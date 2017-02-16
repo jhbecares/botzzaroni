@@ -3,7 +3,7 @@ Descargar el proyecto por primera vez:
 
     git clone https://github.com/masterucm1617/botzzaroni
     
-Se creará una carpeta llamada CAP con los contenidos del repositorio. 
+Se creará una carpeta llamada botzzaroni con los contenidos del repositorio. 
 
 > Nota: si usas windows, recomiendo instalar github desktop (https://desktop.github.com), ya que instala una consola (git shell) que funciona como la de linux. 
 
