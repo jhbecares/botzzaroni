@@ -1,7 +1,7 @@
 ## ¿Cómo consigo el proyecto?
 Descargar el proyecto por primera vez: 
 
-    git clone https://gitlab.com/masterucm1617/CAP
+    git clone https://github.com/masterucm1617/botzzaroni
     
 Se creará una carpeta llamada CAP con los contenidos del repositorio. 
 
