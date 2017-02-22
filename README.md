@@ -10,3 +10,6 @@ Chatbot para pedir comida a una pizzería.
 * Alejandro Martín Guerrero
 * Alfonso Tomé Coronas
 * Verónica del Valle Corral
+
+Más información sobre los integrantes y los roles asignados se encuentra en [doc/equipo-y-roles.md](https://github.com/masterucm1617/botzzaroni/blob/master/doc/equipo-y-roles.md)
+
