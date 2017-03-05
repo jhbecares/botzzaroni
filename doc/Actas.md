@@ -5,6 +5,7 @@
 En el primer día de reunión del equipo del proyecto se decidió entre las diferentes posibilidades para el mismo, descartando las ideas de “creación de escenarios con robots colaborativos” y “robots en Minecraft”, escogiendo por tanto la realización de un chatbot.
 
 Se hicieron dos propuestas para las cuales el chatbot aporta un valor a la solución:
+
 * Organización de vuelos.
 * Pedidos de comida.
 
