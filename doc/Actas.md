@@ -28,14 +28,26 @@ Se detectaron de esta manera las variables a almacenar sobre el usuario, los dif
 Queda pendiente para la próxima sesión la puesta en común de los diálogos o escenarios, una vez analizados por todos los integrantes, para extraer los elementos comunes y definir el flujo principal de la conversación.
 
 Tras hablar con el profesor, éste determinó que la interfaz final con el usuario es a nuestra elección, existiendo posibilidades como: 
+
 * Realizar nuestro propio webchat a mano.
 * Emplear un bot de Telegram.
 * Bot en canal IRC.
 
 Finalmente, se detallaron las siguientes tareas futuras:
+
 * Buscar información sobre chatbots: cuáles existen, probarlos, buscar algún chabot existente que también ayude a realizar pedidos de pizzas…
 * Incluir casos de uso en los que se tenga en cuenta la personalización por el histórico de pedidos de un usuario ya conocido.
 * Implementar (a futuro) una versión “estática” o con conversaciones por defecto de lo que podría ser la aplicación final, de manera que nos sirva para definir el diálogo o flujo de conversación.
 * Investigar en los diálogos de pizzerías con pedidos a domicilio, para tomar nota de los flujos de conversación (muy estudiados) que tienen a la hora de hacer los pedidos de manera telefónica.
 
+### 1 a 5 de Marzo: Presentación del proyecto
 
+El miércoles 1 en el horario de clase, al final de esta, se indicó que para el lunes 6 de Marzo todos los grupos deberán hacer una breve presentación del trabajo (de unos 5 minutos aproximadamente), a cargo del *comunicador* del equipo.
+En esta presentación, se deberán cumplir los siguientes apartados:
+
+* Presentación del equipo.
+* Descripción del tema del proyecto: en qué consistirá.
+* Escenario de ejemplo de funcionamiento
+* De manera opcional se podrán presentar los casos de uso, aunque serán detallados de manera extensa en entregas posteriores.
+
+El trabajo se "repartió" por parejas, encargándose Frank y Alex de la redacción del diálogo, Alfonso y Vero del diseño del cómic del escenario y finalmente Jenny y Bea de la elaboración de las diapositivas de tema, motivación y equipo, así como la elección del escenario.
