@@ -52,3 +52,33 @@ En esta presentación, se deberán cumplir los siguientes apartados:
 * De manera opcional se podrán presentar los casos de uso, aunque serán detallados de manera extensa en entregas posteriores.
 
 El trabajo se "repartió" por parejas, encargándose Frank y Alex de la redacción del diálogo, Alfonso y Vero del diseño del cómic del escenario y finalmente Jenny y Bea de la elaboración de las diapositivas de tema, motivación y equipo, así como la elección del escenario.
+
+### 8 a 13 de Marzo: Primera entrega "Descripción del proyecto"
+
+
+El miércoles 8 se indicó en clase que la primera entrega del proyecto tendría fecha límite el lunes 13. Dicha entrega consistirá en la redacción del documento "Descripción del proyecto", que debe contar con los siguientes apartados:
+
+* Nombre de los integrantes del grupo.
+* Título de la práctica.
+* Breve descripción del propósito del sistema inteligente a realizar. Identificar los aspectos de "inteligencia" que se pueden considerar en el sistema propuesto.
+* Identificación de actores (tipos de usuario) y funcionalidad (casos de uso). Se recomienda presentarlo como un diagrama de casos de uso UML.
+* Descripción de escenarios principales de los casos de uso.
+* Descripción de una historia que concatene varios escenarios (historia de lo que debería ser la demo final).
+
+Se proporcionó además vía Campus Virtual un documento con la estructura de esta entrega.
+El trabajo se repartió de la siguiente manera:
+
+* **Jenny**: Elaboración del diagrama de casos de uso y detalle de los casos de uso Modificar pedido "Modificar pizza", "Eliminar pizza", "Eliminar bebida" y "Logout".
+
+* **Frank**: Revisión del diagrama de casos de uso y detalla de los casos de uso "Gestionar pedido", "Aceptar pedido", "Gestionar fecha y hora", "Gestionar pago"y "Gestionar cambio".
+
+* **Alex:** Revisión del diagrama de casos de uso y detalla de los casos de uso "Personalizar pizza", "Escoger ingredientes", "Quitar ingrediente", y "Escoger salsa".
+
+* **Vero**: Revisión del diagrama de casos de uso y detalla de los casos de uso "Iniciar sesión", "Registrarse", "Pedir datos usuarios" y "Usuario conocido".
+
+* **Alfons**o: Revisión del diagrama de casos de uso y detalla de los casos de uso "Generar Pedido",  "Pedir pizza", "Seleccionar pizza de la carta" y "Preguntar alergias".
+
+* **Bea:** Elaboración del diagrama de casos de uso, la descripción del propósito y de la inteligencia y detalle de los casos de uso "Guardar pizza", "Repetir pizza", "Escoger masa", "Escoger tamaño" y "Pedir bebida".
+
+Los escenarios principales de los casos de uso y la historia para la demo fina fueron añadidos de documentación generada anteriormente, en concreto para la "Presentación del proyecto" del día 6 de Marzo. El documento final se revisó por todos los integrantes del grupo el domingo 12.
+
