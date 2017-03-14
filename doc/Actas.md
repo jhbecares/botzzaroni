@@ -80,5 +80,5 @@ El trabajo se repartió de la siguiente manera:
 
 * **Bea:** Elaboración del diagrama de casos de uso, la descripción del propósito y de la inteligencia y detalle de los casos de uso "Guardar pizza", "Repetir pizza", "Escoger masa", "Escoger tamaño" y "Pedir bebida".
 
-Los escenarios principales de los casos de uso y la historia para la demo fina fueron añadidos de documentación generada anteriormente, en concreto para la "Presentación del proyecto" del día 6 de Marzo. El documento final se revisó por todos los integrantes del grupo el domingo 12.
+Los escenarios principales de los casos de uso y la historia para la demo final fueron añadidos de documentación generada anteriormente, en concreto para la "Presentación del proyecto" del día 6 de Marzo. El documento final se revisó **exhaustivamente** por todos los integrantes del grupo el domingo 12.
 
