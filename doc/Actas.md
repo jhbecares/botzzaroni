@@ -76,7 +76,7 @@ El trabajo se repartió de la siguiente manera:
 
 * **Vero**: Revisión del diagrama de casos de uso y detalla de los casos de uso "Iniciar sesión", "Registrarse", "Pedir datos usuarios" y "Usuario conocido".
 
-* **Alfons**o: Revisión del diagrama de casos de uso y detalla de los casos de uso "Generar Pedido",  "Pedir pizza", "Seleccionar pizza de la carta" y "Preguntar alergias".
+* **Alfonso**: Revisión del diagrama de casos de uso y detalla de los casos de uso "Generar Pedido",  "Pedir pizza", "Seleccionar pizza de la carta" y "Preguntar alergias".
 
 * **Bea:** Elaboración del diagrama de casos de uso, la descripción del propósito y de la inteligencia y detalle de los casos de uso "Guardar pizza", "Repetir pizza", "Escoger masa", "Escoger tamaño" y "Pedir bebida".
 
