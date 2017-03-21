@@ -1,6 +1,9 @@
 
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
 <script type="text/javascript"
@@ -34,9 +37,14 @@
 					<div class="btn-group pull-right open">
 
 						<div class="btn-group pull-right">
-							<a class="btn btn-default btn-sm" href="#"> <i
+							<a class="btn btn-default btn-sm" onclick="document.forms['logoutForm'].submit()"> <i
 								class="fa fa-sign-out"></i> Cerrar sesión
 							</a>
+						 <c:if test="${pageContext.request.userPrincipal.name != null}">
+					        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+					            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					        </form>
+					    </c:if>
 						</div>
 					</div>
 				</div>
@@ -114,4 +122,7 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
