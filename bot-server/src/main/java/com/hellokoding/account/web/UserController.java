@@ -1,9 +1,17 @@
 package com.hellokoding.account.web;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.hellokoding.account.model.User;
 import com.hellokoding.account.service.SecurityService;
 import com.hellokoding.account.service.UserService;
@@ -49,7 +56,7 @@ public class UserController {
         securityService.autologin(userForm.getUsername(),
                 userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "redirect:/chat";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -67,7 +74,7 @@ public class UserController {
 
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
     public String welcome(Model model) {
-        return "welcome";
+        return "redirect:/chat";
     }
 
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
