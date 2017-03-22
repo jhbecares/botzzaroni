@@ -50,68 +50,38 @@
 				</div>
 				<div class="panel-body body-panel" style="min-height: 450;min-width: 700;">
 					<ul class="chat">
-						<li class="left clearfix"><span class="chat-img pull-left">
-								<img src="http://placehold.it/50/55C1E7/fff&text=B"
-								alt="User Avatar" class="img-circle" />
-						</span>
+						<li class="left clearfix">
+							<span class="chat-img pull-left">
+								<img src="http://placehold.it/50/55C1E7/fff&text=B" alt="User Avatar" class="img-circle" />
+							</span>
 							<div class="chat-body clearfix">
 								<div class="header">
-									<strong class="primary-font">Botzza</strong> <small
-										class="pull-right text-muted"> <span
-										class="glyphicon glyphicon-time"></span>Hace 14 minutos
+									<strong class="primary-font">Botzza</strong> 
+									<small class="pull-right text-muted"> 
+										<span class="glyphicon glyphicon-time"> </span> Hace 14 minutos
 									</small>
 								</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Curabitur bibendum ornare dolor, quis ullamcorper ligula
-									sodales.</p>
-							</div></li>
-						<li class="right clearfix"><span class="chat-img pull-right">
-								<img src="http://placehold.it/50/FA6F57/fff&text=YO"
-								alt="User Avatar" class="img-circle" />
-						</span>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</p>
+							</div>
+						</li>
+						<li class="right clearfix">
+							<span class="chat-img pull-right">
+								<img src="http://placehold.it/50/FA6F57/fff&text=YO" alt="User Avatar" class="img-circle" />
+							</span>
 							<div class="chat-body clearfix">
 								<div class="header">
-									<small class=" text-muted"><span
-										class="glyphicon glyphicon-time"></span>Hace 14 minutos</small> <strong
-										class="pull-right primary-font">Bé</strong>
+									<strong class="pull-right primary-font">Bé</strong>
+									<small class=" text-muted">
+										<span class="glyphicon glyphicon-time"></span> Hace 15 minutos
+									</small> 
 								</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Curabitur bibendum ornare dolor, quis ullamcorper ligula
-									sodales.</p>
-							</div></li>
-						<li class="left clearfix"><span class="chat-img pull-left">
-								<img src="http://placehold.it/50/55C1E7/fff&text=B"
-								alt="User Avatar" class="img-circle" />
-						</span>
-							<div class="chat-body clearfix">
-								<div class="header">
-									<strong class="primary-font">Botzza</strong> <small
-										class="pull-right text-muted"> <span
-										class="glyphicon glyphicon-time"></span>Hace 14 minutos
-									</small>
-								</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Curabitur bibendum ornare dolor, quis ullamcorper ligula
-									sodales.</p>
-							</div></li>
-						<li class="right clearfix"><span class="chat-img pull-right">
-								<img src="http://placehold.it/50/FA6F57/fff&text=YO"
-								alt="User Avatar" class="img-circle" />
-						</span>
-							<div class="chat-body clearfix">
-								<div class="header">
-									<small class=" text-muted"><span
-										class="glyphicon glyphicon-time"></span>Hace 15 minutos</small> <strong
-										class="pull-right primary-font">Bé</strong>
-								</div>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Curabitur bibendum ornare dolor, quis ullamcorper ligula
-									sodales.</p>
-							</div></li>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.</p>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div class="panel-footer clearfix">
-					<textarea class="form-control" rows="3"></textarea>
+					<textarea id="text" class="form-control" rows="3"></textarea>
 					<span
 						class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
 						style="margin-top: 10px">
@@ -125,4 +95,25 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#btn-chat').click(function() {
+			var texto = $('#text').val(); 
+		    $('.chat').append(
+		    	'<li class="right clearfix">' +
+					'<span class="chat-img pull-right">' +
+						'<img src="http://placehold.it/50/FA6F57/fff&text=YO" alt="User Avatar" class="img-circle" />' +
+					'</span>' +
+					'<div class="chat-body clearfix">' +
+						'<div class="header">' +
+							'<strong class="pull-right primary-font">Bé</strong>' +
+							'<small class=" text-muted"> ' +
+								'<span class="glyphicon glyphicon-time"></span> Hace 15 minutos ' +
+							'</small>' +
+						'</div>' +
+						'<p>' + texto + '</p>' +
+					'</div>' +
+				'</li>')
+		});		
+	});
+</script>
