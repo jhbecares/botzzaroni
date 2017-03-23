@@ -6,5 +6,5 @@ public class Direccion {
 	private int piso;
 	private String puerta;
 	private int codigoPostal;
-	
+	private String ciudad;	
 }
