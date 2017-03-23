@@ -7,9 +7,6 @@ public class Pedido {
 		tarjeta, efectivo
 	}
 	
-	public enum Ingrediente{ // Provisional, añadir
-		jamonYork, mozzarella, cheddar, chorizo, jamonSerrano, pollo
-	}
 	
 	private Usuario usuario;
 	private List<Pizza> pizzas;
