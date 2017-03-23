@@ -1,4 +1,4 @@
-package com.hellokoding.account.web;
+package botzzaroni.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hellokoding.account.model.User;
-import com.hellokoding.account.service.SecurityService;
-import com.hellokoding.account.service.UserService;
-import com.hellokoding.account.validator.UserValidator;
+import botzzaroni.model.User;
+import botzzaroni.service.SecurityService;
+import botzzaroni.service.UserService;
+import botzzaroni.validator.UserValidator;
 
 @Controller
 public class UserController {

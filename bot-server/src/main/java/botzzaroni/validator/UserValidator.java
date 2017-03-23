@@ -1,7 +1,8 @@
-package com.hellokoding.account.validator;
+package botzzaroni.validator;
 
-import com.hellokoding.account.model.User;
-import com.hellokoding.account.service.UserService;
+import botzzaroni.model.User;
+import botzzaroni.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

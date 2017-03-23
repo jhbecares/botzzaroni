@@ -1,8 +1,9 @@
-package com.hellokoding.account.service;
+package botzzaroni.service;
 
-import com.hellokoding.account.model.Role;
-import com.hellokoding.account.model.User;
-import com.hellokoding.account.repository.UserRepository;
+import botzzaroni.model.Role;
+import botzzaroni.model.User;
+import botzzaroni.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
