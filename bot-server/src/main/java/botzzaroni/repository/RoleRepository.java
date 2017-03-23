@@ -1,7 +1,8 @@
-package com.hellokoding.account.repository;
+package botzzaroni.repository;
 
-import com.hellokoding.account.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import botzzaroni.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 }

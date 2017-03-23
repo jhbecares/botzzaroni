@@ -1,4 +1,4 @@
-package com.hellokoding.account.service;
+package botzzaroni.service;
 
 public interface SecurityService {
     String findLoggedInUsername();

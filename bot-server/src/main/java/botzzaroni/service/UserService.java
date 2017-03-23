@@ -1,6 +1,6 @@
-package com.hellokoding.account.service;
+package botzzaroni.service;
 
-import com.hellokoding.account.model.User;
+import botzzaroni.model.User;
 
 public interface UserService {
     void save(User user);
