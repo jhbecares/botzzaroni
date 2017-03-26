@@ -82,3 +82,23 @@ El trabajo se repartió de la siguiente manera:
 
 Los escenarios principales de los casos de uso y la historia para la demo final fueron añadidos de documentación generada anteriormente, en concreto para la "Presentación del proyecto" del día 6 de Marzo. El documento final se revisó **exhaustivamente** por todos los integrantes del grupo el domingo 12.
 
+
+### 22 de Marzo: Diseño del sistema
+
+El día 22 de Marzo en horario de clase se comenzó a trabajar en el diseño del sistema, con una entrega prevista para después de Semana Santa. 
+Esta entrega constará de una demo "cableada" del sistema, de manera que para llevarla a acabo es necesario:
+
+* Definir el flujo conversacional completo del chatbot, identificando sus mensajes, redirecciones, orden...
+* Diseñar la arquitectura de agentes que se llevará a cabo, permitiendo identificar para cada uno sus objetivos inicialmente para después obtener las tareas necesarias para llevarlos a cabo. El proceso más sencillo para hacer esto es listar inicialmente objetivos y tareas para después repartir entre los agentes de la aplicación.
+* Identificar los recursos necesarios, así como las interfaces que permitirán a los agentes de la aplicación utilizarlos para llevar a cabo sus tareas.
+
+El trabajo se ha repartido inicialmente de la siguiente forma:
+
+* Frank y Alex: Encargados del manejo de GATE, con la integración con el sistema y procesamiento del lenguaje para la primera versión.
+
+* Vero y Alfonso: Diseño e implementación de la interfaz, mediante el framework Spring, que permite una integración rápida de Java con tecnologías web.
+
+* Jenny y Bea: Investigación de la creación y control de agentes en la herramienta ÍCARO, así como integración de los distintos recursos a utilizar.
+
+
+
