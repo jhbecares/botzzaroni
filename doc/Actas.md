@@ -101,4 +101,30 @@ El trabajo se ha repartido inicialmente de la siguiente forma:
 * Jenny y Bea: Investigación de la creación y control de agentes en la herramienta ÍCARO, así como integración de los distintos recursos a utilizar.
 
 
+### 27 de Marzo: Diseño del sistema (II)
+
+El día 27 de Marzo se ha recibido feedback sobre la primera entrega realizada en la asignatura. Se han recibido las siguientes recomendaciones:
+
+¿Cómo demostramos que nuestro sistema es inteligente?
+
+- Preguntar menos en una segunda interacción con el mismo usuario (aprender información sobre el usuario).
+- Quedarse con información sobre usuarios para hacer recomendaciones posteriormente. 
+- Demostrar que el sistema es capaz de razonar. 
+- Capacidad del sistema para demostrar lo que hace (explicar sus funciones). 
+- En los diálogos, demostrar que el sistema razona (que los diálogos implican que el sistema puede hacer cosas).
+
+Se ha hablado también de la necesidad de que exista un rol de integración, para asegurar que para el día de la demo va a haber algo funcional. 
+
+- Se recomienda:
+
+* Hacer varias iteraciones con pocas cosas en cada una (para ir avanzando poco a poco) con metodología ágil, en parejas de 2 que luego se van intercambiando para finalmente entender el código completo. 
+* Replanificaciones: Revisar cosas poco a poco, añadir cosas nuevas en función de lo que vamos aprendiendo
+*  Añadir lista de riesgos -> tecnologías desconocidas, problemas organizativos de los equipos
+
+Como recomendación para nuestro proyecto:
+- Añadir como recurso o como agente algo que pueda generar múltiples input/output
+
+Finalmente el grupo ha estado terminando de diseñar el sistema que se va a utilizar el día de la demo, especificando qué agentes se van a utilizar y cuáles aun no se van a implementar. 
+
+Para el próximo día, hemos quedado en enterarnos de cómo funciona el proyecto que nuestros compañeros del año pasado habían desarrollado (SONIA [https://github.com/SONIAGroup]). 
 
