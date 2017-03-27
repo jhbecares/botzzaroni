@@ -115,7 +115,7 @@ El día 27 de Marzo se ha recibido feedback sobre la primera entrega realizada e
 
 Se ha hablado también de la necesidad de que exista un rol de integración, para asegurar que para el día de la demo va a haber algo funcional. 
 
-- Se recomienda:
+Se recomienda:
 
 * Hacer varias iteraciones con pocas cosas en cada una (para ir avanzando poco a poco) con metodología ágil, en parejas de 2 que luego se van intercambiando para finalmente entender el código completo. 
 * Replanificaciones: Revisar cosas poco a poco, añadir cosas nuevas en función de lo que vamos aprendiendo
@@ -128,3 +128,9 @@ Finalmente el grupo ha estado terminando de diseñar el sistema que se va a util
 
 Para el próximo día, hemos quedado en enterarnos de cómo funciona el proyecto que nuestros compañeros del año pasado habían desarrollado (SONIA [https://github.com/SONIAGroup]). 
 
+Finalmente, se decidió entre todos los integrantes implementar lo siguiente para la demo cableada:
+
+* Usuario que inicia sesión o se registra en la aplicación.
+* Pedido de una pizza de la carta.
+* Aceptar/Cancelar el pedido, tras mostrar un resumen del mismo.
+* Seleccionar entre pago en efectivo o con tarjeta.
