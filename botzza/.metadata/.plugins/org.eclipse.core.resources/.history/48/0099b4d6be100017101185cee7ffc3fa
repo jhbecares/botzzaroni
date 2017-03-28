@@ -1,0 +1,62 @@
+/*--- ficheros de cabecera ---*/
+#include "44blib.h"
+#include "44b.h"
+#include "def.h"
+#include "mainstates.h"
+/*--- variables globales ---*/
+
+int symbol = 0;
+/*--- funciones externas ---*/
+//extern void D8Led_Symbol(int value);
+/*--- declaracion de funciones ---*/
+void Eint4567_ISR(void) __attribute__ ((interrupt ("IRQ")));
+
+
+void Eint4567_ISR()
+{
+  //Identificar la interrupcion
+  int which_int = rEXTINTPND;
+  // Actualizar simbolo
+  switch (which_int) {
+  case 4: // 0100 -> Suponemos boton izqdo
+	  switch (get_current_state()) {
+	  case S1: // lee la mitad mas significativa de la dir
+	  case S2: // lee mitad menos significativa de la dir
+	  case S3: // lee la mitad mas significativa del dato a escribir
+	  case S4: // lee la mitad menos significativa del dato a escribir
+		  break;
+	  case S5: // escribe el dato en la direccion de la eeprom
+		  at24c04_bytewrite( addr, bytes );
+    	  old_addr = addr; // guaramos la dir vieja para poder leerla cuando
+    	  // se pulse el boton derecho
+		  break;
+	  default:
+		  break;
+	  }
+	  break;
+  case 8: // 1000 // boton derecho
+	// en cualquier momento el usuario puede pulsar el boton derecho y el
+	  // sistema sera capaz de leer de la EEPROM la palabra que este
+	  // en la ultima direccion introducida y mostrarla en el 8 segmentos
+
+	  // suponemos que queremos leer dos hexas, ya que tenemos el uint8
+	  	uint8 data;
+		at24c04_byteread(old_addr, &data);
+		D8Led_symbol(data >> 4);
+		DelayMs(200);
+		D8Led_symbol(data & 0xF);
+	    DelayMs(200);
+    break;
+  }
+
+  // actualizamos el estado
+  set_current_state((get_current_state()+1)%6); // es ciclico, por lo que vuelve
+  // a s0 cuando termina el proceso
+
+  // borra los bits en EXTINTPND
+  rEXTINTPND = rEXTINTPND | 0xC;
+  // borra el bit pendiente en INTPND
+  rI_ISPC = BIT_EINT4567;
+}
+
+

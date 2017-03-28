@@ -1,0 +1,16 @@
+#include "s3c44b0x.h"
+#include "s3cev40.h"
+
+extern void sys_init();
+extern void iic_init();
+
+int val;
+
+void Main( void )
+{
+    sys_init();
+    iic_init();
+
+    initialize();
+    while( 1 );
+}

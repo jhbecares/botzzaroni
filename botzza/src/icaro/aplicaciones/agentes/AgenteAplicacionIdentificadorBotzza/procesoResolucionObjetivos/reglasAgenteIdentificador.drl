@@ -1,0 +1,192 @@
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
+import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
+import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
+import icaro.infraestructura.entidadesBasicas.comunicacion.*
+import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.objetivos.*;
+
+//import icaro.aplicaciones.informacion.gestionQuedadas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.tools.*;
+import icaro.aplicaciones.informacion.gestionPizzeria.*;
+import icaro.aplicaciones.informacion.gestionQuedadas.FocoGrupo;
+import icaro.aplicaciones.agentes.AgenteAplicacionIdentificador.tareas.NotificarAlGrupoSinContexto;
+
+
+global ItfGestorTareas gestorTareas;
+global ItfUsoRecursoTrazas recursoTrazas;
+global String agentId;
+
+
+// "grupo" es el nombre del usuario del chat.
+
+rule "Creacion de los objetivos iniciales"
+when 
+then 
+TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarInfoWorkMem.class);
+    tarea.ejecutar();
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+end
+
+
+rule "Saludo Inicial"
+when
+then
+     TareaSincrona tarea = gestorTareas.crearTareaSincrona(SaludoInicial.class);
+     tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Saludo inicial cuando el grupo dice algo que no es un saludo"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion != tipoNotif.saludo)
+    not( exists (Usuario(username == identInterlc )))
+ then
+ 	Usuario gr = new Usuario();
+ 	gr.username = identInterlc;
+ 	insert( gr );
+ 	FocoUsuario fgr = new FocoUsuario(identInterlc);
+ 	Objetivo ob = new ObtenerInfoUsuario();
+ 	ob.setobjectReferenceId(identInterlc);
+ 	insert( fgr );
+ 	insert( ob );
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(identInterlc,ConversacionBotzza.msg("saludoInicialNoSaludo"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    retract(notif);
+end
+
+rule "Saludo inicial cuando el grupo saluda y no se conoce"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.saludo)
+    not( exists (Usuario(username == identInterlc )))
+ then
+ 	Usuario gr = new Usuario();
+ 	gr.username = identInterlc;
+ 	insert( gr );
+ 	FocoUsuario fgr = new FocoUsuario(identInterlc);
+ 	Objetivo ob = new ObtenerInfoUsuario();
+ 	ob.setobjectReferenceId(identInterlc);
+ 	insert( fgr );
+ 	insert( ob );
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(identInterlc,ConversacionBotzza.msg("saludoInicialDesconocido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    retract(notif);
+end
+
+rule "Saludo inicial cuando el grupo saluda y se conoce"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.saludo)
+   	gr:Usuario(username == identInterlc)
+ then
+ 	FocoUsuario fgr = new FocoUsuario(identInterlc);
+ 	Objetivo ob = new ObtenerInfoUsuario();
+ 	ob.setobjectReferenceId(identInterlc);
+ 	insert( fgr );
+ 	insert( ob );
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(identInterlc,ConversacionBotzza.msg("saludoInicial"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    retract(notif);
+end
+
+
+rule "Respuesta ante resaludo del grupo conocido"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.saludo)
+   	gr:Usuario(username == identInterlc)
+ then
+  	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+     tarea.ejecutar(identInterlc,ConversacionBotzza.msg("volverASaludar"));
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+     gr.actividad();
+     retract(notif);
+end
+
+
+rule "Notificar desconocimiento"
+ when
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == VocabularioGestionPizzeria.ExtraccionSemanticaNull )
+	gr:Usuario(username == group)
+ then
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+     tarea.ejecutar(group,ConversacionBotzza.msg("desconocido"));
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+     gr.actividad();
+     retract(notif);
+end
+
+rule "Despedirse"
+	when 
+	 notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.despedida)
+ 	 gr:Usuario(username == identInterlc )
+	 then
+   recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
+	// TODO eliminar sesion ?
+   TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenerico.class);
+     tarea.ejecutar(gr.username,  ConversacionBotzza.msg("despedida"));
+   recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   
+   retract( notif );
+end
+
+////////////////////////////
+
+rule "Regla de solicitar nombre"
+ when
+ 	obj:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
+ 	//fc:FocoUsuario(foco == null, username == group)
+ 	//not( exists (ObtenerTelefono(objectReferenceId == group)))
+ 	not(exists (ObtenerNombreUsuario(objectReferenceId == group)))
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
+  	Objetivo ob = new ObtenerNombreUsuario();
+  	ob.setobjectReferenceId(group);
+  	//fc.setFoco(ob);
+  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenerico.class);
+    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarNombre"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	//update(fc);
+   	insert(ob);
+end
+
+rule "Regla de obtencion del nombre" // TODO comment esto todavia no se va a hacer
+// porque no reconocemos nombres
+ when
+ 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
+ 	ob:ObtenerNombreUsuario(state == Objetivo.PENDING, objectReferenceId == group)
+ 	//fc:FocoUsuario(username == group, foco == ob )
+    notif:Notificacion(identNotificador == group, tipoNotificacion == tipoNotif.nombre, msgg:mensajeNotificacion )
+    gr:Usuario(username == group)
+ then
+ 	//ob.setSolved();
+ 	//gr.setTelefono(msgg);
+ 	
+ 	gr.actividad();
+ 	//fc.setFoco(null);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenerico.class);
+    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarNombreImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	update(ob);
+   	//update(fc);
+   	retract(notif);
+end
+
+
+rule "Regla de obtencion del nombre cuando se recibe algo que no es un nombre"
+ salience -1
+ when
+ 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
+ 	ob:ObtenerNombreUsuario(state == Objetivo.PENDING, objectReferenceId == group)
+ 	//fc:FocoGrupo(grupo == group, foco == ob )
+    notif:Notificacion(identNotificador == group, tipoNotificacion != tipoNotif.nombre, msgg:mensajeNotificacion )
+ then
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenerico.class);
+    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarNombreImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
