@@ -1,0 +1,15 @@
+#ifndef MAIN_STATES_H_
+#define MAIN_STATES_H_
+
+#include "44b.h"
+#include "stdio.h"
+#include "state.h"
+
+extern State;
+
+void init_states();
+State get_current_state();
+void set_current_state(State new_state);
+
+
+#endif /* MAIN_STATES_H_ */

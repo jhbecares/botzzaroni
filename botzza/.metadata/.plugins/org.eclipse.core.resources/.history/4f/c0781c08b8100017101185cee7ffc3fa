@@ -1,0 +1,44 @@
+#import "mainstates.h"
+
+extern void led1_on();
+extern void led2_on();
+extern void leds_off();
+extern void D8Led_symbol(int value);
+extern void init_ISR();
+
+extern State;
+
+State state;
+
+
+State get_current_state() {
+	return state;
+}
+
+void set_current_state(State new_state) {
+	state = new_state;
+}
+
+void initialize() {
+
+	init_ISR();
+
+	// Inicialización del teclado matricial
+	D8Led_symbol(0);
+	/* Establecer valor inicial de los LEDs */
+	leds_off();
+
+	DelayMs(100);
+
+	set_current_state(S0);
+}
+
+
+void reset_everything() {
+	set_current_state(S0);
+
+	// TODO algo mas?
+	//leds_off();
+	//D8Led_symbol(0);
+	//set_current_state(ESPERA_NUM_1);
+}

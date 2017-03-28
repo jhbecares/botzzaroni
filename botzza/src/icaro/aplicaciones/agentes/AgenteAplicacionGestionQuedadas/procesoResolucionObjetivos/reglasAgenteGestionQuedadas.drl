@@ -1,0 +1,18 @@
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.aplicaciones.recursos.persistenciaMensajesGrupo.*;
+import icaro.aplicaciones.recursos.persistenciaQuedadas.*;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
+import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
+import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
+import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
+import icaro.infraestructura.entidadesBasicas.comunicacion.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionGestionQuedadas.objetivos.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionGestionQuedadas.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionGestionQuedadas.tools.*;
+import icaro.aplicaciones.informacion.gestionQuedadas.*;
+
+global ItfGestorTareas gestorTareas;
+global ItfUsoRecursoTrazas recursoTrazas;
+global String agentId;
+

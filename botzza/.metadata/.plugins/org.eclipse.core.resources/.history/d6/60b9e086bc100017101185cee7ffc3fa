@@ -1,0 +1,133 @@
+/*--- Ficheros de cabecera ---*/
+#include "44b.h"
+#include "44blib.h"
+#include "def.h"
+#include "mainstates.h"
+#include "state.h"
+/*--- Definición de macros ---*/
+#define KEY_VALUE_MASK 0xF
+/*--- Variables globales ---*/
+volatile UCHAR *keyboard_base = (UCHAR *)0x06000000;
+int key;
+/*--- Funciones externas ---*/
+void D8Led_symbol(int value);
+/*--- Declaracion de funciones ---*/
+//void keyboard_init();
+void KeyboardInt(void) __attribute__ ((interrupt ("IRQ")));
+
+extern State;
+
+int first_num = -1;
+int second_num = -1;
+int op = -1;
+
+
+void KeyboardInt(void)
+{
+  /* Esperar trp mediante la funcion DelayMs()*/
+  // Del manual: Para detectar correctamente una tecla es necesario esperar a que
+  // terminen los rebotes de presion. Una forma es esperar durante un
+  // tiempo superior al tiempo de rebote de presion minimo previsto
+  // (trp) despues de haber detectado la pulsacion. Suponemos que para
+  // este tipo de teclado trp son 20ms
+  DelayMs(20);
+  
+  State prev_state = get_current_state();
+
+  /* Identificar la tecla */
+  key = key_read();
+  /* Si la tecla se ha identificado, visualizarla en el 8SEG*/
+  if(key > -1) {
+	  switch (get_current_state()) {
+	  	  case S1: // lee la mitad mas significativa de la dir
+
+	  		  break;
+	  	  case S2: // lee mitad menos significativa de la dir
+
+	  		  break;
+	  	  case S3: // lee la mitad mas significativa del dato a escribir
+
+	  		  break;
+	  	  case S4: // lee la mitad menos significativa del dato a escribir
+
+	  		  break;
+	  	  default:
+	  		  break;
+	  	  }
+  }
+
+  /* Esperar a se libere la tecla: consultar bit 1 del registro de datos del puerto G */
+    // Tambien se deben eliminar los rebotes de depresion. Como no
+    // conocemos el momento en que el usuario va a dejar de pulsar la
+    // tecla, la forma mas segura de evitar los rebotes de depresion
+    // consiste en detectar la transacion de depresion, y solo
+    // entonces esperar durante un tiempo superior al rebote de
+    // depresion (tr). Esto permitira eludir los rebotes de depresion
+    // antes de dar por finalizado el proceso de identificacion. Para
+    // detectar la transicion de depresion se esperara a que la linea
+    // EINT1 tome el valor '1' y despues esperamos trd=100ms. Para
+    // leer el valor de EINT1 consultaremos el bit 1 de PDATG
+  while (rPDATG & 0x2 != 0x2){ // esperamos hasta que el bit 1 sea 1
+    //NOTHING
+  }
+  /* Esperar trd mediante la funcion Delay() */
+  DelayMs(100);
+
+ // if prev_state...
+
+  //
+  /* Borrar interrupción de teclado */
+  // borramos los bits en EXTINTPND
+  // borramos el bit pendiente en INTPND escribiendo en ISPC
+  rEXTINTPND = rEXTINTPND | 0xC;
+  rI_ISPC = BIT_EINT1;
+}
+int key_read() // por el momento suponemos que queremos mostrar los
+			// numeros en hexa. Ya lo cambiaremos para el apartado
+			// b
+{
+  int value= -1;
+  char temp;
+  // Identificar la tecla mediante ''scanning'' Si la identificación
+  // falla la función debe devolver -1. Como esta puesto por defecto
+  // el value=-1, no tenemos que hacer nada extra.
+  temp = *(keyboard_base + 0xfd) & KEY_VALUE_MASK; // primera fila
+  //Usamos KEY_VALUE_MASK para quedarnos con los 4 bits menos significativos
+
+  switch (temp) {
+  case 0x7:  value = 7; break; // primera fila, columna 1: SB1
+  case 0xB:  value = 8; break; // primera fila, columna 2: SB5
+  case 0xD:  value = 9; break; // primera fila, columna 3: SB9
+  case 0xE:  value = 16; break; // primera fila, columna 4: SB13. A. Add
+  }
+
+  // Vamos ahora con la segunda fila...
+  temp = *(keyboard_base + 0xfb) & KEY_VALUE_MASK; 
+  switch (temp) {
+  case 0x7:  value = 4; break; // segunda fila, columna 1: SB2
+  case 0xB:  value = 5; break; // segunda fila, columna 2: SB6
+  case 0xD:  value = 6; break; // segunda fila, columna 3: SB10
+  case 0xE:  value = 17; break; // segunda fila, columna 4: SB14. -. Substract
+  }
+  
+  // Vamos ahora con la tercera fila...
+  temp = *(keyboard_base + 0xf7) & KEY_VALUE_MASK;
+  switch (temp) {
+  case 0x7:  value = 1; break; // tercera fila, columna 1: SB3
+  case 0xB:  value = 2; break; // tercera fila, columna 2: SB7
+  case 0xD:  value = 3; break; // tercera fila, columna 3: SB11
+  case 0xE:  value = 18; break; // tercera fila, columna 4: SB15. *
+  }
+  
+  // Vamos ahora con la cuarta fila...
+  temp = *(keyboard_base + 0xef) & KEY_VALUE_MASK; 
+  switch (temp) {
+  case 0x7:  value = 15; break; // cuarta fila, columna 1: SB4. F. Sin usar
+  case 0xB:  value = 0; break; // cuarta fila, columna 2: SB8
+  case 0xD:  value = 15; break; // cuarta fila, columna 3: SB12. F. Sin usar
+  case 0xE:  value = 19; break; // cuarta fila, columna 4: SB16. =
+  }
+    
+  return value;
+
+}
