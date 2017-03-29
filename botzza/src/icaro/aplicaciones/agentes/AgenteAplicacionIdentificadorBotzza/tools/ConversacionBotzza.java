@@ -69,6 +69,14 @@ public class ConversacionBotzza {
 		List<String> desconocido = new ArrayList<String>();
 		desconocido.add("Perdona, creo que me he perdido...");
 
+		List<String> tengoTuPizza = new ArrayList<String>();
+		tengoTuPizza.add("Oh, me has dicho una pizza!");
+		
+		List<String> tengoTuMasa = new ArrayList<String>();
+		tengoTuMasa.add("Oh, me has dicho una masa!");
+
+		List<String> tengoTuSalsa = new ArrayList<String>();
+		tengoTuMasa.add("Oh, me has dicho una salsa!");
 		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
@@ -87,6 +95,9 @@ public class ConversacionBotzza {
 		conversacion.put("fechaAnterior", fechaAnterior);		
 		conversacion.put("desconocido", desconocido);		
 
+		conversacion.put("tengoTuPizza", tengoTuPizza);
+		conversacion.put("tengoTuMasa", tengoTuMasa);
+		conversacion.put("tengoTuSalsa", tengoTuSalsa);
 	}
 	
 	

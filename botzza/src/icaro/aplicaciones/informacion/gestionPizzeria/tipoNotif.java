@@ -12,4 +12,11 @@ public class tipoNotif {
 	
 	public static String despedida = "despedida";
 
+	public static String nombres = "nombres";
+	public static String apellidos = "apellidos";
+	public static String ingredientes = "ingredientes";
+	public static String salsas = "salsas";
+	public static String tamanyopizza = "tamanyopizza";
+	public static String masapizza = "masapizza";
+	public static String pizzas = "pizzas";
 }
