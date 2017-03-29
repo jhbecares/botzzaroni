@@ -486,6 +486,16 @@ public class InterpreteMsgsIRC {
 		anotacionesBusquedaPrueba.add("no");
 		anotacionesBusquedaPrueba.add("meDaIgual");
 		anotacionesBusquedaPrueba.add("novedad");
+		
+		anotacionesBusquedaPrueba.add("masapizza");
+		anotacionesBusquedaPrueba.add("pizzas");
+		anotacionesBusquedaPrueba.add("tamanyopizza");
+		anotacionesBusquedaPrueba.add("salsas");
+		anotacionesBusquedaPrueba.add("nombres");
+		anotacionesBusquedaPrueba.add("ingredientes");
+		anotacionesBusquedaPrueba.add("apellidos");
+		
+		
 		// esto habria que pasarlo como parametro
 		if (infoConecxInterlocutor == null) {
 			infoConecxInterlocutor = new InfoConexionUsuario();
@@ -1679,8 +1689,62 @@ public class InterpreteMsgsIRC {
 //								contextoInterpretacion, annot));
 //			}
 			
-			
-
+			else if (anotType.equalsIgnoreCase("nombres")) {
+				if (!anotaciones_leidas.contains("nombres"))
+					anotaciones_leidas.add("nombres");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("apellidos")) {
+				if (!anotaciones_leidas.contains("apellidos"))
+					anotaciones_leidas.add("apellidos");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("ingredientes")) {
+				if (!anotaciones_leidas.contains("ingredientes"))
+					anotaciones_leidas.add("ingredientes");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("salsas")) {
+				if (!anotaciones_leidas.contains("salsas"))
+					anotaciones_leidas.add("salsas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("tamanyopizza")) {
+				if (!anotaciones_leidas.contains("tamanyopizza"))
+					anotaciones_leidas.add("tamanyopizza");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("masapizza")) {
+				if (!anotaciones_leidas.contains("masapizza"))
+					anotaciones_leidas.add("masapizza");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("pizzas")) {
+				if (!anotaciones_leidas.contains("pizzas"))
+					anotaciones_leidas.add("pizzas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
 		}
 		
 		return anotacionesInterpretadas;

@@ -190,3 +190,39 @@ rule "Regla de obtencion del nombre cuando se recibe algo que no es un nombre"
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	retract(notif);
 end
+
+rule "Pizza"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pizzas)
+   	gr:Usuario(username == identInterlc)
+ then
+  	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+     tarea.ejecutar(identInterlc,ConversacionBotzza.msg("tengoTuPizza"));
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+     gr.actividad();
+     retract(notif);
+end
+
+rule "Salsa"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.salsas)
+   	gr:Usuario(username == identInterlc)
+ then
+  	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+     tarea.ejecutar(identInterlc,ConversacionBotzza.msg("tengoTuSalsa"));
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+     gr.actividad();
+     retract(notif);
+end
+
+rule "Masa pizza"
+ when
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.masapizza)
+   	gr:Usuario(username == identInterlc)
+ then
+  	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+     tarea.ejecutar(identInterlc,ConversacionBotzza.msg("tengoTuMasa"));
+     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+     gr.actividad();
+     retract(notif);
+end
