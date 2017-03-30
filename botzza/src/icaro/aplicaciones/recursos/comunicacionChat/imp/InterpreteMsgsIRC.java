@@ -463,30 +463,31 @@ public class InterpreteMsgsIRC {
 		HashSet anotacionesBusquedaPrueba = new HashSet();
 		anotacionesBusquedaPrueba.add("saludo");
 		
-		anotacionesBusquedaPrueba.add("queHacer_beber");
-		anotacionesBusquedaPrueba.add("queHacer_deporte");
-		anotacionesBusquedaPrueba.add("queHacer_cultural");
-		anotacionesBusquedaPrueba.add("queHacer_compras");
-		anotacionesBusquedaPrueba.add("queHacer_comer");
-		anotacionesBusquedaPrueba.add("queHacer_fiesta");
+//		anotacionesBusquedaPrueba.add("queHacer_beber");
+//		anotacionesBusquedaPrueba.add("queHacer_deporte");
+//		anotacionesBusquedaPrueba.add("queHacer_cultural");
+//		anotacionesBusquedaPrueba.add("queHacer_compras");
+//		anotacionesBusquedaPrueba.add("queHacer_comer");
+//		anotacionesBusquedaPrueba.add("queHacer_fiesta");
 		
-		anotacionesBusquedaPrueba.add("dondeHacer");
+//		anotacionesBusquedaPrueba.add("dondeHacer");
 		anotacionesBusquedaPrueba.add("hora");
-		anotacionesBusquedaPrueba.add("edad");
-		anotacionesBusquedaPrueba.add("sexo");
+//		anotacionesBusquedaPrueba.add("edad");
+//		anotacionesBusquedaPrueba.add("sexo");
 		anotacionesBusquedaPrueba.add("telefono");
-		anotacionesBusquedaPrueba.add("numintegrantes");
-		anotacionesBusquedaPrueba.add("idgrupo");
-		anotacionesBusquedaPrueba.add("InicioPeticion");
-		anotacionesBusquedaPrueba.add("Lookup");
+//		anotacionesBusquedaPrueba.add("numintegrantes");
+//		anotacionesBusquedaPrueba.add("idgrupo");
+//		anotacionesBusquedaPrueba.add("InicioPeticion");
+//		anotacionesBusquedaPrueba.add("Lookup");
 		anotacionesBusquedaPrueba.add("despedida");
 		anotacionesBusquedaPrueba.add("fecha");
-		anotacionesBusquedaPrueba.add("consulta");
-		anotacionesBusquedaPrueba.add("si");
-		anotacionesBusquedaPrueba.add("no");
-		anotacionesBusquedaPrueba.add("meDaIgual");
-		anotacionesBusquedaPrueba.add("novedad");
+//		anotacionesBusquedaPrueba.add("consulta");
+//		anotacionesBusquedaPrueba.add("si");
+//		anotacionesBusquedaPrueba.add("no");
+//		anotacionesBusquedaPrueba.add("meDaIgual");
+//		anotacionesBusquedaPrueba.add("novedad");
 		
+		// añadido Botzzaroni
 		anotacionesBusquedaPrueba.add("masapizza");
 		anotacionesBusquedaPrueba.add("pizzas");
 		anotacionesBusquedaPrueba.add("tamanyopizza");
@@ -494,6 +495,7 @@ public class InterpreteMsgsIRC {
 		anotacionesBusquedaPrueba.add("nombres");
 		anotacionesBusquedaPrueba.add("ingredientes");
 		anotacionesBusquedaPrueba.add("apellidos");
+		
 		
 		
 		// esto habria que pasarlo como parametro

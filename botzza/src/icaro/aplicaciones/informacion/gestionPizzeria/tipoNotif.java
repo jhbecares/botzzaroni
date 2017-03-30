@@ -12,6 +12,7 @@ public class tipoNotif {
 	
 	public static String despedida = "despedida";
 
+	// añadido Botzzaroni
 	public static String nombres = "nombres";
 	public static String apellidos = "apellidos";
 	public static String ingredientes = "ingredientes";

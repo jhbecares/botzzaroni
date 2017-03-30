@@ -27,6 +27,7 @@ ALCIDES
 ALDO
 ALEJANDRA
 ALEJANDRO
+ALEX
 ALFONSO
 ALFREDO
 ALICIA
@@ -107,6 +108,7 @@ BAUDELIA
 BAUDELIO
 BAUTISTA
 BEATO
+BEA
 BEATRIZ
 BEGOÑA
 BELEN
@@ -413,6 +415,7 @@ FRANCIS
 FRANCISCA
 FRANCISCO
 FRANCO
+FRANK
 FRANKLIN
 FRANZ
 FRIDA
@@ -1036,6 +1039,7 @@ VENTURA
 VENUSTIANO
 VERA
 VERENICE
+VERO
 VERONICA
 VERÓNICA
 VICENTE
@@ -1109,6 +1113,8 @@ alcides
 aldo
 alejandra
 alejandro
+alex
+álex
 alfonso
 alfredo
 alicia
@@ -1188,6 +1194,7 @@ basilio
 baudelia
 baudelio
 bautista
+bea
 beato
 beatriz
 begoña
@@ -1495,6 +1502,7 @@ francis
 francisca
 francisco
 franco
+frank
 franklin
 franz
 frida
@@ -1642,8 +1650,11 @@ javiera
 jazmín
 jean
 jeanette
+jen
 jenaro
 jenifer
+jennifer
+jenny
 jeremías
 jerónimo
 jesabel
@@ -2118,6 +2129,7 @@ ventura
 venustiano
 vera
 verenice
+vero
 veronica
 verónica
 vicente
@@ -2191,6 +2203,7 @@ Alcides
 Aldo
 Alejandra
 Alejandro
+Alex
 Alfonso
 Alfredo
 Alicia
@@ -2577,6 +2590,7 @@ Francis
 Francisca
 Francisco
 Franco
+Frank
 Franklin
 Franz
 Frida
@@ -2726,6 +2740,9 @@ Jean
 Jeanette
 Jenaro
 Jenifer
+Jennifer
+Jenny
+Jen
 Jeremías
 Jerónimo
 Jesabel
@@ -3200,6 +3217,7 @@ Ventura
 Venustiano
 Vera
 Verenice
+Vero
 Veronica
 Verónica
 Vicente
