@@ -62,7 +62,7 @@ public class NotificarSinContexto extends TareaSincrona {
 			if (recComunicacionChat != null) {
 			
 				recComunicacionChat.comenzar(identAgenteOrdenante);
-				recComunicacionChat.enviarMensagePrivado(foGrupo.getUsuario(),
+				recComunicacionChat.enviarMensagePrivado(foGrupo.getUsername(),
 						mensajeAenviar);
 			} else {
 				identAgenteOrdenante = this.getAgente().getIdentAgente();

@@ -28,12 +28,12 @@ public class FocoUsuario {
 	/**
 	 * Indice de la cola circular
 	 */
-	public String getUsuario(){
+	public String getUsername(){
 		return username;
 	}
 	
-	public FocoUsuario(String usuario){
-		this.username = usuario;
+	public FocoUsuario(String username){
+		this.username = username;
 		this.focosAnteriores = new Objetivo[TAM_COLA_FOCOS];
 		Arrays.fill(this.focosAnteriores, null);
 		this.indice = 0;

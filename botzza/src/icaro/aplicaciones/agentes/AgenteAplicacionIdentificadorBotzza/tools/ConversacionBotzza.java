@@ -28,6 +28,10 @@ public class ConversacionBotzza {
 		solicitarNombre.add("Todavía no te conocemos, ¿me dices tu nombre?");
 		solicitarNombre.add("Para comenzar, ¿me puedes decir tu nombre?");
 		solicitarNombre.add("Empecemos... ¿me dices tu nombre?");
+		
+		List<String> solicitarApellido = new ArrayList<String>();
+		solicitarApellido.add("Vale. Ahora necesito que me digas tu apellido.");
+		solicitarApellido.add("Vale... ¿Y cuál es tu apellido?");
 
 		List<String> solicitarNombreImperativo = new ArrayList<String>();
 		solicitarNombreImperativo.add("Para continuar, le recuerdo que necesito su nombre.");
@@ -57,7 +61,7 @@ public class ConversacionBotzza {
 		peticionTelefono.add("¿Me puedes indicar tu teléfono móvil? Lo usaremos en caso de que haya algún problema con vuestro pedido.");
 			
 		List<String> noTelefono = new ArrayList<String>(); 
-		noTelefono.add("Lo siento pero para mí eso no es un teléfono, escribídme un teléfono que yo entienda.");
+		noTelefono.add("Lo siento pero para mí eso no es un teléfono, escribidme un teléfono que yo entienda.");
 			
 		List<String> peticionTelefonoImperativo = new ArrayList<String>(); 
 		peticionTelefonoImperativo.add("En serio... necesito tu número de móvil");
@@ -68,6 +72,8 @@ public class ConversacionBotzza {
 
 		List<String> desconocido = new ArrayList<String>();
 		desconocido.add("Perdona, creo que me he perdido...");
+		desconocido.add("No sé muy bien de qué me estás hablando...");
+		desconocido.add("Todavía no me han enseñado a hablar de eso. Quizás en el futuro... :)");
 
 		List<String> tengoTuPizza = new ArrayList<String>();
 		tengoTuPizza.add("Oh, me has dicho una pizza!");
@@ -77,6 +83,14 @@ public class ConversacionBotzza {
 
 		List<String> tengoTuSalsa = new ArrayList<String>();
 		tengoTuMasa.add("Oh, me has dicho una salsa!");
+		
+		List<String> tengoTuNombre = new ArrayList<String>();
+		tengoTuNombre.add("¡Gracias! Apunto tu nombre ;)");
+		tengoTuNombre.add("Vale, usaré ese nombre de ahora en adelante :)");
+		
+		List<String> tengoTuApellido = new ArrayList<String>();
+		tengoTuApellido.add("De acuerdo. Apunto también tu apellido.");
+		tengoTuApellido.add("Gracias. Ya he apuntado tu apellido");
 		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
@@ -98,6 +112,10 @@ public class ConversacionBotzza {
 		conversacion.put("tengoTuPizza", tengoTuPizza);
 		conversacion.put("tengoTuMasa", tengoTuMasa);
 		conversacion.put("tengoTuSalsa", tengoTuSalsa);
+		conversacion.put("tengoTuNombre", tengoTuNombre);
+		conversacion.put("solicitarApellido", solicitarApellido);
+		conversacion.put("tengoTuApellido", tengoTuApellido);
+
 	}
 	
 	
