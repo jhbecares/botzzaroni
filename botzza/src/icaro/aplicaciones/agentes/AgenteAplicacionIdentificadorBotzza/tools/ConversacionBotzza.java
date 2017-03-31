@@ -30,8 +30,12 @@ public class ConversacionBotzza {
 		solicitarNombre.add("Empecemos... ¿me dices tu nombre?");
 		
 		List<String> solicitarApellido = new ArrayList<String>();
-		solicitarApellido.add("Vale. Ahora necesito que me digas tu apellido.");
-		solicitarApellido.add("Vale... ¿Y cuál es tu apellido?");
+		solicitarApellido.add("Ahora necesito que me digas tu apellido.");
+		solicitarApellido.add("¿Y cuál es tu apellido?");
+		
+		List<String> solicitarApellidoImperativo = new ArrayList<String>();
+		solicitarApellidoImperativo.add("En serio, necesito que me digas tu apellido.");
+		solicitarApellidoImperativo.add("No te desvíes del tema... ¿cuál es tu apellido?");
 
 		List<String> solicitarNombreImperativo = new ArrayList<String>();
 		solicitarNombreImperativo.add("Para continuar, le recuerdo que necesito su nombre.");
@@ -76,13 +80,20 @@ public class ConversacionBotzza {
 		desconocido.add("Todavía no me han enseñado a hablar de eso. Quizás en el futuro... :)");
 
 		List<String> tengoTuPizza = new ArrayList<String>();
-		tengoTuPizza.add("Oh, me has dicho una pizza!");
+		tengoTuPizza.add("Ok, tengo tu pizza.");
+		tengoTuPizza.add("De acuerdo, apunto esa pizza.");
+		tengoTuPizza.add("Mmh, ¡esa pizza está deliciosa!");
+
 		
 		List<String> tengoTuMasa = new ArrayList<String>();
-		tengoTuMasa.add("Oh, me has dicho una masa!");
+		tengoTuMasa.add("Apunto esa masa entonces.");
+		tengoTuMasa.add("Oh, ¡es mi masa favorita!");
+		tengoTuMasa.add("¡Mi masa favorita!");
 
 		List<String> tengoTuSalsa = new ArrayList<String>();
-		tengoTuMasa.add("Oh, me has dicho una salsa!");
+		tengoTuSalsa.add("¡Qué salsa más rica! Buena elección :)");
+		tengoTuSalsa.add("¡Esa salsa está muy buena!");
+		tengoTuSalsa.add("Salsa anotada.");
 		
 		List<String> tengoTuNombre = new ArrayList<String>();
 		tengoTuNombre.add("¡Gracias! Apunto tu nombre ;)");
@@ -115,7 +126,9 @@ public class ConversacionBotzza {
 		conversacion.put("tengoTuNombre", tengoTuNombre);
 		conversacion.put("solicitarApellido", solicitarApellido);
 		conversacion.put("tengoTuApellido", tengoTuApellido);
+		conversacion.put("solicitarApellidoImperativo", solicitarApellidoImperativo);
 
+		
 	}
 	
 	

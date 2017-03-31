@@ -22,6 +22,8 @@ public class VocabularioGestionPizzeria {
 //	public static final String IdentAgenteAplicacionDialogoCitas = "AgenteAplicacionDialogoCitas1";
 	//public static final String IdentAgenteIdentificador = "AgenteAplicacionIdentificador1";
 	public static final String IdentAgenteIdentificadorBotzza = "AgenteAplicacionIdentificadorBotzza1";
+	public static final String IdentAgentePizzero = "AgenteAplicacionPizzero1";
+
 
 //	public static final String IdentAgenteAplicacionDialogoQuedadas = "AgenteAplicacionDialogoQuedadas1";
 //	public static final String IdentAgenteAplicacionGestionQuedadas = "AgenteAplicacionGestionQuedadas1";

@@ -20,4 +20,6 @@ public class tipoNotif {
 	public static String tamanyopizza = "tamanyopizza";
 	public static String masapizza = "masapizza";
 	public static String pizzas = "pizzas";
+	
+	public static String pidePizza = "pidePizza";
 }
