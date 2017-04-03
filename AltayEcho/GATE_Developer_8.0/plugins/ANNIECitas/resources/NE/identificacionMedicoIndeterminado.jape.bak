@@ -1,0 +1,36 @@
+/*
+*  identificacionMedicoIndeterminado.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Alberto Gil 
+* identififacionMedicoIndeterminado = {kind = "identificacionMedicoIndeterminado", rule = "identificacionMedicoIndeterminado"}
+*/
+
+Phase:	identificacionMedicoIndeterminado
+Input:  Token SpaceToken Lookup
+Options: control = brill
+
+Rule: identificacionMedicoIndeterminado
+Priority: 100
+(
+  ({Lookup.minorType == "indeterminado"}) // palabras del gazetero
+  ({SpaceToken})?
+  ({Token.kind == "number",Token.string >0,Token.string <13}) // palabras del gazetero
+):identificacionMedicoIndeterminado
+-->
+:identificacionMedicoIndeterminado{
+System.out.println("______________ rule identificacionMedicoIndeterminado ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionMedicoIndeterminadoAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionMedicoIndeterminado.MedicoIndeterminado = {kind = "identificacionMedicoIndeterminado", rule = "identificacionMedicoIndeterminado1"}
