@@ -7,9 +7,9 @@ package icaro.aplicaciones.recursos.interfazChatUsuario.imp;
 
 import icaro.aplicaciones.recursos.comunicacionChat.imp.*;
 import gate.Annotation;
-import icaro.aplicaciones.informacion.gestionQuedadas.InfoConexionUsuario;
-import icaro.aplicaciones.informacion.gestionQuedadas.Notificacion;
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.InfoConexionUsuario;
+import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc;
 import static icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc.VERSION;
 import icaro.aplicaciones.recursos.extractorSemantico.ItfUsoExtractorSemantico;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 public class InterpreteMsgsPanelChat {
     
      private boolean _verbose = true;
-    private String _userNameAgente = VocabularioGestionQuedadas.IdentConexionAgte;
+    private String _userNameAgente = VocabularioGestionPizzeria.IdentConexionAgte;
     private int _maxLineLength = 512;
     private ConexionIrc conectorIrc;
      protected ItfUsoRepositorioInterfaces itfUsoRepositorioInterfaces;
@@ -145,13 +145,13 @@ public class InterpreteMsgsPanelChat {
 			try {
 				if (infoExtraida.size() == 0) {
 					infoAenviar = new Notificacion(sender);
-					infoAenviar.setTipoNotificacion(VocabularioGestionQuedadas.ExtraccionSemanticaNull);
+					infoAenviar.setTipoNotificacion(VocabularioGestionPizzeria.ExtraccionSemanticaNull);
 					mensajeAenviar = new MensajeSimple(infoAenviar, sender,
 							identAgenteGestorDialogo);
 				} else if (infoExtraida.size() == 1) {
 					infoAenviar = new Notificacion(sender);
 					infoAenviar.setMensajeNotificacion((String)infoExtraida.get(0));
-					infoAenviar.setTipoNotificacion(VocabularioGestionQuedadas.ExtraccionSemanticaNull);
+					infoAenviar.setTipoNotificacion(VocabularioGestionPizzeria.ExtraccionSemanticaNull);
 					mensajeAenviar = new MensajeSimple(infoAenviar, sender,
 							identAgenteGestorDialogo);
 				} else {

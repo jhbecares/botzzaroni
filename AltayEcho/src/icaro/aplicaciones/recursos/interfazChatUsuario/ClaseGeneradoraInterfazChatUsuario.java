@@ -1,6 +1,6 @@
 package icaro.aplicaciones.recursos.interfazChatUsuario;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.extractorSemantico.ItfUsoExtractorSemantico;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.aplicaciones.recursos.interfazChatUsuario.imp.InterpreteMsgsPanelChat;
@@ -59,7 +59,7 @@ public class ClaseGeneradoraInterfazChatUsuario extends ImplRecursoSimple implem
   	
   	private void inicializa() throws Exception {
             this.visorChatSimple = new VisualizadorChatSimple();
-            identAgenteAreportar = VocabularioGestionQuedadas.IdentAgenteContexto;
+            identAgenteAreportar = VocabularioGestionPizzeria.IdentAgenteContexto;
             interpreteMsgUsuario = new InterpreteMsgsPanelChat(this.nombredeEsteRecurso,this.identAgenteAreportar);
             visorChatSimple.setInterpreteTextoUsuario(interpreteMsgUsuario);
             trazas.aceptaNuevaTraza(new InfoTraza(nombredeEsteRecurso,

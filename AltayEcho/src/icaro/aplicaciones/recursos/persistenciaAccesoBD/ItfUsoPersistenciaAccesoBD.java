@@ -1,5 +1,6 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD;
 
+import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.infraestructura.patronRecursoSimple.ItfUsoRecursoSimple;
 
 public interface ItfUsoPersistenciaAccesoBD extends ItfUsoRecursoSimple {
@@ -10,4 +11,7 @@ public interface ItfUsoPersistenciaAccesoBD extends ItfUsoRecursoSimple {
 
 	public void insertaUsuario(String usuario, String password)
 			throws Exception;
+
+	// Método a hacer, añadiendo los datos del usuario ya identificado
+	// public void insertaDatosUsuario(Usuario gr);
 }

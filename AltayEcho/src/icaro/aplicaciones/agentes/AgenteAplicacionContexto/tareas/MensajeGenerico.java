@@ -5,7 +5,7 @@
 
 package icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.ItfUsoComunicacionChat;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.CausaTerminacionTarea;
@@ -30,7 +30,7 @@ public class MensajeGenerico extends TareaSincrona {
 			// // Se busca la interfaz del recurso en el repositorio de
 			// interfaces
 			ItfUsoComunicacionChat recComunicacionChat = (ItfUsoComunicacionChat) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ
-					.obtenerInterfazUso(VocabularioGestionQuedadas.IdentRecursoComunicacionChat);
+					.obtenerInterfazUso(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
 			if (recComunicacionChat != null) {
 				recComunicacionChat.comenzar(identAgenteOrdenante);
 				String mensajeAenviar = mensaje;
@@ -42,7 +42,7 @@ public class MensajeGenerico extends TareaSincrona {
 						contextoEjecucionTarea,
 						identAgenteOrdenante,
 						"Error-AlObtener:Interfaz:"
-								+ VocabularioGestionQuedadas.IdentRecursoComunicacionChat,
+								+ VocabularioGestionPizzeria.IdentRecursoComunicacionChat,
 						CausaTerminacionTarea.ERROR);
 			}
 		} catch (Exception e) {
@@ -51,7 +51,7 @@ public class MensajeGenerico extends TareaSincrona {
 					contextoEjecucionTarea,
 					identAgenteOrdenante,
 					"Error-Acceso:Interfaz:"
-							+ VocabularioGestionQuedadas.IdentRecursoComunicacionChat,
+							+ VocabularioGestionPizzeria.IdentRecursoComunicacionChat,
 					CausaTerminacionTarea.ERROR);
 			e.printStackTrace();
 		}

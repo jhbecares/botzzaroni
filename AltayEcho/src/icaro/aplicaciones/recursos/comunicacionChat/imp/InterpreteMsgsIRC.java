@@ -6,9 +6,8 @@
 package icaro.aplicaciones.recursos.comunicacionChat.imp;
 
 import gate.Annotation;
-import icaro.aplicaciones.informacion.gestionQuedadas.InfoConexionUsuario;
-import icaro.aplicaciones.informacion.gestionQuedadas.Notificacion;
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc;
 import static icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc.VERSION;
 import icaro.aplicaciones.recursos.extractorSemantico.ItfUsoExtractorSemantico;
@@ -32,7 +31,7 @@ import java.util.logging.Logger;
 public class InterpreteMsgsIRC {
     
      private boolean _verbose = true;
-    private String _userNameAgente = VocabularioGestionQuedadas.IdentConexionAgte;
+    private String _userNameAgente = VocabularioGestionPizzeria.IdentConexionAgte;
     private String _login = "ConexionIrc";
     private String _version = "ConexionIrc " + VERSION + " Java IRC Bot - www.jibble.org";
     private String _finger = "You ought to be arrested for fingering a bot!";
@@ -45,7 +44,7 @@ public class InterpreteMsgsIRC {
     private InterfazUsoAgente itfAgenteDialogo;
     private ItfUsoExtractorSemantico itfUsoExtractorSem;
     private HashSet anotacionesRelevantes;
-    private InfoConexionUsuario infoConecxInterlocutor;
+    //private InfoConexionUsuario infoConecxInterlocutor;
     
     public InterpreteMsgsIRC (){}
     public InterpreteMsgsIRC(ConexionIrc conexIrc) {
@@ -401,10 +400,12 @@ public class InterpreteMsgsIRC {
         anotacionesBusquedaPrueba.add("Saludo");
         anotacionesBusquedaPrueba.add("Lookup");
     // esto habria que pasarlo como parametro
-        if(infoConecxInterlocutor==null)infoConecxInterlocutor= new InfoConexionUsuario();
+        
+     /*   if(infoConecxInterlocutor==null)infoConecxInterlocutor= new InfoConexionUsuario();
         infoConecxInterlocutor.setuserName(sender);
         infoConecxInterlocutor.sethost(hostname);
-        infoConecxInterlocutor.setlogin(login);
+        infoConecxInterlocutor.setlogin(login);*/
+        
     if(itfUsoExtractorSem !=null){
         try {
             anotacionesRelevantes = itfUsoExtractorSem.extraerAnotaciones(anotacionesBusquedaPrueba, textoUsuario);
@@ -429,7 +430,7 @@ public class InterpreteMsgsIRC {
             try {
                 if (infoExtraida.size()==0){
                     Notificacion infoAenviar = new Notificacion(sender);
-                    infoAenviar.setTipoNotificacion(VocabularioGestionQuedadas.ExtraccionSemanticaNull);
+                    infoAenviar.setTipoNotificacion(VocabularioGestionPizzeria.ExtraccionSemanticaNull);
                     mensajeAenviar = new MensajeSimple((Object)infoAenviar,sender,identAgenteGestorDialogo);
                 }
                 else if (infoExtraida.size()==1){
@@ -1228,7 +1229,7 @@ private ArrayList interpretarAnotaciones(String interlocutor,String contextoInte
              Annotation    annot = (Annotation) annotTypesSal.next();
              String anotType=annot.getType();
              if(anotType.equalsIgnoreCase("saludo")){
-                 anotacionesInterpretadas.add(interpretarAnotacionSaludo(contextoInterpretacion, annot));
+                 //anotacionesInterpretadas.add(interpretarAnotacionSaludo(contextoInterpretacion, annot));
 //                 i++;
              }
 //                 fet = annot.getFeatures();
@@ -1237,7 +1238,7 @@ private ArrayList interpretarAnotaciones(String interlocutor,String contextoInte
             }
      return anotacionesInterpretadas;
 }
-private Notificacion interpretarAnotacionSaludo(String conttextoInterpretacion,Annotation anotacionSaludo){
+/*private Notificacion interpretarAnotacionSaludo(String conttextoInterpretacion,Annotation anotacionSaludo){
 //    if(anotacionSaludo.getType()!="saludo"){
 //        return null;
 //    }
@@ -1250,5 +1251,6 @@ private Notificacion interpretarAnotacionSaludo(String conttextoInterpretacion,A
         notif.setTipoNotificacion(anotacionSaludo.getType());
         notif.setMensajeNotificacion(msgNotif);
         return notif;
-}
+}*/
+
 }

@@ -7,7 +7,7 @@
  */
 package icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.CausaTerminacionTarea;
@@ -39,7 +39,7 @@ public class SolicitarInfoInicial extends TareaSincrona {
                 }
                 if(itfRecChatSimple!=null ){
                     itfRecChatSimple.setIdentAgteAreportar(identAgente);
-                    itfRecChatSimple.mostrarTexto(VocabularioGestionQuedadas.SaludoInicial1);
+                    itfRecChatSimple.mostrarTexto(VocabularioGestionPizzeria.SaludoInicial1);
                     
                 }
                 else {
