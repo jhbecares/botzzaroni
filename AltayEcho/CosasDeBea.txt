@@ -1,0 +1,22 @@
+Cómo hacer que funcione:
+
+- Modificar si hace falta en este .xml la contraseña de root, que yo tengo puesta vacío
+- Arrancar mysql
+- El script de nuestra base de datos está en config/botzzaroni.sql
+- Run con chatters/descripcionAplicacionBotzzaroni
+
+
+Agentes
+
+- AccesoAlta: Agente reactivo (su comportamiento está en automata.xml, no lleva reglas) que tiene acceso a las interfaces de acceso al sistema y alta. Cuando se loguea un usuario o después de darle de alta, manda un mensaje al agente Contexto para que abra la ventana del chat.
+- Contexto: Agente cognitivo (comportamiento por reglas con drools), que recibe el mensaje del agente AccesoAlta y abre la ventana del usuario. 
+De momento solo repite lo que le dice el usuario, pero lo que intentamos es que él reciba los mensajes del usuario ya anotados y hable con los agentes que toquen, que crearán entre todos el pedido del usuario.
+
+Recursos
+
+- PersistenciaAccesoDB: de momento es la única persistencia que tenemos, que crea la BD con el script SQL y es la encargada de hacer las consultas que necesitemos. De momento el AgenteAlta es el único que la usa, pero la usarán muchos (por ejemplo, el identificador cuando tenga ya los datos del usuario).
+- VisualizacionAccesoAlta: Interfaces del usuario, recogen los mensajes, se los mandan al agente AccesoAlta.
+- InterfazChatUsuario: Cutre interfaz que recoge los mensajes del usuario actual y se los manda al agente Contexto.
+- ComunicacionChat: está por si al final usamos la comunicación vía IRC, pero no tiene pinta y es un rollo.
+- ExtractorSemantico: En lo que hay hecho no se usa, pero Jenny lo está usando tal cual para lo que está haciendo ella.
+

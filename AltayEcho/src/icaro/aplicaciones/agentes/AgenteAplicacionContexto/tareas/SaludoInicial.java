@@ -7,7 +7,7 @@
  */
 package icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.ItfUsoComunicacionChat;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -37,7 +37,7 @@ public class SaludoInicial extends TareaSincrona {
 							+ identRecursoComunicacionChat);
 			if (recComunicacionChat != null) {
                 recComunicacionChat.setIdentAgteAreportar(this.identAgente);
-                String mensajeAenviar = VocabularioGestionQuedadas.SaludoInicial1;
+                String mensajeAenviar = VocabularioGestionPizzeria.SaludoInicial1;
                 recComunicacionChat.mostrarTexto(botname + mensajeAenviar);
 			} 
 			else {

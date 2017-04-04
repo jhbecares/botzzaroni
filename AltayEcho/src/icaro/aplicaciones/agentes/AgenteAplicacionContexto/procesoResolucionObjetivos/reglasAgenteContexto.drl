@@ -6,7 +6,7 @@ import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
 import icaro.infraestructura.entidadesBasicas.comunicacion.*
 import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.*;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.*;
+import icaro.aplicaciones.informacion.gestionPizzeria.*;
 import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas.*;
 import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tools.*;
 
@@ -50,22 +50,22 @@ rule "Crear Chat Usuario y mostrarselo"
    when
     obj:CrearChatUsuario(state==Objetivo.SOLVING)
     Focus(foco == obj)
-    notif:Notificacion(tipoNotificacion == VocabularioGestionQuedadas.ResultadoAutenticacion_DatosValidos )
+    notif:Notificacion(tipoNotificacion == VocabularioGestionPizzeria.ResultadoAutenticacion_DatosValidos )
    then
     recursoTrazas.aceptaNuevaTraza(new InfoTraza(agentId,"Se ejecuta la tarea : MostrarChatUsuario",InfoTraza.NivelTraza.debug));
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MostrarChatUsuario.class);
-    tarea.ejecutar(VocabularioGestionQuedadas.IdentRecursoComunicacionChat, notif.getMensajeNotificacion());
+    tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat, notif.getMensajeNotificacion());
     recursoTrazas.aceptaNuevaTraza(new InfoTraza(agentId,"Realizando el objetivo : "+obj.getgoalId()+"  Ejecutando la tarea : "+ tarea.getIdentTarea() ,InfoTraza.NivelTraza.debug));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
 rule "Notificar desconocimiento"
  when
-    notif:Notificacion(tipoNotificacion == VocabularioGestionQuedadas.ExtraccionSemanticaNull )
+    notif:Notificacion(tipoNotificacion == VocabularioGestionPizzeria.ExtraccionSemanticaNull )
  then
   TareaSincrona tarea = gestorTareas.crearTareaSincrona(ContestarUsuario.class);
-    tarea.ejecutar(VocabularioGestionQuedadas.IdentRecursoComunicacionChat, notif.getMensajeNotificacion());
+    tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat, notif.getMensajeNotificacion());
     retract(notif);
-  recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 

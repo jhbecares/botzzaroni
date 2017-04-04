@@ -1,6 +1,6 @@
 package icaro.aplicaciones.recursos.comunicacionChat;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.InterpreteMsgsIRC;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.IrcException;
@@ -43,7 +43,7 @@ public class ClaseGeneradoraComunicacionChat extends ImplRecursoSimple implement
                 url=ConfigInfoComunicacionChat.urlFeeNode;
                 nickname=ConfigInfoComunicacionChat.nicknameConexionAgte;
 //                identAgenteAReportar = VocabularioGestionCitas.IdentAgenteAplicacionDialogoCitas;
-                identExtractorSem = VocabularioGestionQuedadas.IdentRecursoExtractorSemantico;
+                identExtractorSem = VocabularioGestionPizzeria.IdentRecursoExtractorSemantico;
 		try {
 //                        comunicChat = new ComunicacionChatImp(idInstanciaRecurso,url,nickname);
                     
@@ -138,8 +138,8 @@ private void generarErrorCreacionComponente(String textoMensaje){
            }else interpreteMsgIrc.setItfusoRecExtractorSemantico(itfExtractorSem);
            if (itfExtractorSem == null ||itfAgteControlador == null )throw new Exception();
            else{
-               interpreteMsgIrc.setIdentAgenteGestorDialogo(VocabularioGestionQuedadas.IdentAgenteAplicacionDialogoCitas);
-               interpreteMsgIrc.setIdentConexion(VocabularioGestionQuedadas.IdentConexionAgte);
+               //interpreteMsgIrc.setIdentAgenteGestorDialogo(VocabularioGestionPizzeria.IdentAgenteAplicacionDialogoCitas);
+               //interpreteMsgIrc.setIdentConexion(VocabularioGestionPizzeria.IdentConexionAgte);
                comunicChat.setVerbose(true);
                conectar( url, chanel, nickname);
            }

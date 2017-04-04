@@ -4,8 +4,8 @@ package icaro.aplicaciones.agentes.agenteAplicacionAccesoReactivo.comportamiento
 import icaro.aplicaciones.agentes.agenteAplicacionAccesoReactivo.comportamiento.*;
 import icaro.aplicaciones.informacion.dominioClases.aplicacionAcceso.InfoAccesoSinValidar;
 import icaro.aplicaciones.informacion.dominioClases.aplicacionAcceso.InfoAccesoValidada;
-import icaro.aplicaciones.informacion.gestionQuedadas.Notificacion;
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
+import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.ItfUsoPersistenciaAccesoBD;
 import icaro.aplicaciones.recursos.visualizacionAcceso.ItfUsoVisualizadorAcceso;
@@ -212,12 +212,12 @@ public class AccionesSemanticasAgenteAplicacionAccesoAlta extends AccionesSemant
 		
 			/** ENVIAR MENSAJE DESDE ESTE AGENTE AL DE CONTEXTO PARA QUE INICIE EL CHAT CON EL USUARIO **/
 			InterfazUsoAgente itfAgenteDialogo = (InterfazUsoAgente) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz
-					(NombresPredefinidos.ITF_USO+ VocabularioGestionQuedadas.IdentAgenteContexto);; 
-	    	Notificacion infoAenviar = new Notificacion(VocabularioGestionQuedadas.IdentRecursoComunicacionChat);
-			infoAenviar.setTipoNotificacion(VocabularioGestionQuedadas.ResultadoAutenticacion_DatosValidos);
+					(NombresPredefinidos.ITF_USO+ VocabularioGestionPizzeria.IdentAgenteContexto);; 
+	    	Notificacion infoAenviar = new Notificacion(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
+			infoAenviar.setTipoNotificacion(VocabularioGestionPizzeria.ResultadoAutenticacion_DatosValidos);
 			infoAenviar.setMensajeNotificacion(dav.tomaUsuario());
-			MensajeSimple mensajeAenviar = new MensajeSimple(infoAenviar, VocabularioGestionQuedadas.IdentRecursoComunicacionChat, 
-					VocabularioGestionQuedadas.IdentAgenteContexto);
+			MensajeSimple mensajeAenviar = new MensajeSimple(infoAenviar, VocabularioGestionPizzeria.IdentRecursoComunicacionChat, 
+					VocabularioGestionPizzeria.IdentAgenteContexto);
 			itfAgenteDialogo.aceptaMensaje(mensajeAenviar);
 		}
 		catch (Exception ex) {

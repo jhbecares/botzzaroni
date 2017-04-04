@@ -5,9 +5,9 @@
 
 package icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas;
 
-import icaro.aplicaciones.informacion.gestionQuedadas.Grupo;
-import icaro.aplicaciones.informacion.gestionQuedadas.VocabularioGestionQuedadas;
-import icaro.aplicaciones.recursos.persistenciaGrupos.ItfPersistenciaGrupos;
+import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
+import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
+import icaro.aplicaciones.recursos.persistenciaAccesoBD.ItfUsoPersistenciaAccesoBD;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.CausaTerminacionTarea;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
@@ -25,15 +25,15 @@ public class AlmacenarUsuarioIdentificado extends TareaSincrona {
 
 		String identDeEstaTarea = this.getIdentTarea();
 		String identAgenteOrdenante = this.getIdentAgente();
-		Grupo gr = (Grupo) params[0];
+		Usuario gr = (Usuario) params[0];
 		try {
 
 			// // Se busca la interfaz del recurso en el repositorio de
 			// interfaces
-			ItfPersistenciaGrupos persistencia = (ItfPersistenciaGrupos) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ
-					.obtenerInterfazUso(VocabularioGestionQuedadas.IdentRecursoPersistenciaGrupos);
+			ItfUsoPersistenciaAccesoBD persistencia = (ItfUsoPersistenciaAccesoBD) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ
+					.obtenerInterfazUso(VocabularioGestionPizzeria.IdentRecursoPersistencia);
 			//Grupo ngr = persistencia.obtenerGrupo(gr.getId());
-			persistencia.insertarGrupo(gr);
+			// persistencia.insertaDatosUsuario(gr);
 		
 
 		} catch (Exception e) {
@@ -42,7 +42,7 @@ public class AlmacenarUsuarioIdentificado extends TareaSincrona {
 					contextoEjecucionTarea,
 					identAgenteOrdenante,
 					"Error-Acceso:Interfaz:"
-							+ VocabularioGestionQuedadas.IdentRecursoComunicacionChat,
+							+ VocabularioGestionPizzeria.IdentRecursoComunicacionChat,
 					CausaTerminacionTarea.ERROR);
 			e.printStackTrace();
 		}
