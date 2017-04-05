@@ -1,0 +1,17 @@
+
+Phase:	numerico
+Input: Token SpaceToken
+Options: control = appelt
+
+
+
+
+Rule: numerico
+
+(
+ {Token.kind == number}
+):tag
+-->
+:tag.numerico = {rule = "numerico"}
+
+

@@ -1,0 +1,57 @@
+/*
+*  identificacionHora.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Alberto Gil 
+* identificacionHora = {kind = "identificacionHora", rule = "identificacionHora"}
+*/
+
+Phase:	identificacionHora
+Input:  Token SpaceToken Lookup
+Options: control = brill
+
+Rule: identificacionHora
+Priority: 100
+(
+ {Token.string =~ "[12][0-9]", Token.length==2}	
+ ({Token.string == ":"} | {Token.string == "."} | {SpaceToken})
+ {Token.string =~ "[0-5][0-9]", Token.length==2}
+):identificacionHora
+-->
+:identificacionHora{
+System.out.println("______________ rule identificacionHora ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionHoraAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionHora.hora = {kind = "identificacionHora", rule = "identificacionHora"}
+
+
+Rule: identificacionHora2
+Priority: 100
+(
+ {Token.string =~ "[0-9]", Token.length==1}	
+ ({Token.string == ":"} | {Token.string == "."} | {SpaceToken})
+ {Token.string =~ "[0-5][0-9]", Token.length==2}
+):identificacionHora
+-->
+:identificacionHora{
+System.out.println("______________ rule identificacionHora ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionHoraAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionHora.hora = {kind = "identificacionHora", rule = "identificacionHora"}
+
