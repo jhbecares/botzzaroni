@@ -1,9 +1,0 @@
-/log/
-*.log
-
-/grupos
-/quedadas
-/mensajes
-
-/build/
-/dist/
