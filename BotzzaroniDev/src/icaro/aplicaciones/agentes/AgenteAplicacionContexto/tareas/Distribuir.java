@@ -17,7 +17,7 @@ public class Distribuir extends TareaComunicacion {
 		Notificacion notif = (Notificacion) params[0];
 		String idAgente = (String) params[1];
 		try {
-			// this.informaraOtroAgente(new NotificacionQuedada(notif), idAgente);
+			this.informaraOtroAgente(notif, idAgente);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -34,13 +34,13 @@
 					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionContexto"
 					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionContexto.procesoResolucionObjetivos.reglasAgenteContexto.drl"
 					tipo="Cognitivo" />
-				<!--
+				
 				<icaro:DescComportamientoAgente
 					nombreComportamiento="AgenteAplicacionIdentificadorBotzza" rol="AgenteAplicacion"
 					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionIdentificadorBotzza"
 					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionIdentificadorBotzza.procesoResolucionObjetivos.reglasAgenteIdentificador.drl"
 					tipo="Cognitivo" />
-					-->
+				
 			</icaro:DescComportamientoAgentesAplicacion>
 		</icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
@@ -68,9 +68,9 @@
 				<icaro:componentesGestionados>
 				  <icaro:componenteGestionado refId="AgenteAplicacionAccesoAlta1" tipoComponente="AgenteAplicacion"/>
 				  <icaro:componenteGestionado refId="AgenteAplicacionContexto1" tipoComponente="AgenteAplicacion" />
-				 <!--
+				 
 				 <icaro:componenteGestionado refId="AgenteAplicacionIdentificadorBotzza1" tipoComponente="AgenteAplicacion" />
-				 -->
+				 
 				</icaro:componentesGestionados>
 						
 			</icaro:InstanciaGestor>
@@ -98,13 +98,13 @@
 					<icaro:propiedad atributo="" valor="" />
 				</icaro:listaPropiedades>
 			</icaro:Instancia>
-			<!-- 
+			 
 			<icaro:Instancia id="AgenteAplicacionIdentificadorBotzza1" refDescripcion="AgenteAplicacionIdentificadorBotzza">
 				<icaro:listaPropiedades>
 					<icaro:propiedad atributo="" valor="" />
 				</icaro:listaPropiedades>
 			</icaro:Instancia>
-			-->
+			
 		</icaro:AgentesAplicacion>
 	<!--******************************************************************************************************
 	******************   Instancias de Recursos de aplicación								******************
