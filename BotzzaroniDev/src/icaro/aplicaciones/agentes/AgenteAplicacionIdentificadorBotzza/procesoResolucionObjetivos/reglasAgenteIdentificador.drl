@@ -9,7 +9,6 @@ import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.objetivos.
 import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.tareas.*;
 import icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.tools.*;
 import icaro.aplicaciones.informacion.gestionPizzeria.*;
-import icaro.aplicaciones.agentes.AgenteAplicacionIdentificador.tareas.NotificarAlGrupoSinContexto;
 import icaro.aplicaciones.agentes.AgenteAplicacionPizzero.objetivos.*;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -30,7 +29,7 @@ then
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
 end
 
-
+/*
 rule "Saludo Inicial"
 when
 then
@@ -38,6 +37,7 @@ then
      tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
+*/
 
 rule "Saludo inicial cuando el grupo dice algo que no es un saludo"
  when
@@ -255,6 +255,8 @@ rule "Regla de obtencion del apellido"
   	//ob2.setobjectReferenceId(group);
   	//fc.setFoco(ob2);
   	
+  	
+  	/*
   	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
   		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgentePizzero);
   	Notificacion notifPide = new Notificacion(group);
@@ -264,7 +266,7 @@ rule "Regla de obtencion del apellido"
    	MensajeSimple mensaje = new MensajeSimple(notifPide, 
    		VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgentePizzero);
    	iftAgente.aceptaMensaje(mensaje);
-   	
+   	*/   	
    	obGeneral.setSolved(); // FIXME esto hay que cambiarlo de sitio cuando haya más cosas que el apellido
    	update(obGeneral);
    	

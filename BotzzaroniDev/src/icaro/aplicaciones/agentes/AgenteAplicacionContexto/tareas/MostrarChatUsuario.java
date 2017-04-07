@@ -1,6 +1,8 @@
 
 package icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas;
 
+import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.CrearChatUsuario;
+import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.SaludarConocer;
 import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -31,10 +33,10 @@ public class MostrarChatUsuario extends TareaSincrona {
 			if (recComunicacionChat != null) {
                 recComunicacionChat.setIdentAgteAreportar(this.identAgente);
 				recComunicacionChat.mostrarVisualizadorChatUsuario(identAgenteOrdenante, NombresPredefinidos.TIPO_COGNITIVO);
-                String mensajeAenviar = VocabularioGestionPizzeria.SaludoInicial1;
-                recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + " "  + mensajeAenviar);
+                //String mensajeAenviar = VocabularioGestionPizzeria.SaludoInicial1;
+                //recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + " "  + mensajeAenviar);
                 recComunicacionChat.setIdentidadUsuario(nombre);
-
+                this.getEnvioHechos().insertarHecho(new SaludarConocer());
 			} 
 			else {
 				identAgenteOrdenante = this.getAgente().getIdentAgente();

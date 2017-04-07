@@ -42,9 +42,14 @@ public class VocabularioGestionPizzeria {
 	
 	// Agentes
 	public static final String IdentConexionAgte = "Botzza_BOT";
-	public static final String IdentAgenteIdentificadorBotzza = "AgenteAplicacionIdentificadorBotzza1";
-	public static final String IdentAgentePizzero = "AgenteAplicacionPizzero1";
 	public static final String IdentAgenteContexto = "AgenteAplicacionContexto1";
+	public static final String IdentAgenteIdentificadorBotzza = "AgenteAplicacionIdentificadorBotzza1";
+	public static final String IdentAgenteAmigo = "AgenteAplicacionAmigo1";
+	public static final String IdentAgentePizzero = "AgenteAplicacionPizzero1";
+	public static final String IdentAgenteBebida = "AgenteAplicacionBebida1";
+	public static final String IdentAgentePago = "AgenteAplicacionPago1";
+	public static final String IdentAgenteCalendario = "AgenteAplicacionCalendario1";
+
 
 	
 	// Recursos 

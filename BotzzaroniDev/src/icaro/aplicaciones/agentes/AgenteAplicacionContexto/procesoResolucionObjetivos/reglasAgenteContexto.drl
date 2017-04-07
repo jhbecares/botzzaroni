@@ -49,7 +49,7 @@ end
 rule "Crear Chat Usuario y mostrarselo"
    when
     obj:CrearChatUsuario(state==Objetivo.SOLVING)
-    Focus(foco == obj)
+    f:Focus(foco == obj)
     notif:Notificacion(tipoNotificacion == VocabularioGestionPizzeria.ResultadoAutenticacion_DatosValidos )
    then
     recursoTrazas.aceptaNuevaTraza(new InfoTraza(agentId,"Se ejecuta la tarea : MostrarChatUsuario",InfoTraza.NivelTraza.debug));
@@ -57,8 +57,46 @@ rule "Crear Chat Usuario y mostrarselo"
     tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat, notif.getMensajeNotificacion());
     recursoTrazas.aceptaNuevaTraza(new InfoTraza(agentId,"Realizando el objetivo : "+obj.getgoalId()+"  Ejecutando la tarea : "+ tarea.getIdentTarea() ,InfoTraza.NivelTraza.debug));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    retract(notif);
+    obj.setSolved();
+    update(obj);
 end
 
+rule "Regla de focalizacion en objetivo SaludarConocer"
+ when
+ 	objA:CrearChatUsuario(state == Objetivo.SOLVED)
+    f:Focus(foco == objA)
+    obj:SaludarConocer()
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Inicio del proceso de consecucion del  objetivo SaludarConocer"
+  when
+    obj:SaludarConocer(state==Objetivo.PENDING)
+    Focus(foco ==obj)
+  then
+    obj.setSolving();
+    update(obj);
+end
+
+rule "Distribuir mensaje al agente identificador"
+ when
+    obj:SaludarConocer(state==Objetivo.SOLVING)
+    f:Focus(foco == obj)
+    notif:Notificacion()
+  then
+   	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+     Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
+     tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+     retract(notif);
+     update(f);
+     update(obj);
+ end
+
+/*
 rule "Respuesta ante resaludo del grupo conocido"
  when
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.saludo)
@@ -78,4 +116,6 @@ rule "Notificar desconocimiento"
     retract(notif);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
+
+*/
 

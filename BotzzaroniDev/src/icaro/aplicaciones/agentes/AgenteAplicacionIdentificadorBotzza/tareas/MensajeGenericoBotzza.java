@@ -7,6 +7,7 @@ package icaro.aplicaciones.agentes.AgenteAplicacionIdentificadorBotzza.tareas;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.ItfUsoComunicacionChat;
+import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.CausaTerminacionTarea;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
@@ -29,18 +30,18 @@ public class MensajeGenericoBotzza extends TareaSincrona {
 		try {
 			// // Se busca la interfaz del recurso en el repositorio de
 			// interfaces
-			ItfUsoComunicacionChat recComunicacionChat = (ItfUsoComunicacionChat) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ
-					.obtenerInterfazUso(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
+			ItfUsoInterfazChatUsuario recComunicacionChat = (ItfUsoInterfazChatUsuario) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ.obtenerInterfazUso(
+					VocabularioGestionPizzeria.IdentRecursoComunicacionChat); 
 			if (recComunicacionChat != null) {
-				recComunicacionChat.comenzar(identAgenteOrdenante);
-				String mensajeAenviar = mensaje;
-				//recComunicacionChat.enviarMensagePrivado(identInterlocutor, mensajeAenviar);
-			} else {
+                //recComunicacionChat.setIdentAgteAreportar(this.identAgente);
+				recComunicacionChat.mostrarVisualizadorChatUsuario(identAgenteOrdenante, NombresPredefinidos.TIPO_COGNITIVO);
+                recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + " " + mensaje);
+
+			} 
+			else {
 				identAgenteOrdenante = this.getAgente().getIdentAgente();
-				this.generarInformeConCausaTerminacion(
-						identDeEstaTarea,
-						contextoEjecucionTarea,
-						identAgenteOrdenante,
+				this.generarInformeConCausaTerminacion(identDeEstaTarea,
+						contextoEjecucionTarea, identAgenteOrdenante,
 						"Error-AlObtener:Interfaz:"
 								+ VocabularioGestionPizzeria.IdentRecursoComunicacionChat,
 						CausaTerminacionTarea.ERROR);
