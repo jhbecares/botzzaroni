@@ -40,7 +40,11 @@
 					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionIdentificadorBotzza"
 					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionIdentificadorBotzza.procesoResolucionObjetivos.reglasAgenteIdentificador.drl"
 					tipo="Cognitivo" />
-				
+				<icaro:DescComportamientoAgente
+					nombreComportamiento="AgenteAplicacionPizzero" rol="AgenteAplicacion"
+					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionPizzero"
+					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionPizzero.procesoResolucionObjetivos.reglasAgentePizzero.drl"
+					tipo="Cognitivo" />
 			</icaro:DescComportamientoAgentesAplicacion>
 		</icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
@@ -68,8 +72,8 @@
 				<icaro:componentesGestionados>
 				  <icaro:componenteGestionado refId="AgenteAplicacionAccesoAlta1" tipoComponente="AgenteAplicacion"/>
 				  <icaro:componenteGestionado refId="AgenteAplicacionContexto1" tipoComponente="AgenteAplicacion" />
-				 
 				 <icaro:componenteGestionado refId="AgenteAplicacionIdentificadorBotzza1" tipoComponente="AgenteAplicacion" />
+				 <icaro:componenteGestionado refId="AgenteAplicacionPizzero1" tipoComponente="AgenteAplicacion" />
 				 
 				</icaro:componentesGestionados>
 						
@@ -100,6 +104,12 @@
 			</icaro:Instancia>
 			 
 			<icaro:Instancia id="AgenteAplicacionIdentificadorBotzza1" refDescripcion="AgenteAplicacionIdentificadorBotzza">
+				<icaro:listaPropiedades>
+					<icaro:propiedad atributo="" valor="" />
+				</icaro:listaPropiedades>
+			</icaro:Instancia>
+			
+			<icaro:Instancia id="AgenteAplicacionPizzero1" refDescripcion="AgenteAplicacionPizzero">
 				<icaro:listaPropiedades>
 					<icaro:propiedad atributo="" valor="" />
 				</icaro:listaPropiedades>
