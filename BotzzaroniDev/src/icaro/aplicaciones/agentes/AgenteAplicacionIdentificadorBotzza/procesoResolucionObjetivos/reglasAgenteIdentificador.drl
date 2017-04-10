@@ -255,18 +255,6 @@ rule "Regla de obtencion del apellido"
   	//ob2.setobjectReferenceId(group);
   	//fc.setFoco(ob2);
   	
-  	
-  	/*
-  	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
-  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgentePizzero);
-  	Notificacion notifPide = new Notificacion(group);
-  	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
-  	notifPide.setMensajeNotificacion("Pide pizza al usuario ");
-
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgentePizzero);
-   	iftAgente.aceptaMensaje(mensaje);
-   	*/   	
    	obGeneral.setSolved(); // FIXME esto hay que cambiarlo de sitio cuando haya más cosas que el apellido
    	update(obGeneral);
    	
@@ -277,4 +265,19 @@ rule "Regla de obtencion del apellido"
    	retract(notif);
    //	insert(ob2);
 end
+
+rule "Enviar mensaje al agente contexto cuando acaba el agente identificador"
+when
+ 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.SOLVED)
+then
+	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteContexto);
+  	Notificacion notifPide = new Notificacion(agentId);
+  	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
+  	notifPide.setMensajeNotificacion("El agente identificador ha terminado ");
+   	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgenteContexto);
+   	System.out.println(mensaje);
+   	iftAgente.aceptaMensaje(mensaje);
+end
+
 

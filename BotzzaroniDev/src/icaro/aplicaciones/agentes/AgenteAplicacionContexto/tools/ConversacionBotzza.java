@@ -55,12 +55,7 @@ public class ConversacionBotzza {
 		sincontexto.add("No me estarás vacilando, ¿no? Es que no entiendo de que me estás hablando :(");
 		sincontexto.add("Lo siento, pero no os entiendo. Estoy preparado especialmente para pedir pizzas ;(");
 
-		List<String> despedida = new ArrayList<String>(); 
-		despedida.add("Espero que volváis pronto. ¡¡Ciaooo!! ");
-		despedida.add("¡¡Hasta pronto!!");
-		despedida.add("¡¡Adiós!! Espero que os hayáis llevado una buena impresión de mí :)");
-		despedida.add("¡¡Hasta la próxima!! :)");
-
+		
 		List<String> peticionTelefono = new ArrayList<String>(); 
 		peticionTelefono.add("¿Me puedes indicar tu teléfono móvil? Lo usaremos en caso de que haya algún problema con vuestro pedido.");
 			
@@ -74,6 +69,9 @@ public class ConversacionBotzza {
 		List<String> fechaAnterior = new ArrayList<String>(); 
 		fechaAnterior.add("Disculpa, pero la fecha en la que quieres tu pedido es anterior a la fecha actual. Dime una fecha posterior, por favor :)");
 
+		
+		// ---------------------------------------------------------------------------
+		
 		List<String> desconocido = new ArrayList<String>();
 		desconocido.add("Perdona, creo que me he perdido...");
 		desconocido.add("No sé muy bien de qué me estás hablando...");
@@ -102,6 +100,13 @@ public class ConversacionBotzza {
 		List<String> tengoTuApellido = new ArrayList<String>();
 		tengoTuApellido.add("De acuerdo. Apunto también tu apellido.");
 		tengoTuApellido.add("Gracias. Ya he apuntado tu apellido");
+		
+		List<String> despedida = new ArrayList<String>(); 
+		despedida.add("Ya está registrado tu pedido. Estamos encantados de que hayas confiado en nosotros, ¡Hasta otra! ");
+		despedida.add("Tu pedido a Botzzaroni ha llegado a nuestra central. ¡Disfruta de tu pizza y vuelve pronto!");
+		despedida.add("Listo el pedido, intentaremos que esté todo a tu gusto. ¡Hasta pronto!");
+		despedida.add("Eso es todo, pedido listo. Esperamos que vuelvas pronto, estamos encantados de atenderte. ¡Hasta la próxima!");
+
 		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
