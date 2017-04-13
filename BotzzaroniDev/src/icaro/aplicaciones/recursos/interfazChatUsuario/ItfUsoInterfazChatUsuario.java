@@ -18,4 +18,5 @@ public interface ItfUsoInterfazChatUsuario {
   	public void mostrarMensajeAviso(String titulo,String mensaje) throws Exception;
   	public void mostrarMensajeError(String titulo,String mensaje) throws Exception;	
   	public void setIdentidadUsuario(String nombre);
+	public String getIdentUsuario();
 }

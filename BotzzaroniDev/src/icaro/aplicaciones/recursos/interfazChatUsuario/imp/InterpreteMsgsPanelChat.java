@@ -111,6 +111,10 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("nombres");
 			anotacionesBusquedaPrueba.add("ingredientes");
 			anotacionesBusquedaPrueba.add("apellidos");
+			anotacionesBusquedaPrueba.add("apellidos");
+			anotacionesBusquedaPrueba.add("si");
+			anotacionesBusquedaPrueba.add("no");
+
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -343,5 +347,9 @@ public class InterpreteMsgsPanelChat {
 	public void setSender(String nombre) {
 		this.sender = nombre;
 		
+	}
+
+	public String getIdentidadUsuario() {
+		return this.sender;
 	}
 }

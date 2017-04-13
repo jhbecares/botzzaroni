@@ -30,7 +30,6 @@ rule "Regla de solicitar nombre de pizza"
   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
   	Objetivo ob = new ObtenerNombrePizza();
   	ob.setobjectReferenceId(group);  	
-  	System.out.println("El identificador es: " + group);
   	FocoUsuario fgr = new FocoUsuario(group);
   	fgr.setFoco(ob);  	
 

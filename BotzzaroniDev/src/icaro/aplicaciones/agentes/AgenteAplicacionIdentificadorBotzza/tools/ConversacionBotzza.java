@@ -68,8 +68,10 @@ public class ConversacionBotzza {
 		noTelefono.add("Lo siento pero para mí eso no es un teléfono, escribidme un teléfono que yo entienda.");
 			
 		List<String> peticionTelefonoImperativo = new ArrayList<String>(); 
-		peticionTelefonoImperativo.add("En serio... necesito tu número de móvil");
-		peticionTelefonoImperativo.add("Si no me das tu número de móvil no puedo seguir :(");
+		peticionTelefonoImperativo.add("Por favor, necesitamos tu número de teléfono");
+		peticionTelefonoImperativo.add("Si no nos das tu número de teléfono no podemos seguir :(");
+		peticionTelefonoImperativo.add("Si no nos das tu número de teléfono no podemos continuar con tu pedido.");
+
 
 		List<String> fechaAnterior = new ArrayList<String>(); 
 		fechaAnterior.add("Disculpa, pero la fecha en la que quieres tu pedido es anterior a la fecha actual. Dime una fecha posterior, por favor :)");
@@ -103,6 +105,28 @@ public class ConversacionBotzza {
 		tengoTuApellido.add("De acuerdo. Apunto también tu apellido.");
 		tengoTuApellido.add("Gracias. Ya he apuntado tu apellido");
 		
+		List<String> solicitaConfirmarDireccion = new ArrayList<String>();
+		solicitaConfirmarDireccion.add("Tenemos una dirección ya almacenada, ¿Quieres usar la misma dirección?");
+		
+		List<String> direccionConfirmada = new ArrayList<String>();
+		direccionConfirmada.add("Genial, usaremos esa dirección :)");
+		
+		List<String> solicitaCalle = new ArrayList<String>();
+		solicitaCalle.add("Muy bien, dinos el nombre de la calle, por favor.");
+		
+		List<String> solicitarConfirmarDireccionImperativo = new ArrayList<String>();
+		solicitarConfirmarDireccionImperativo.add("Necesitamos si saber si quieres usar esa dirección...");
+		solicitarConfirmarDireccionImperativo.add("Si no nos dices si quieres esa dirección o no sabemos a dónde mandar tus pizzas.");
+
+		List<String> solicitaTelefono = new ArrayList<String>();
+		solicitaTelefono.add("Ahora necesitamos un teléfono para poder ponernos en contacto si es necesario.");
+		solicitaTelefono.add("Muy bien, ahora facilítanos un teléfono de contacto");
+		
+		List<String> tengoTuTelefono = new ArrayList<String>();
+		tengoTuTelefono.add("Apuntamos ese teléfono entonces.");
+		tengoTuTelefono.add("Genial, ya podemos ponernos en contacto contigo.");
+		tengoTuTelefono.add("¡Teléfono listo!");
+
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
 		conversacion.put("saludoInicial", saludoInicialConocido);
@@ -127,7 +151,12 @@ public class ConversacionBotzza {
 		conversacion.put("solicitarApellido", solicitarApellido);
 		conversacion.put("tengoTuApellido", tengoTuApellido);
 		conversacion.put("solicitarApellidoImperativo", solicitarApellidoImperativo);
-
+		conversacion.put("solicitaConfirmarDireccion", solicitaConfirmarDireccion);
+		conversacion.put("solicitaCalle", solicitaCalle);
+		conversacion.put("direccionConfirmada", direccionConfirmada);
+		conversacion.put( "solicitarConfirmarDireccionImperativo",solicitarConfirmarDireccionImperativo);
+		conversacion.put("solicitaTelefono", solicitaTelefono);
+		conversacion.put("tengoTuTelefono", tengoTuTelefono);
 		
 	}
 	
