@@ -111,6 +111,12 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("nombres");
 			anotacionesBusquedaPrueba.add("ingredientes");
 			anotacionesBusquedaPrueba.add("apellidos");
+			anotacionesBusquedaPrueba.add("alergias");
+			anotacionesBusquedaPrueba.add("numero");
+			anotacionesBusquedaPrueba.add("tipoPizzaCasa");
+			anotacionesBusquedaPrueba.add("tipoPizzaPersonalizada");
+			
+			
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -299,6 +305,38 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("pizzas")) {
 				if (!anotaciones_leidas.contains("pizzas"))
 					anotaciones_leidas.add("pizzas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("alergias")) {
+				if (!anotaciones_leidas.contains("alergias"))
+					anotaciones_leidas.add("alergias");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("numero")) {
+				if (!anotaciones_leidas.contains("numero"))
+					anotaciones_leidas.add("numero");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("tipoPizzaCasa")) {
+				if (!anotaciones_leidas.contains("tipoPizzaCasa"))
+					anotaciones_leidas.add("tipoPizzaCasa");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("tipoPizzaPersonalizada")) {
+				if (!anotaciones_leidas.contains("tipoPizzaPersonalizada"))
+					anotaciones_leidas.add("tipoPizzaPersonalizada");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(

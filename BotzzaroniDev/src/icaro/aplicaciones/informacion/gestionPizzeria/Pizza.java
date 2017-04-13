@@ -1,5 +1,6 @@
 package icaro.aplicaciones.informacion.gestionPizzeria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pizza {
@@ -20,13 +21,18 @@ public class Pizza {
 	}
 	
 
-	private MasaPizza masa;
-	private TamanioPizza tamanio;
-	private SalsaPizza salsa;
-	private List<Ingrediente> ingredientes;
-	private boolean personalizada; 
-	private Usuario usuarioCreador; // será un admin general si no la ha creado un usuario
-	private String nombrePizza; // nombre de la pizza
+	public MasaPizza masa;
+	public TamanioPizza tamanio;
+	public SalsaPizza salsa;
+	public List<Ingrediente> ingredientes;
+	public boolean personalizada; 
+	public Usuario usuarioCreador; // será un admin general si no la ha creado un usuario
+	public String nombrePizza; // nombre de la pizza
+	
+	public Pizza(){
+		ingredientes = new ArrayList<Ingrediente>();
+		usuarioCreador = new Usuario();
+	}
 	
 	
 }

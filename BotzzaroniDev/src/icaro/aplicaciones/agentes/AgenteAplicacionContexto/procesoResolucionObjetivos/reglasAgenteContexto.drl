@@ -257,7 +257,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  
  rule "Distribuir mensaje al agente BEBIDA"
  when
-    obj:ObtenerPizza(state==Objetivo.SOLVING)
+    obj:ObtenerBebida(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
     notif:Notificacion()
   then

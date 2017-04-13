@@ -1,5 +1,6 @@
 package icaro.aplicaciones.informacion.gestionPizzeria;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Pedido {
@@ -9,13 +10,19 @@ public class Pedido {
 	}
 	
 	
-	private Usuario usuario;
-	private List<Pizza> pizzas;
+	public Usuario usuario;
+	public List<Pizza> pizzas;
 	private List<Bebida> bebidas ;
 	private MetodoPago metodoPago;
 	private int cambioEfectivo;
 	private Date fechaEntrega;
 	private List<Ingrediente> alergias;
+	public int numeroPizzas;
+	
+	public Pedido(){
+		usuario = new Usuario();
+		pizzas = new ArrayList<Pizza>();
+	}
 	
 	/*
 	 * java.util.Date utilDate = new java.util.Date();
