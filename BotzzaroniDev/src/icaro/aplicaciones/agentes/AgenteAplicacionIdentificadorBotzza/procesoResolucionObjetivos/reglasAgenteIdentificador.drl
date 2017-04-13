@@ -37,7 +37,7 @@ then
      tarea.ejecutar(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
      recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
-*/
+
 
 rule "Saludo inicial cuando el grupo dice algo que no es un saludo"
  when
@@ -106,6 +106,7 @@ rule "Respuesta ante resaludo del grupo conocido"
      retract(notif);
 end
 
+*/
 
 rule "Notificar desconocimiento"
  when
@@ -113,10 +114,10 @@ rule "Notificar desconocimiento"
 	gr:Usuario(username == group)
  then
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-     tarea.ejecutar(group,ConversacionBotzza.msg("desconocido"));
-     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-     gr.actividad();
-     retract(notif);
+    tarea.ejecutar(group,ConversacionBotzza.msg("desconocido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    gr.actividad();
+    retract(notif);
 end
 
 rule "Despedirse"
@@ -135,149 +136,285 @@ end
 
 ////////////////////////////
 
+
+rule "Regla de saludar al usuario en función de si es conocido o no"
+ when
+    notif:Notificacion(tipoNotificacion == tipoNotif.saludar, msgg:mensajeNotificacion)
+ then 
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(SaludoInicial.class);  	
+    tarea.ejecutar();
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+   	Objetivo obGeneral = new ObtenerInfoUsuario();
+   	insert(obGeneral);
+end
+
+rule "Preguntar si quiere usar la misma direccion siendo usuario conocido"
+when
+	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+	obj:ConfirmarDireccion(state == Objetivo.PENDING)
+    f:Focus(foco == obj)
+	user: Usuario()
+then 
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaConfirmarDireccion"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	TareaSincrona tarea2 = gestorTareas.crearTareaSincrona(MostrarDireccion.class);
+   	tarea2.ejecutar(user);
+end
+
+rule "Regla de solicitar confirmar direccion cuando no dice ni que si ni que no"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+	obj:ConfirmarDireccion(state == Objetivo.PENDING)
+    f:Focus(foco == obj)
+	user: Usuario()
+	notif:Notificacion(tipoNotificacion != tipoNotif.si && tipoNotificacion != tipoNotif.no, msgg:mensajeNotificacion )
+ then
+ 
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitarConfirmarDireccionImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+  	 
+   	retract(notif);
+end
+
+rule "Regla obtener confirmar direccion afirmativa para usuario conocido"
+when
+	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+	obj:ConfirmarDireccion(state == Objetivo.PENDING)
+    f:Focus(foco == obj)
+	user: Usuario()
+	notif:Notificacion(tipoNotificacion == tipoNotif.si, msgg:mensajeNotificacion )
+then 
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("direccionConfirmada"));
+	// Actualizo el objetivo general a resuelto y he acabado
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	obG.setSolved();
+   	obj.setSolved();
+   	f.setFoco(obG);
+   	update(f);
+   	update(obj);
+   	update(obG);
+   	retract(notif);
+end
+
+rule "Regla obtener confirmar direccion negativo para usuario conocido"
+when
+	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+	obj:ConfirmarDireccion(state == Objetivo.PENDING)
+	user: Usuario()
+	f:Focus(foco == obj)
+	notif:Notificacion(tipoNotificacion == tipoNotif.no, msgg:mensajeNotificacion )
+then 
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	Objetivo obN = new ObtenerDireccion();
+   	insert(obN);
+   	obj.setSolved();
+   	f.setFoco(obN);
+   	update(f);
+   	update(obj);	
+   	retract(notif);
+end
+
 rule "Regla de solicitar nombre"
  when
- 	obj:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	fc:FocoUsuario(username == group, foco == null)
-   	not (exists (ObtenerNombreUsuario(objectReferenceId == group)))
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerNombreUsuario(state == Objetivo.PENDING)
+ 	user:Usuario()
+ 	f:Focus(foco == obj)
  then
   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
-  	Objetivo ob = new ObtenerNombreUsuario();
-  	ob.setobjectReferenceId(group);
-  	fc.setFoco(ob);
-  	
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarNombre"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitarNombre"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   	update(fc);
-   	insert(ob);
 end
 
 rule "Regla de solicitar nombre cuando se obtiene algo que no es el nombre"
  when
- 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	ob:ObtenerNombreUsuario(state == Objetivo.PENDING, objectReferenceId == group)
- 	fc:FocoUsuario(username == group, foco == ob )
-    notif:Notificacion(identNotificador == group, tipoNotificacion != tipoNotif.nombres, msgg:mensajeNotificacion )
-    gr:Usuario(username == group)
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerNombreUsuario(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.nombres, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
  then
- 	
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarNombreImperativo"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitarNombreImperativo"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   
    	retract(notif);
 end
 
 rule "Regla de obtencion del nombre" 
  when
- 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	ob:ObtenerNombreUsuario(state == Objetivo.PENDING, objectReferenceId == group)
- 	fc:FocoUsuario(username == group, foco == ob )
-    notif:Notificacion(identNotificador == group, tipoNotificacion == tipoNotif.nombres, msgg:mensajeNotificacion )
-    gr:Usuario(username == group)
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	ob:ObtenerNombreUsuario(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.nombres, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == ob)
  then
  	ob.setSolved();
- 	
- 	gr.setNombre(msgg);
- 	gr.actividad();
- 	fc.setFoco(null);
+ 	user.setNombre(msgg);
+ 	user.actividad();
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("tengoTuNombre"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuNombre"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	
    	// creamos objetivo de obtener el apellido, ya que tenemos el nombre!
    	Objetivo ob2 = new ObtenerApellidoUsuario();
-  	ob2.setobjectReferenceId(group);
-  	//fc.setFoco(ob2);
-   	
-   	
    	update(ob);
-   	update(fc);
+   	f.setFoco(ob2);
+   	update(f);
    	retract(notif);
    	insert(ob2);
 end
 
-
 rule "Regla de solicitar apellido"
  when
- 	obj:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	
- 	obj2:ObtenerApellidoUsuario(objectReferenceId == group, state == Objetivo.PENDING)
- 	fc:FocoUsuario(username == group, foco == null)
-    gr:Usuario(username == group)
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerApellidoUsuario(state == Objetivo.PENDING)
+    user:Usuario()
+    f:Focus(foco == obj)
  then
-  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
-  	fc.setFoco(obj2);
-  	
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());	
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarApellido"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitarApellido"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   	update(fc);
-   	update(obj2);
 end
 
 rule "Regla de solicitar el apellido cuando se obtiene algo que no es el apellido" 
  when
- 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	ob:ObtenerApellidoUsuario(state == Objetivo.PENDING, objectReferenceId == group)
- 	fc:FocoUsuario(username == group, foco == ob )
-    notif:Notificacion(identNotificador == group, tipoNotificacion != tipoNotif.apellidos, msgg:mensajeNotificacion )
-    gr:Usuario(username == group)
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerApellidoUsuario(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.apellidos, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
  then
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("solicitarApellidoImperativo"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitarApellidoImperativo"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   	
    	retract(notif);
 end
-
 
 rule "Regla de obtencion del apellido" 
  when
- 	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.PENDING)
- 	ob:ObtenerApellidoUsuario(state == Objetivo.PENDING, objectReferenceId == group)
- 	fc:FocoUsuario(username == group, foco == ob )
-    notif:Notificacion(identNotificador == group, tipoNotificacion == tipoNotif.apellidos, msgg:mensajeNotificacion )
-    gr:Usuario(username == group)
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerApellidoUsuario(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.apellidos, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
  then
- 	ob.setSolved();
- 	
- 	gr.setApellidos(msgg);
- 	gr.actividad();
- 	fc.setFoco(null);
+ 	user.setApellidos(msgg);
+ 	user.actividad();
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBotzza.msg("tengoTuApellido"));
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuApellido"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+  	obj.setSolved();
+  	update(obj);
+   	
+   	Objetivo objN = new ObtenerTelefono();
+   	f.setFoco(objN);
+   	update(f);
+   	insert(objN);   	
+   	retract(notif);
+end
+
+
+rule "Regla de solicitar número de teléfono"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerTelefono(state == Objetivo.PENDING)
+ 	user:Usuario()
+ 	f:Focus(foco == obj)
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaTelefono"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de solicitar teléfono cuando se obtiene algo que no es un teléfono"
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerTelefono(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.telefono, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionTelefonoImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
+
+rule "Regla de obtencion del teléfono" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerTelefono(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.telefono, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	user.setMovil(msgg);
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuTelefono"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	
-   	// creamos objetivo de obtener la masa de pizza, ya que tenemos el apellido!
-   	//Objetivo ob2 = new SolicitarNombrePizza();
-  	//ob2.setobjectReferenceId(group);
-  	//fc.setFoco(ob2);
-  	
-   	obGeneral.setSolved(); // FIXME esto hay que cambiarlo de sitio cuando haya más cosas que el apellido
-   	update(obGeneral);
-   	
-   	
-   	fc.setFoco(null);
-   	update(ob);
-   	update(fc);
+   	Objetivo ob2 = new ObtenerDireccion();
+   	f.setFoco(ob2);
+   	update(f);
+   	update(obj);
    	retract(notif);
-   //	insert(ob2);
+   	insert(ob2);
 end
+
+rule "Regla de solicitar calle"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerDireccion(state == Objetivo.PENDING)
+ 	user:Usuario()
+ 	f:Focus(foco == obj)
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaCalle"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	/*
+   	obGeneral.setSolved(); // FIXME esto hay que cambiarlo de sitio a donde se acabe de recopilar la informacion del usuario
+   	update(obGeneral);
+   	f.setFoco(obGeneral);
+   	update(f);
+   	*/
+end
+
+
+
+
+// ÚLTIMA REGLA, devuelve el control al agente contexto para que dirija la conversación
 
 rule "Enviar mensaje al agente contexto cuando acaba el agente identificador"
 when
  	obGeneral:ObtenerInfoUsuario(group:objectReferenceId, state == Objetivo.SOLVED)
+ 	f:Focus(foco == obGeneral)
+ 	user:Usuario()
 then
+	// TODO: Actualizar los datos del usuario
+
+	// Enviar mensaje de finalizado
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
   		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteContexto);
   	Notificacion notifPide = new Notificacion(agentId);
   	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
   	notifPide.setMensajeNotificacion("El agente identificador ha terminado ");
    	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgenteContexto);
-   	System.out.println(mensaje);
    	iftAgente.aceptaMensaje(mensaje);
+   	f.setFoco(null);
+   	update(f);
 end
 
 

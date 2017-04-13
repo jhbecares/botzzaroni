@@ -33,7 +33,7 @@ end
 
 rule "Regla de focalizacion en objetivo CrearChatUsuario"
  when
-    f:Focus(foco == null )
+    f:Focus(foco == null)
     obj:CrearChatUsuario()
  then
     f.setFoco(obj);
@@ -84,6 +84,16 @@ rule "Inicio del proceso de consecucion del  objetivo SaludarConocer"
   then
     obj.setSolving();
     update(obj);
+    
+    InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+  	Notificacion notifPide = new Notificacion(agentId);
+  	notifPide.setTipoNotificacion(tipoNotif.saludar);
+  	notifPide.setMensajeNotificacion("Turno del agente identificador ");
+
+   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
+   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+   	iftAgente.aceptaMensaje(mensaje);
 end
 
 

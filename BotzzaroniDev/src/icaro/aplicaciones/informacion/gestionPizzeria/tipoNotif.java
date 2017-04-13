@@ -12,6 +12,8 @@ public class tipoNotif {
 	
 	public static String despedida = "despedida";
 
+	public static String si = "si";
+	public static String no = "no";
 	// añadido Botzzaroni
 	public static String nombres = "nombres";
 	public static String apellidos = "apellidos";
@@ -23,6 +25,7 @@ public class tipoNotif {
 	
 	
 	// Notificaciones de los agentes al agente contexto cuando han terminado
+	public static String saludar = "saludar";
 	public static String pidePizza = "pidePizza";
 	public static String pideBebida ="pideBebida";
 	public static String pidePago ="pidePago";
