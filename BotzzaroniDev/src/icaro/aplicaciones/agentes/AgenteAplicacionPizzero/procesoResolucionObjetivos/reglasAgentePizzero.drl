@@ -36,7 +36,7 @@ rule "Regla de solicitar nombre de pizza"
 
   	//obj.setSolved();
   	
-  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);  	
     tarea.ejecutar(group,ConversacionPizzero.msg("solicitarPizza"));
     System.out.println("el agent id...: " + agentId);
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
