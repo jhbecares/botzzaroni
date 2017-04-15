@@ -114,7 +114,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("apellidos");
 			anotacionesBusquedaPrueba.add("si");
 			anotacionesBusquedaPrueba.add("no");
-
+			anotacionesBusquedaPrueba.add("calles");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -303,6 +303,14 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("pizzas")) {
 				if (!anotaciones_leidas.contains("pizzas"))
 					anotaciones_leidas.add("pizzas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("calles")) {
+				if (!anotaciones_leidas.contains("calles"))
+					anotaciones_leidas.add("calles");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
