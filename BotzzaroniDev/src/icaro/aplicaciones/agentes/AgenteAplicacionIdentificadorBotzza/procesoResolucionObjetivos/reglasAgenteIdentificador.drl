@@ -364,7 +364,7 @@ rule "Regla de obtencion del teléfono"
     tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuTelefono"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	
-   	Objetivo ob2 = new ObtenerDireccion();
+   	Objetivo ob2 = new ObtenerCalle();
    	f.setFoco(ob2);
    	update(f);
    	update(obj);
@@ -375,7 +375,7 @@ end
 rule "Regla de solicitar calle"
  when
  	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
- 	obj:ObtenerDireccion(state == Objetivo.PENDING)
+ 	obj:ObtenerCalle(state == Objetivo.PENDING)
  	user:Usuario()
  	f:Focus(foco == obj)
  then
@@ -390,6 +390,48 @@ rule "Regla de solicitar calle"
    	f.setFoco(obGeneral);
    	update(f);
    	*/
+end
+
+rule "Regla de solicitar calle cuando se obtiene algo que no es una calle de la lista"
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerCalle(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.calles, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionCalleImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
+
+rule "Regla de obtencion de la calle" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerCalle(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.calles, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	// TODO TODO TODO
+ 	//user.setDireccion(msgg); // de momento no se como hacer lo de la direccion
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuCalle"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	//Objetivo ob2 = new ObtenerDireccion();
+   	//f.setFoco(ob2);
+   	
+   	Objetivo ob2 = new ObtenerPortal();
+   	f.setFoco(ob2);
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   	insert(ob2);
 end
 
 

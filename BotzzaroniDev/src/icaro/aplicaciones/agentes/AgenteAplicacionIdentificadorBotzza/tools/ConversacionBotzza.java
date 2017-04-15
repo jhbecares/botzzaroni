@@ -110,6 +110,8 @@ public class ConversacionBotzza {
 		
 		List<String> direccionConfirmada = new ArrayList<String>();
 		direccionConfirmada.add("Genial, usaremos esa dirección :)");
+		direccionConfirmada.add("Ok, usaremos la dirección que tenemos guardada ;)");
+
 		
 		List<String> solicitaCalle = new ArrayList<String>();
 		solicitaCalle.add("Muy bien, dinos el nombre de la calle, por favor.");
@@ -126,7 +128,16 @@ public class ConversacionBotzza {
 		tengoTuTelefono.add("Apuntamos ese teléfono entonces.");
 		tengoTuTelefono.add("Genial, ya podemos ponernos en contacto contigo.");
 		tengoTuTelefono.add("¡Teléfono listo!");
+		
+		List<String> peticionCalleImperativo = new ArrayList<String>();
+		peticionCalleImperativo.add("Si no nos dices el nombre de la calle no podemos mandarte el pedido :(");
+		peticionCalleImperativo.add("Necesitamos saber el nombre de la calle donde quieres recibir el pedido...");
 
+
+		List<String> tengoTuCalle = new ArrayList<String>();
+		tengoTuCalle.add("Vale, apunto esa calle.");
+		tengoTuCalle.add("Guardo esa calle entonces.");
+		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
 		conversacion.put("saludoInicial", saludoInicialConocido);
@@ -154,10 +165,12 @@ public class ConversacionBotzza {
 		conversacion.put("solicitaConfirmarDireccion", solicitaConfirmarDireccion);
 		conversacion.put("solicitaCalle", solicitaCalle);
 		conversacion.put("direccionConfirmada", direccionConfirmada);
-		conversacion.put( "solicitarConfirmarDireccionImperativo",solicitarConfirmarDireccionImperativo);
+		conversacion.put("solicitarConfirmarDireccionImperativo",solicitarConfirmarDireccionImperativo);
 		conversacion.put("solicitaTelefono", solicitaTelefono);
 		conversacion.put("tengoTuTelefono", tengoTuTelefono);
 		
+		conversacion.put("peticionCalleImperativo", peticionCalleImperativo);
+		conversacion.put("tengoTuCalle", tengoTuCalle);
 	}
 	
 	
