@@ -16,16 +16,12 @@
 MultiPhase:	TestTheGrammars
 Phases:
 saludo
-peticionCita
-identificacionEdad
-identificacionNumIntegrantes
 identificacionTelefono
 identificacionPortal
-identificacionDNI
-identificacionGrupo
+identificacionPiso
+identificacionPuerta
 identificacionFecha
 identificacionHora
-identificacionMedicoIndeterminado
 numberletter 
 url_pre
 url

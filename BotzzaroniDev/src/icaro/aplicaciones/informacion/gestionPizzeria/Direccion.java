@@ -7,10 +7,17 @@ public class Direccion {
 	private int piso;
 	private String puerta;
 	private int codigoPostal;
+	
+	public static int INTEGER_DEFAULT = -1;
+	public static String STRING_DEFAULT = "";
 	//private String ciudad; // ahora mismo no se usa
 	
 	public Direccion() {
-		
+		this.nombreCalle = STRING_DEFAULT;
+		this.numero = INTEGER_DEFAULT;
+		this.piso = INTEGER_DEFAULT;
+		this.puerta = STRING_DEFAULT;
+		this.codigoPostal = INTEGER_DEFAULT;
 	}
 	
 	public Direccion(String nombreCalle, int numero, int piso, String puerta, int codigoPostal) {

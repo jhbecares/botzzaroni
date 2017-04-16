@@ -462,7 +462,7 @@ rule "Regla de solicitar portal cuando se obtiene algo que no es un numero de po
  when
  	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
  	obj:ObtenerPortal(state == Objetivo.PENDING)
-    notif:Notificacion(tipoNotificacion != tipoNotif.portal, msgg:mensajeNotificacion )
+    notif:Notificacion(tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.piso, msgg:mensajeNotificacion )
     user:Usuario()
     f:Focus(foco == obj)
  then
@@ -476,7 +476,8 @@ rule "Regla de obtencion del portal"
  when
  	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
  	obj:ObtenerPortal(state == Objetivo.PENDING)
-    notif:Notificacion(tipoNotificacion == tipoNotif.portal, msgg:mensajeNotificacion )
+ 	notif:Notificacion(tipoNotificacion == tipoNotif.portal, msgg:mensajeNotificacion )
+    notif2:Notificacion(tipoNotificacion == tipoNotif.piso, msgg2:mensajeNotificacion )
     user:Usuario()
     f:Focus(foco == obj)
  then
@@ -491,17 +492,229 @@ rule "Regla de obtencion del portal"
     tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPortal"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	
-   	//Objetivo ob2 = new ObtenerPortal();
-   	//f.setFoco(ob2);
+   	Objetivo ob2 = new ObtenerPiso();
+   	f.setFoco(ob2);
    	
    	update(f);
    	update(obj);
    	retract(notif);
-   //	insert(ob2);
+   	retract(notif2);
+    insert(ob2);
 end
+
 
 ///////////////////////////////////////////////////////
 /////////////////// FIN PORTAL ////////////////////////
+///////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////
+/////////////////// PISO //////////////////////////////
+///////////////////////////////////////////////////////
+
+rule "Regla de solicitar piso"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPiso(state == Objetivo.PENDING)
+ 	user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT)
+ 	f:Focus(foco == obj)
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaPiso"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de solicitar piso cuando se obtiene algo que no es un piso"
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPiso(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, msgg:mensajeNotificacion )
+    user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT)
+    f:Focus(foco == obj)
+ then
+ 	Direccion direccion = user.getDireccion();
+ 
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionPisoImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
+
+rule "Regla de obtencion del piso" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPiso(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.piso, msgg:mensajeNotificacion )
+    notif2:Notificacion(tipoNotificacion == tipoNotif.portal, msgg2:mensajeNotificacion )
+    user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT)
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+ 	direccion.setPiso(Integer.parseInt(msgg));
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPiso"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+	Objetivo ob2 = new ObtenerPuerta();
+   	f.setFoco(ob2);
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   	retract(notif2);
+    insert(ob2);
+end
+
+
+rule "Regla de obtencion del piso 2" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPiso(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.piso, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+	
+	if (msgg.equalsIgnoreCase("bajo")) msgg = "0";
+	else if (msgg.equalsIgnoreCase("primero")) msgg = "1";
+	else if (msgg.equalsIgnoreCase("segundo")) msgg = "2";
+	else if (msgg.equalsIgnoreCase("tercero")) msgg = "3";
+	else if (msgg.equalsIgnoreCase("cuarto")) msgg = "4";
+	else if (msgg.equalsIgnoreCase("quinto")) msgg = "5";
+	else if (msgg.equalsIgnoreCase("sexto")) msgg = "6";
+	else if (msgg.equalsIgnoreCase("septimo") || msgg.equalsIgnoreCase("séptimo")) msgg = "7";
+	else if (msgg.equalsIgnoreCase("octavo")) msgg = "8";
+	else if (msgg.equalsIgnoreCase("noveno")) msgg = "9";
+	else if (msgg.equalsIgnoreCase("decimo") || msgg.equalsIgnoreCase("décimo")) msgg = "10";
+	else if (msgg.equalsIgnoreCase("undecimo") || msgg.equalsIgnoreCase("undécimo")) msgg = "11";
+	
+ 	direccion.setPiso(Integer.parseInt(msgg));
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPiso"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	Objetivo ob2 = new ObtenerPuerta();
+   	f.setFoco(ob2);
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+    insert(ob2);
+end
+
+///////////////////////////////////////////////////////
+/////////////////// FIN PISO //////////////////////////
+///////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////
+/////////////////// PUERTA ////////////////////////////
+///////////////////////////////////////////////////////
+
+rule "Regla de solicitar puerta"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPuerta(state == Objetivo.PENDING)
+ 	user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT, direccion.piso != Direccion.INTEGER_DEFAULT)
+ 	f:Focus(foco == obj)
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaPuerta"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de solicitar puerta cuando se obtiene algo que no es una puerta"
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPuerta(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta, msgg:mensajeNotificacion )
+    user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT, direccion.piso != Direccion.INTEGER_DEFAULT)
+    f:Focus(foco == obj)
+ then
+ 	Direccion direccion = user.getDireccion();
+ 
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionPuertaImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
+
+rule "Regla de obtencion de la puerta" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPuerta(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.puerta, msgg:mensajeNotificacion )
+    notif2:Notificacion(tipoNotificacion == tipoNotif.piso, msgg2:mensajeNotificacion )
+    notif3:Notificacion(tipoNotificacion == tipoNotif.portal, msgg3:mensajeNotificacion )
+    user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT, direccion.piso != Direccion.INTEGER_DEFAULT)
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+	direccion.setPuerta(msgg);
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPuerta"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   	retract(notif2);
+   	retract(notif3);
+   	
+   	obGeneral.setSolved();
+   	update(obGeneral);
+   	f.setFoco(obGeneral);
+   	update(f);
+end
+
+rule "Regla de obtencion de la puerta 2" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPuerta(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.puerta, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+ 	direccion.setPuerta(msgg);
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPuerta"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   	
+   	obGeneral.setSolved();
+   	update(obGeneral);
+   	f.setFoco(obGeneral);
+   	update(f);
+   	
+end
+
+///////////////////////////////////////////////////////
+/////////////////// FIN PUERTA ////////////////////////
 ///////////////////////////////////////////////////////
 
 
