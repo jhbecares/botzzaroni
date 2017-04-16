@@ -150,6 +150,30 @@ public class ConversacionBotzza {
 		tengoTuPortal.add("¡Portal apuntado!");
 		tengoTuPortal.add("Ya tengo el portal :)");
 		
+		List<String> solicitaPiso = new ArrayList<String>();
+		solicitaPiso.add("¿Y cuál es tu piso?");
+		solicitaPiso.add("¿Y el piso?");
+		
+		List<String> peticionPisoImperativo = new ArrayList<String>();
+		peticionPisoImperativo.add("Necesito saber el piso :(");
+		peticionPisoImperativo.add("Por favor, necesito saber el piso...");
+		
+		List<String> tengoTuPiso = new ArrayList<String>();
+		tengoTuPiso.add("¡Piso apuntado!");
+		tengoTuPiso.add("Vale, ya tengo el piso ;)");
+		
+		List<String> solicitaPuerta = new ArrayList<String>();
+		solicitaPuerta.add("¿Y la puerta?");
+		solicitaPuerta.add("¿Qué puerta?");
+		
+		List<String> peticionPuertaImperativo = new ArrayList<String>();
+		peticionPuertaImperativo.add("Necesito saber la puerta :(");
+		peticionPuertaImperativo.add("Por favor, necesito saber la puerta...");
+		
+		List<String> tengoTuPuerta = new ArrayList<String>();
+		tengoTuPuerta.add("¡Tengo la puerta!");
+		tengoTuPuerta.add("Vale, ya tengo la puerta ;)");
+		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
 		conversacion.put("saludoInicial", saludoInicialConocido);
@@ -186,6 +210,13 @@ public class ConversacionBotzza {
 		conversacion.put("solicitaPortal",  solicitaPortal);
 		conversacion.put("peticionPortalImperativo", peticionPortalImperativo);
 		conversacion.put("tengoTuPortal", tengoTuPortal);
+		conversacion.put("solicitaPiso", solicitaPiso);
+		conversacion.put("peticionPisoImperativo", peticionPisoImperativo);
+		conversacion.put("tengoTuPiso", tengoTuPiso);
+	
+		conversacion.put("solicitaPuerta", solicitaPuerta);
+		conversacion.put("peticionPuertaImperativo", peticionPuertaImperativo);
+		conversacion.put("tengoTuPuerta", tengoTuPuerta);
 	}
 	
 	

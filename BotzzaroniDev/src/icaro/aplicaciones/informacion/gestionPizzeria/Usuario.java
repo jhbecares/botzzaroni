@@ -10,7 +10,6 @@ public class Usuario {
 	private long tiempo;
 
 	public Usuario() {
-		
 		tiempo = System.currentTimeMillis();
 	}
 	

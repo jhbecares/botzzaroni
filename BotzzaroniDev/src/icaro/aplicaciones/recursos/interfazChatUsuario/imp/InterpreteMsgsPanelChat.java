@@ -116,6 +116,8 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("no");
 			anotacionesBusquedaPrueba.add("calles");
 			anotacionesBusquedaPrueba.add("portal");
+			anotacionesBusquedaPrueba.add("piso");
+			anotacionesBusquedaPrueba.add("puerta");
 
 			
 			if (itfUsoExtractorSem != null) {
@@ -320,6 +322,20 @@ public class InterpreteMsgsPanelChat {
 				
 			} else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
 				anotaciones_leidas.add("portal");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+	
+			} else if (anotType.equalsIgnoreCase("piso")&& !anotaciones_leidas.contains("piso")) {
+				anotaciones_leidas.add("piso");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+	
+			} else if (anotType.equalsIgnoreCase("puerta")&& !anotaciones_leidas.contains("puerta")) {
+				anotaciones_leidas.add("puerta");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
