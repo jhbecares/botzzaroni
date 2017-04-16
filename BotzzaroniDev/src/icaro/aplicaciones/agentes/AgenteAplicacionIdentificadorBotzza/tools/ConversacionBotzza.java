@@ -174,6 +174,10 @@ public class ConversacionBotzza {
 		tengoTuPuerta.add("¡Tengo la puerta!");
 		tengoTuPuerta.add("Vale, ya tengo la puerta ;)");
 		
+		List<String> tengoTusDatos = new ArrayList<String>();
+		tengoTusDatos.add("Ya tengo todos tus datos :) Vamos con tu pedido...");
+		tengoTusDatos.add("Ya he guardado tus datos de contacto. Vamos con lo importante ;)");
+		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
 		conversacion.put("saludoInicial", saludoInicialConocido);
@@ -217,6 +221,7 @@ public class ConversacionBotzza {
 		conversacion.put("solicitaPuerta", solicitaPuerta);
 		conversacion.put("peticionPuertaImperativo", peticionPuertaImperativo);
 		conversacion.put("tengoTuPuerta", tengoTuPuerta);
+		conversacion.put("tengoTusDatos", tengoTusDatos);
 	}
 	
 	

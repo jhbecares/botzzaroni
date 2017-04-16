@@ -726,6 +726,12 @@ when
  	f:Focus(foco == obGeneral)
  	user:Usuario()
 then
+
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTusDatos"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+
 	// TODO: Actualizar los datos del usuario
 
 	// Enviar mensaje de finalizado
