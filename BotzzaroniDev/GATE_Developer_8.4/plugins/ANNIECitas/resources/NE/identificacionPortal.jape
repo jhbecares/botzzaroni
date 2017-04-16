@@ -1,0 +1,62 @@
+/*
+*  identificacionPortal.jape
+*
+*  Jenny Hernández
+* identificacionPortal = {kind = "identificacionPortal", rule = "identificacionPortal"}
+*/
+
+Phase:	identificacionPortal
+Input:  Token SpaceToken Lookup
+Options: control = brill
+
+Rule: identificacionPortal
+Priority: 100
+(
+ {Token.string =~ "^[1-9]{1}$", Token.length==1}
+):identificacionPortal
+-->
+:identificacionPortal{
+System.out.println("______________ rule identificacionPortal ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPortalAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPortal.portal = {kind = "identificacionPortal", rule = "identificacionPortal"}
+
+Rule: identificacionPortal2
+Priority: 100
+(
+ {Token.string =~ "^[1-9]{1}[0-9]{1}$", Token.length==2}
+):identificacionPortal
+-->
+:identificacionPortal{
+System.out.println("______________ rule identificacionPortal2 ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPortalAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPortal.portal = {kind = "identificacionPortal", rule = "identificacionPortal2"}
+
+
+Rule: identificacionPortal3
+Priority: 100
+(
+ {Token.string =~ "^[1-9]{1}[0-9]{2}$", Token.length==3}
+):identificacionPortal
+-->
+:identificacionPortal{
+System.out.println("______________ rule identificacionPortal3 ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPortalAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPortal.portal = {kind = "identificacionPortal", rule = "identificacionPortal3"}

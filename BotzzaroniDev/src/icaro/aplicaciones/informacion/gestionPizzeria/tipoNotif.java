@@ -23,7 +23,8 @@ public class tipoNotif {
 	public static String masapizza = "masapizza";
 	public static String pizzas = "pizzas";
 	public static String calles = "calles";
-	
+	public static String portal = "portal";
+
 	
 	// Notificaciones de los agentes al agente contexto cuando han terminado
 	public static String saludar = "saludar";
