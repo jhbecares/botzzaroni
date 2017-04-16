@@ -7,7 +7,12 @@ public class Direccion {
 	private int piso;
 	private String puerta;
 	private int codigoPostal;
-	private String ciudad;
+	//private String ciudad; // ahora mismo no se usa
+	
+	public Direccion() {
+		
+	}
+	
 	public Direccion(String nombreCalle, int numero, int piso, String puerta, int codigoPostal) {
 		super();
 		this.nombreCalle = nombreCalle;
@@ -15,8 +20,8 @@ public class Direccion {
 		this.piso = piso;
 		this.puerta = puerta;
 		this.codigoPostal = codigoPostal;
-		this.ciudad = ciudad;
-	}
+		//this.ciudad = ciudad;
+	}         
 	public String getNombreCalle() {
 		return nombreCalle;
 	}
@@ -47,12 +52,12 @@ public class Direccion {
 	public void setCodigoPostal(int codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
-	public String getCiudad() {
-		return ciudad;
-	}
-	public void setCiudad(String ciudad) {
-		this.ciudad = ciudad;
-	}
+//	public String getCiudad() {
+//		return ciudad;
+//	}
+//	public void setCiudad(String ciudad) {
+//		this.ciudad = ciudad;
+//	}
 	@Override
 	public String toString() {
 		return " calle " + nombreCalle + " número " + numero + ", " + piso + " " + puerta

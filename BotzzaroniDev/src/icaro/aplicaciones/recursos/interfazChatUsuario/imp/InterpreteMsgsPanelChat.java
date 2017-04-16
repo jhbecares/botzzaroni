@@ -115,6 +115,8 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("si");
 			anotacionesBusquedaPrueba.add("no");
 			anotacionesBusquedaPrueba.add("calles");
+			anotacionesBusquedaPrueba.add("portal");
+
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -315,6 +317,14 @@ public class InterpreteMsgsPanelChat {
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
+				
+			} else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
+				anotaciones_leidas.add("portal");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+	
 			}
 		}
 		

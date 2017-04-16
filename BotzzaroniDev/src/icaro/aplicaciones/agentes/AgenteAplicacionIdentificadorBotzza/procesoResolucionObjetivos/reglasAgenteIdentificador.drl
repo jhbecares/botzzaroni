@@ -372,6 +372,9 @@ rule "Regla de obtencion del teléfono"
    	insert(ob2);
 end
 
+///////////////////////////////////////////////////////
+/////////////////////// CALLE /////////////////////////
+///////////////////////////////////////////////////////
 rule "Regla de solicitar calle"
  when
  	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
@@ -415,15 +418,16 @@ rule "Regla de obtencion de la calle"
     f:Focus(foco == obj)
  then
  	obj.setSolved();
- 	// TODO TODO TODO
- 	//user.setDireccion(msgg); // de momento no se como hacer lo de la direccion
+ 	
+	Direccion direccion = new Direccion();
+ 	direccion.setNombreCalle(msgg);
+ 	user.setDireccion(direccion);
+ 	
+ 	
  	user.actividad();
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
     tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuCalle"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   	
-   	//Objetivo ob2 = new ObtenerDireccion();
-   	//f.setFoco(ob2);
    	
    	Objetivo ob2 = new ObtenerPortal();
    	f.setFoco(ob2);
@@ -433,8 +437,72 @@ rule "Regla de obtencion de la calle"
    	retract(notif);
    	insert(ob2);
 end
+///////////////////////////////////////////////////////
+/////////////////// FIN CALLE /////////////////////////
+///////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////
+///////////////////   PORTAL  /////////////////////////
+///////////////////////////////////////////////////////
 
+rule "Regla de solicitar portal"
+ when
+ 	obG:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPortal(state == Objetivo.PENDING)
+ 	user:Usuario()
+ 	f:Focus(foco == obj)
+ then
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("solicitaPortal"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de solicitar portal cuando se obtiene algo que no es un numero de portal"
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPortal(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion != tipoNotif.portal, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionPortalImperativo"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	retract(notif);
+end
+
+rule "Regla de obtencion del portal" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPortal(state == Objetivo.PENDING)
+    notif:Notificacion(tipoNotificacion == tipoNotif.portal, msgg:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+ 	direccion.setNumero(Integer.parseInt(msgg));
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPortal"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	//Objetivo ob2 = new ObtenerPortal();
+   	//f.setFoco(ob2);
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   //	insert(ob2);
+end
+
+///////////////////////////////////////////////////////
+/////////////////// FIN PORTAL ////////////////////////
+///////////////////////////////////////////////////////
 
 
 // ÚLTIMA REGLA, devuelve el control al agente contexto para que dirija la conversación
