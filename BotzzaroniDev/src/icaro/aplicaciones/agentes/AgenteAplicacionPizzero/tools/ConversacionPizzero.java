@@ -93,7 +93,15 @@ public class ConversacionPizzero {
 		
 		List<String> masaIncorrecta = new ArrayList<String>();
 		masaIncorrecta.add("Esa masa no la tenemos, dinos otra por favor.");
-	
+		
+		List<String> obtieneIngredientesAlergias = new ArrayList<String>();
+		obtieneIngredientesAlergias.add("Vale, estos son los ingredientes que tenemos ¿Cuál no puedes tomar? \n" + ingredientes );
+		
+		List<String> obtieneIngredientesAlergiasCorrecto = new ArrayList<String>();
+		obtieneIngredientesAlergiasCorrecto.add("Muy bien, estos ingredientes no aparecerán en tus pizzas.");
+		
+		List<String> obtieneIngredientesAlergiasIncorrecto = new ArrayList<String>();
+		obtieneIngredientesAlergiasIncorrecto.add("El ingrediente que me has dicho no se encuentra en la carta ¿Me lo puedes repetir?");
 		
 		conversacion.put("tengoTuPizza", tengoTuPizza);
 		conversacion.put("tengoTuMasa", tengoTuMasa);
@@ -115,6 +123,9 @@ public class ConversacionPizzero {
 		conversacion.put("tipoTamanioIncorrecto", tipoTamanioIncorrecto);
 		conversacion.put("masaIncorrecta", masaIncorrecta);
 		conversacion.put("obtenerNumeroPizzasIncorrecto", obtenerNumeroPizzasIncorrecto);
+		conversacion.put("obtieneIngredientesAlergias", obtieneIngredientesAlergias);
+		conversacion.put("obtieneIngredientesAlergiasCorrecto", obtieneIngredientesAlergiasCorrecto);
+		conversacion.put("obtieneIngredientesAlergiasIncorrecto", obtieneIngredientesAlergiasIncorrecto);
 		
 	}
 	

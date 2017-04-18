@@ -29,9 +29,11 @@ public class Pizza {
 	public Usuario usuarioCreador; // será un admin general si no la ha creado un usuario
 	public String nombrePizza; // nombre de la pizza
 	
+	public static String String_Default="";
 	public Pizza(){
 		ingredientes = new ArrayList<Ingrediente>();
 		usuarioCreador = new Usuario();
+		salsa.salsa = String_Default;
 	}
 	
 	
