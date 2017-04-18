@@ -12,6 +12,7 @@ package icaro.aplicaciones.recursos.interfazChatUsuario.imp;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 import javax.swing.JScrollPane;
 
 import java.awt.Color;
@@ -26,6 +27,8 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	JPanel p=new JPanel();
 	JTextArea dialog=new JTextArea(20,50);
 	JTextArea input=new JTextArea(1,50);
+	DefaultCaret c = (DefaultCaret) dialog.getCaret();
+	
 	JScrollPane scroll=new JScrollPane(
                 dialog,
 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -62,6 +65,7 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		dialog.setEditable(false);
 		input.addKeyListener(this);
+		c.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	
 		p.add(scroll);
 		p.add(input);

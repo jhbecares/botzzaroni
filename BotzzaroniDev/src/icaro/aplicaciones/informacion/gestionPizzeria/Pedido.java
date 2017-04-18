@@ -16,8 +16,10 @@ public class Pedido {
 	private MetodoPago metodoPago;
 	private int cambioEfectivo;
 	private Date fechaEntrega;
+	public boolean tieneAlergia;
 	private List<Ingrediente> alergias;
 	public int numeroPizzas;
+	public int numeroTotalPizzas;
 	
 	public Pedido(){
 		usuario = new Usuario();

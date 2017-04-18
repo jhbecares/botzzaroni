@@ -11,6 +11,9 @@ public class tipoNotif {
 	public static String hora = "hora";
 	
 	public static String despedida = "despedida";
+	
+	public static String si = "si";
+	public static String no = "no";
 
 	// añadido Botzzaroni
 	public static String nombres = "nombres";
@@ -20,7 +23,6 @@ public class tipoNotif {
 	public static String tamanyopizza = "tamanyopizza";
 	public static String masapizza = "masapizza";
 	public static String pizzas = "pizzas";
-	public static String alergias = "alergias";
 	public static String numero = "numero";
 	public static String tipoPizzaCasa = "tipoPizzaCasa";
 	public static String tipoPizzaPersonalizada = "tipoPizzaPersonalizada";
