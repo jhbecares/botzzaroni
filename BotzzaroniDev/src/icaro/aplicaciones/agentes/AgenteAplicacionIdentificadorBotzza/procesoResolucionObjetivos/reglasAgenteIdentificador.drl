@@ -613,6 +613,38 @@ rule "Regla de obtencion del piso 2"
     insert(ob2);
 end
 
+rule "Regla de obtencion del piso 3"
+	when
+		obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+		obj:ObtenerPiso(state == Objetivo.PENDING)
+		notif:Notificacion(tipoNotificacion == tipoNotif.piso, msgg:mensajeNotificacion )
+		notif2:Notificacion(tipoNotificacion == tipoNotif.portal, msgg2:mensajeNotificacion )
+		notif3:Notificacion(tipoNotificacion == tipoNotif.puerta, msgg3:mensajeNotificacion )
+		user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT)
+		f:Focus(foco == obj)
+	then
+		obj.setSolved();
+		
+		Direccion direccion = user.getDireccion();
+		direccion.setPiso(Integer.parseInt(msgg));
+		user.setDireccion(direccion);
+		
+		user.actividad();
+		TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+		tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPiso"));
+		recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+		
+		Objetivo ob2 = new ObtenerPuerta();
+		f.setFoco(ob2);
+		
+		update(f);
+		update(obj);
+		retract(notif);
+		retract(notif2);
+		retract(notif3);
+		insert(ob2);
+end
+
 ///////////////////////////////////////////////////////
 /////////////////// FIN PISO //////////////////////////
 ///////////////////////////////////////////////////////
