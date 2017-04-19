@@ -1,0 +1,65 @@
+/*
+*  identificacionPiso.jape
+*
+*  Jenny Hernández
+* identificacionPiso = {kind = "identificacionPiso", rule = "identificacionPiso"}
+*/
+
+Phase:	identificacionPiso
+Input:  Token SpaceToken Lookup
+Options: control = brill
+
+Rule: identificacionPiso
+Priority: 100
+(
+ {Token.string =~ "^[1-9]{1}$", Token.length==1}
+):identificacionPiso
+-->
+:identificacionPiso{
+System.out.println("______________ rule identificacionPiso ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPisoAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPiso.piso = {kind = "identificacionPiso", rule = "identificacionPiso"}
+
+Rule: identificacionPiso2
+Priority: 100
+(
+ {Token.string =~ "^[1-9]{1}[0-9]{1}$", Token.length==2}
+):identificacionPiso
+-->
+:identificacionPiso{
+System.out.println("______________ rule identificacionPiso2 ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPisoAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPiso.piso = {kind = "identificacionPiso", rule = "identificacionPiso2"}
+
+
+Rule: identificacionPiso3
+Priority: 100
+(
+ {Token.string =~ "bajo|primero|segundo|tercero|cuarto|quinto|sexto|septimo|séptimo|octavo|noveno|decimo|décimo|undecimo|undécimo"}
+):identificacionPiso
+-->
+:identificacionPiso{
+System.out.println("______________ rule identificacionPiso3 ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPisoAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+
+
+
+System.out.println(str);
+}
+},
+:identificacionPiso.piso = {kind = "identificacionPiso", rule = "identificacionPiso3"}

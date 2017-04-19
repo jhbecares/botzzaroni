@@ -1,5 +1,7 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD.imp;
 
+import icaro.aplicaciones.informacion.gestionPizzeria.Direccion;
+import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.imp.util.ScriptRunner;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.descEntidadesOrganizacion.DescInstanciaRecursoAplicacion;
@@ -349,6 +351,43 @@ public class PersistenciaAccesoImp {
 			desconectar();
 		}
 
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+
+	public Usuario obtenerDatosUsuario(String usuario) throws ErrorEnRecursoException {
+		Usuario user = null;
+		try {
+			conectar();
+			// crearQuery();
+			
+			query = conn.createStatement();
+			resultado = query.executeQuery("SELECT * FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".usuario U where U.alias = '" + usuario+ "'");
+			if (resultado.next()) {
+
+		        String nombre = resultado.getString("nombre");
+		        String calle = resultado.getString("calle");
+				int numero  = resultado.getInt("numero");
+		        int piso = resultado.getInt("piso");
+		        String puerta = resultado.getString("puerta");
+		        int codigoPostal = resultado.getInt("codPostal");
+		        int movil = resultado.getInt("movil");
+
+				user = new Usuario();
+				user.setUsername(usuario);
+				user.setNombre(nombre);
+				//user.setApellidos(apellidos);
+				user.setMovil(String.valueOf(movil));
+				Direccion direccion = new Direccion(calle,  numero, piso, puerta, codigoPostal);
+				user.setDireccion(direccion);
+			}
+			resultado.close();
+			desconectar();
+			return user;
+		}
 		catch (Exception e) {
 			throw new ErrorEnRecursoException(e.getMessage());
 		}
