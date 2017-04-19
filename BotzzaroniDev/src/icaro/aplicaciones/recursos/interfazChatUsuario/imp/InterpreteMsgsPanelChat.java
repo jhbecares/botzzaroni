@@ -312,15 +312,18 @@ public class InterpreteMsgsPanelChat {
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
+			}else if (anotType.equalsIgnoreCase("calles")) {
+				if (!anotaciones_leidas.contains("calles"))
+					anotaciones_leidas.add("calles");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+				
 			}
-
 			else if (anotType.equalsIgnoreCase("numero")) {
 				if (!anotaciones_leidas.contains("numero"))
 					anotaciones_leidas.add("numero");
-
-			else if (anotType.equalsIgnoreCase("calles")) {
-				if (!anotaciones_leidas.contains("calles"))
-					anotaciones_leidas.add("calles");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
@@ -329,8 +332,21 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("tipoPizzaCasa")) {
 				if (!anotaciones_leidas.contains("tipoPizzaCasa"))
 					anotaciones_leidas.add("tipoPizzaCasa");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
 				
-			} else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
+			}
+			else if (anotType.equalsIgnoreCase("tipoPizzaPersonalizada")) {
+				if (!anotaciones_leidas.contains("tipoPizzaPersonalizada"))
+					anotaciones_leidas.add("tipoPizzaPersonalizada");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
 				anotaciones_leidas.add("portal");
 				tienePeticion = true;
 				anotacionesInterpretadas
@@ -355,8 +371,8 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-		}
-		}
+			
+	}
 		
 		return anotacionesInterpretadas;
 	}

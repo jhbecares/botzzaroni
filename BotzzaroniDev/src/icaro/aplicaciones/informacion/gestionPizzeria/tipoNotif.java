@@ -11,9 +11,8 @@ public class tipoNotif {
 	public static String hora = "hora";
 	
 	public static String despedida = "despedida";
-	
-	static String si = "si";
 	public static String no = "no";
+	public static String si = "si";
 	// añadido Botzzaroni
 	public static String nombres = "nombres";
 	public static String apellidos = "apellidos";
