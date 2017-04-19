@@ -1,0 +1,27 @@
+/*
+*  identificacionPuerta.jape
+*
+*  Jenny Hernández
+* identificacionPuerta = {kind = "identificacionPuerta", rule = "identificacionPuerta"}
+*/
+
+Phase:	identificacionPuerta
+Input:  Token SpaceToken Lookup
+Options: control = brill
+
+Rule: identificacionPuerta
+Priority: 100
+(
+ {Token.string =~ "^[a-zA-Z1-9]{1}$", Token.length==1}
+):identificacionPuerta
+-->
+:identificacionPuerta{
+System.out.println("______________ rule identificacionPuerta ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : identificacionPuertaAnnots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+:identificacionPuerta.puerta = {kind = "identificacionPuerta", rule = "identificacionPuerta"}

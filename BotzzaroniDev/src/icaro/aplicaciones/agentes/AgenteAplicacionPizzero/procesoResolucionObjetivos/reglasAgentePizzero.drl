@@ -159,6 +159,7 @@ rule "Regla de obtener numero de pizzas"
  	f: FocoUsuario(foco == ob) 
  	p: Pedido()
  then 
+
   	ob.setSolved();
  	Objetivo ob1 = new ObtenerTipoPizza();
  	ob1.setobjectReferenceId(group);
@@ -202,6 +203,23 @@ rule "Regla de obtener numero de pizzas"
    	update(f);
    	update(ob);
    	insert(ob1);
+
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTARA LA REGLA: " + drools.getRule().getName());
+  	Objetivo ob = new ObtenerNombrePizza();
+  	ob.setobjectReferenceId(group);  	
+  	FocoUsuario fgr = new FocoUsuario(group);
+  	fgr.setFoco(ob);  	
+
+  	//obj.setSolved();
+  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);  	
+    tarea.ejecutar(group,ConversacionPizzero.msg("solicitarPizza"));
+    System.out.println("el agent id...: " + agentId);
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	//update(obj);
+   	insert(fgr);
+   	insert(ob);
    	retract(notif);
 end
 
