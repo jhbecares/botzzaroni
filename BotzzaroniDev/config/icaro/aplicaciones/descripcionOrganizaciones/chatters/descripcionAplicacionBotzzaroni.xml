@@ -124,7 +124,7 @@
 				<icaro:listaPropiedades>
 					<icaro:propiedad atributo="MYSQL_NAME_BD" valor="botzzaroni" />
                                         <icaro:propiedad atributo="MYSQL_USER" valor="root" />
-					<icaro:propiedad atributo="MYSQL_PASSWORD" valor="root" />
+					<icaro:propiedad atributo="MYSQL_PASSWORD" valor="" />
 					<icaro:propiedad atributo="MYSQL_SCRIPT_ITEMS" valor="config/botzzaroni.sql" />
 					<icaro:propiedad atributo="MYSQL_URL" valor="jdbc:mysql://localhost:3306/" />
 				</icaro:listaPropiedades>

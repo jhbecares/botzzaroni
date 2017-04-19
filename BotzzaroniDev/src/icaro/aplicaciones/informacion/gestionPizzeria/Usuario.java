@@ -10,7 +10,6 @@ public class Usuario {
 	private long tiempo;
 
 	public Usuario() {
-		
 		tiempo = System.currentTimeMillis();
 	}
 	
@@ -53,5 +52,13 @@ public class Usuario {
 		long tim = ((System.currentTimeMillis() - tiempo) / 1000) / 60;
 		return tim >= i;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [username=" + username + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion="
+				+ direccion + ", movil=" + movil + ", tiempo=" + tiempo + "]";
+	}
+	
+	
 	
 }

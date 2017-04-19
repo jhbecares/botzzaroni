@@ -120,4 +120,13 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 		}
 	}
 
+	@Override
+	public Usuario obtenerUsuario(String usuario) throws ErrorEnRecursoException {
+			trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+					"Obteniendo datos de usuario " + usuario,
+					InfoTraza.NivelTraza.debug));
+			return accesoBD.obtenerDatosUsuario(usuario);
+
+	}
+
 }

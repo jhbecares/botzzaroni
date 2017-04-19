@@ -167,5 +167,10 @@ public class ClaseGeneradoraInterfazChatUsuario extends ImplRecursoSimple implem
 		this.interpreteMsgUsuario.setSender(nombre);
 	}
 
+	@Override
+	public String getIdentUsuario() {
+		return this.interpreteMsgUsuario.getIdentidadUsuario();
+	}
+
     
 }
