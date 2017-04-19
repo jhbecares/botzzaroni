@@ -45,6 +45,16 @@
 					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionPizzero"
 					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionPizzero.procesoResolucionObjetivos.reglasAgentePizzero.drl"
 					tipo="Cognitivo" />
+				<icaro:DescComportamientoAgente
+					nombreComportamiento="AgenteAplicacionBebida" rol="AgenteAplicacion"
+					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionBebida"
+					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionBebida.procesoResolucionObjetivos.reglasAgenteBebida.drl"
+					tipo="Cognitivo" />
+				<icaro:DescComportamientoAgente
+					nombreComportamiento="AgenteAplicacionPago" rol="AgenteAplicacion"
+					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionPago"
+					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionPago.procesoResolucionObjetivos.reglasAgentePago.drl"
+					tipo="Cognitivo" />
 			</icaro:DescComportamientoAgentesAplicacion>
 		</icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
@@ -74,7 +84,8 @@
 				  <icaro:componenteGestionado refId="AgenteAplicacionContexto1" tipoComponente="AgenteAplicacion" />
 				 <icaro:componenteGestionado refId="AgenteAplicacionIdentificadorBotzza1" tipoComponente="AgenteAplicacion" />
 				 <icaro:componenteGestionado refId="AgenteAplicacionPizzero1" tipoComponente="AgenteAplicacion" />
-				 
+				 <icaro:componenteGestionado refId="AgenteAplicacionBebida1" tipoComponente="AgenteAplicacion" />
+				 <icaro:componenteGestionado refId="AgenteAplicacionPago1" tipoComponente="AgenteAplicacion" />
 				</icaro:componentesGestionados>
 						
 			</icaro:InstanciaGestor>
@@ -115,6 +126,18 @@
 				</icaro:listaPropiedades>
 			</icaro:Instancia>
 			
+			<icaro:Instancia id="AgenteAplicacionBebida1" refDescripcion="AgenteAplicacionBebida">
+				<icaro:listaPropiedades>
+					<icaro:propiedad atributo="" valor="" />
+				</icaro:listaPropiedades>
+			</icaro:Instancia>
+			
+			<icaro:Instancia id="AgenteAplicacionPago1" refDescripcion="AgenteAplicacionPago">
+				<icaro:listaPropiedades>
+					<icaro:propiedad atributo="" valor="" />
+				</icaro:listaPropiedades>
+			</icaro:Instancia>
+			
 		</icaro:AgentesAplicacion>
 	<!--******************************************************************************************************
 	******************   Instancias de Recursos de aplicación								******************
@@ -124,7 +147,7 @@
 				<icaro:listaPropiedades>
 					<icaro:propiedad atributo="MYSQL_NAME_BD" valor="botzzaroni" />
                                         <icaro:propiedad atributo="MYSQL_USER" valor="root" />
-					<icaro:propiedad atributo="MYSQL_PASSWORD" valor="root" />
+					<icaro:propiedad atributo="MYSQL_PASSWORD" valor="" />
 					<icaro:propiedad atributo="MYSQL_SCRIPT_ITEMS" valor="config/botzzaroni.sql" />
 					<icaro:propiedad atributo="MYSQL_URL" valor="jdbc:mysql://localhost:3306/" />
 				</icaro:listaPropiedades>

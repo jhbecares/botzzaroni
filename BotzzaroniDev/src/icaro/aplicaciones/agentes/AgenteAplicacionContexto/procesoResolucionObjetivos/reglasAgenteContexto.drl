@@ -97,16 +97,16 @@ when
 	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, tipoNotificacion == tipoNotif.pidePizza)
 then 
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
-  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgentePizzero);
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteBebida);
   	Notificacion notifPide = new Notificacion(agentId);
-  	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
-  	notifPide.setMensajeNotificacion("Turno del agente pizzero ");
+  	notifPide.setTipoNotificacion(tipoNotif.pideBebida);
+  	notifPide.setMensajeNotificacion("Turno del agente bebida ");
 
    	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
+   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteBebida);
    	iftAgente.aceptaMensaje(mensaje);
    	
-   	Objetivo ob = new ObtenerPizza();
+   	Objetivo ob = new ObtenerBebida();
  	ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
@@ -257,7 +257,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  
  rule "Distribuir mensaje al agente BEBIDA"
  when
-    obj:ObtenerBebida(state==Objetivo.SOLVING)
+    obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
     notif:Notificacion()
   then

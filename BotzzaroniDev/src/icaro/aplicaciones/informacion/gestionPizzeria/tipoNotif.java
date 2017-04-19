@@ -20,17 +20,17 @@ public class tipoNotif {
 	public static String tamanyopizza = "tamanyopizza";
 	public static String masapizza = "masapizza";
 	public static String pizzas = "pizzas";
-	public static String alergias = "alergias";
-	public static String numero = "numero";
-	public static String tipoPizzaCasa = "tipoPizzaCasa";
-	public static String tipoPizzaPersonalizada = "tipoPizzaPersonalizada";
-	
-	
+	public static String pagoTarjeta = "pagoTarjeta";
+	public static String pagoEfectivo = "pagoEfectivo";
+	public static String numero ="numero";
+	public static String bebidas ="bebidas";
+
 	// Notificaciones de los agentes al agente contexto cuando han terminado
-	public static String pideAlergia = "pideAlergia";
 	public static String pidePizza = "pidePizza";
 	public static String pideBebida ="pideBebida";
 	public static String pidePago ="pidePago";
 	public static String pideCalendario ="pideCalendario";
 
+	public static String si ="si";
+	public static String no ="no";
 }

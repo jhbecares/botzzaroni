@@ -28,7 +28,7 @@ salsas.lst::salsas:spanish:salsas
 tamanyopizza.lst::tamanyopizza:spanish:tamanyopizza
 masapizza.lst::masapizza:spanish:masapizza
 pizzas.lst::pizzas:spanish:pizzas
-alergias.lst::alergias:spanish:alergias
+pagoEfectivo.lst::pagoEfectivo:spanish:pagoEfectivo
+pagoTarjeta.lst::pagoTarjeta:spanish:pagoTarjeta
 numero.lst::numero:spanish:numero
-tipoPizzaCasa.lst::tipoPizzaCasa:spanish:tipoPizzaCasa
-tipoPizzaPersonalizada.lst::tipoPizzaPersonalizada:spanish:tipoPizzaPersonalizada
+bebidas.lst::bebidas:spanish:bebidas
