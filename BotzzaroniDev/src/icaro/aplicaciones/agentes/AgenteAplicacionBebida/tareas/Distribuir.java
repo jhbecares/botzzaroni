@@ -1,4 +1,4 @@
-package icaro.aplicaciones.agentes.AgenteAplicacionPizzero.tareas;
+package icaro.aplicaciones.agentes.AgenteAplicacionBebida.tareas;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaComunicacion;
@@ -17,7 +17,7 @@ public class Distribuir extends TareaComunicacion {
 		Notificacion notif = (Notificacion) params[0];
 		String idAgente = (String) params[1];
 		try {
-			// this.informaraOtroAgente(new NotificacionQuedada(notif), idAgente);
+			this.informaraOtroAgente(notif, idAgente);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

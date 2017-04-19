@@ -1,0 +1,276 @@
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
+import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
+import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
+import icaro.infraestructura.entidadesBasicas.comunicacion.*
+import icaro.aplicaciones.agentes.AgenteAplicacionPago.objetivos.*;
+
+import icaro.aplicaciones.informacion.gestionPizzeria.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionPago.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionPago.tools.*;
+
+import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
+import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
+import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
+
+import icaro.aplicaciones.informacion.gestionPizzeria.Pedido.MetodoPago;
+
+global ItfGestorTareas gestorTareas;
+global ItfUsoRecursoTrazas recursoTrazas;
+global String agentId;
+
+
+// "usuario" es el nombre del usuario del chat.
+
+
+rule "Creacion de los objetivos iniciales"
+when 
+then 
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarInfoWorkMem.class);
+    tarea.ejecutar();
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Mostrar resumen del pedido" 
+ when
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pidePago)
+ then
+ 	Pedido pedido = new Pedido();
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+ 	tarea.ejecutar(identInterlc, pedido.mostrarResumen());
+ 	tarea.ejecutar(identInterlc,ConversacionPago.msg("confirmacionPedido"));
+ 	
+    Objetivo obGeneral = new ObtenerPago();
+    obGeneral.setobjectReferenceId(identInterlc);
+    insert(obGeneral);
+    
+    Objetivo ob = new AceptarPedido();
+  	ob.setobjectReferenceId(identInterlc);
+  	insert(ob); 
+  	
+  	FocoUsuario fc = new FocoUsuario(identInterlc);
+  	fc.setFoco(ob);	
+  	insert(fc);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+	insert(pedido);
+   	retract(notif);
+end
+
+rule "Acepta el pedido" 
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+ 	ob:AceptarPedido(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.si)
+ then   
+ 	ob.setSolved();
+ 	update(ob);
+      
+    Objetivo ob1 = new ObtenerMetodoPago();
+  	ob1.setobjectReferenceId(group);
+  	insert(ob1); 
+  	
+  	fc.setFoco(ob1);
+  	update(fc);
+  	
+   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("solicitarMetodoDePago"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+	 	
+   	retract(notif);
+end
+
+rule "No acepta el pedido" 
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+ 	ob:AceptarPedido(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.no)
+ then        
+    ob.setSolved();
+ 	update(ob);
+ 	
+ 	obGeneral.setSolved();
+ 	update(obGeneral);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    retract(notif);
+end
+
+rule "No se sabe si acpeta o no"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:AceptarPedido(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion != tipoNotif.si && tipoNotificacion != tipoNotif.no)
+ then 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("aceptaDesconocido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    retract(notif);
+end
+
+rule "Usuario paga con tarjeta"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerMetodoPago(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pagoTarjeta)
+ 	pedido:Pedido()
+ then
+ 	pedido.setMetodoPago(MetodoPago.tarjeta);
+ 	ob.setSolved();
+ 	update(ob);
+ 	
+ 	obGeneral.setSolved();
+ 	update(obGeneral);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("metodoDePagoTarjeta"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(pedido);
+    retract(notif);
+end
+
+rule "Usuario paga en efectivo"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerMetodoPago(state == Objetivo.PENDING, objectReferenceId == group)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pagoEfectivo)
+ 	pedido:Pedido()
+ then 
+ 	pedido.setMetodoPago(MetodoPago.efectivo);
+ 	ob.setSolved();
+ 	update(ob);
+ 	
+ 	Objetivo ob1 = new ObtenerCambio();
+  	ob1.setobjectReferenceId(group);
+  	insert(ob1);
+  	
+  	fc.setFoco(ob1);
+  	update(fc);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("metodoDePagoEfectivo"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(pedido);
+    retract(notif);
+    
+end
+
+rule "Metodo de pago incorrecto"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerMetodoPago(state == Objetivo.PENDING, objectReferenceId == group)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion != tipoNotif.pagoEfectivo && tipoNotificacion != tipoNotif.pagoTarjeta)
+ then 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("metodoDePagoDesconocido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    retract(notif);
+end
+
+rule "Necesita cambio"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerCambio(state == Objetivo.PENDING, objectReferenceId == group)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.si)
+ then	
+ 	ob.setSolving();
+ 	update(ob);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("solicitarCambio"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+
+    retract(notif);
+end
+
+rule "Obtener cambio"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerCambio(state == Objetivo.SOLVING, objectReferenceId == group)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.numero)
+ then	
+ 	ob.setSolved();
+ 	update(ob);
+ 	
+ 	obGeneral.setSolved();
+ 	update(obGeneral);
+    
+    retract(notif);
+end
+
+rule "Cambio erroneo"
+when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerCambio(state == Objetivo.SOLVING, objectReferenceId == group)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion != tipoNotif.numero)
+ then 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("cambioInvalido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    retract(notif);
+end
+
+rule "No necesita cambio"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerCambio(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.no)
+ then
+ 	ob.setSolved();
+ 	update(ob);
+ 	
+ 	obGeneral.setSolved();
+ 	update(obGeneral);
+    
+    retract(notif);
+end
+
+rule "No se sabe cambio"
+ when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.PENDING)
+    ob:ObtenerCambio(objectReferenceId == group, state == Objetivo.PENDING)
+ 	fc:FocoUsuario(username == group, foco == ob )
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion != tipoNotif.si && tipoNotificacion != tipoNotif.no)
+ then 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionPago.msg("cambioDesconocido"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    retract(notif);
+end
+
+rule "Enviar mensaje al agente contexto cuando acaba el agente pago"
+when
+ 	obGeneral:ObtenerPago(group:objectReferenceId, state == Objetivo.SOLVED)
+then
+	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteContexto);
+  	Notificacion notifPide = new Notificacion(agentId);
+  	notifPide.setTipoNotificacion(tipoNotif.pideCalendario);
+  	notifPide.setMensajeNotificacion("El agente pago ha terminado ");
+   	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgentePago, VocabularioGestionPizzeria.IdentAgenteContexto);
+   	System.out.println(mensaje);
+   	iftAgente.aceptaMensaje(mensaje);
+end
+
+
+
+
+
+
+

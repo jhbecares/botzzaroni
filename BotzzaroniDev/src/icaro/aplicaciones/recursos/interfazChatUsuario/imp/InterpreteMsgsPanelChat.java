@@ -111,12 +111,12 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("nombres");
 			anotacionesBusquedaPrueba.add("ingredientes");
 			anotacionesBusquedaPrueba.add("apellidos");
-			anotacionesBusquedaPrueba.add("alergias");
+			anotacionesBusquedaPrueba.add("pagoTarjeta");
+			anotacionesBusquedaPrueba.add("pagoEfectivo");
 			anotacionesBusquedaPrueba.add("numero");
-			anotacionesBusquedaPrueba.add("tipoPizzaCasa");
-			anotacionesBusquedaPrueba.add("tipoPizzaPersonalizada");
-			
-			
+			anotacionesBusquedaPrueba.add("si");
+			anotacionesBusquedaPrueba.add("no");
+			anotacionesBusquedaPrueba.add("bebidas");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -310,9 +310,17 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("alergias")) {
-				if (!anotaciones_leidas.contains("alergias"))
-					anotaciones_leidas.add("alergias");
+			else if (anotType.equalsIgnoreCase("pagoEfectivo")) {
+				if (!anotaciones_leidas.contains("pagoEfectivo"))
+					anotaciones_leidas.add("pagoEfectivo");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("pagoTarjeta")) {
+				if (!anotaciones_leidas.contains("pagoTarjeta"))
+					anotaciones_leidas.add("pagoTarjeta");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
@@ -326,17 +334,9 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("tipoPizzaCasa")) {
-				if (!anotaciones_leidas.contains("tipoPizzaCasa"))
-					anotaciones_leidas.add("tipoPizzaCasa");
-				tienePeticion = true;
-				anotacionesInterpretadas
-						.add(interpretarAnotacionSaludoEInicioPeticion(
-								contextoInterpretacion, annot));
-			}
-			else if (anotType.equalsIgnoreCase("tipoPizzaPersonalizada")) {
-				if (!anotaciones_leidas.contains("tipoPizzaPersonalizada"))
-					anotaciones_leidas.add("tipoPizzaPersonalizada");
+			else if (anotType.equalsIgnoreCase("bebidas")) {
+				if (!anotaciones_leidas.contains("bebidas"))
+					anotaciones_leidas.add("bebidas");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(

@@ -29,7 +29,7 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	JScrollPane scroll=new JScrollPane(
                 dialog,
 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 	);
         String nominacionInterlocutor = "usuario";
 	
@@ -60,6 +60,7 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 		setSize(600,500);
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		dialog.setEditable(false);
 		input.addKeyListener(this);
 	
@@ -68,7 +69,6 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 		p.setBackground(new Color(0,127,255));
 		add(p);		
 		setVisible(false);
-   
 	}
         public void setInterpreteTextoUsuario(InterpreteMsgsPanelChat interpreteTexto){
             this.interpreteTextoUsuario = interpreteTexto;
@@ -85,15 +85,6 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 			addText( nominacionInterlocutor + ": "+quote);
 			quote.trim();
             this.interpreteTextoUsuario.interpetarTextoUsuario(quote);
-            
-            this.setVisible(true);
-            this.setAlwaysOnTop(true);
-            this.toFront();
-            /*this.input.requestFocus();
-            this.setFocusable(true);
-            this.requestFocusInWindow();*/
-            
-            
 
 		}
 	}
@@ -102,21 +93,14 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e){
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
 			input.setEditable(true);
-			this.input.setFocusable(true);
-			this.input.requestFocus();
-			this.setFocusable(true);
-            this.requestFocusInWindow();
-			
 		}
 	}
 	
         @Override
 	public void keyTyped(KeyEvent e){}
-        
 	
 	public void addText(String str){
 		dialog.setText(dialog.getText()+str+"\n");
-		
 	}
 	
 	public boolean inArray(String in,String[] str){
