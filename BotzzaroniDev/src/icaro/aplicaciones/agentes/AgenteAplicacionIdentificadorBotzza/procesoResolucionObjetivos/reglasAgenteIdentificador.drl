@@ -137,6 +137,7 @@ end
 ////////////////////////////
 
 
+
 rule "Regla de saludar al usuario en función de si es conocido o no"
  when
     notif:Notificacion(tipoNotificacion == tipoNotif.saludar, msgg:mensajeNotificacion)
@@ -211,7 +212,7 @@ when
 	notif:Notificacion(tipoNotificacion == tipoNotif.no, msgg:mensajeNotificacion )
 then 
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-   	Objetivo obN = new ObtenerDireccion();
+   	Objetivo obN = new ObtenerCalle();
    	insert(obN);
    	obj.setSolved();
    	f.setFoco(obN);
@@ -471,6 +472,7 @@ rule "Regla de solicitar portal cuando se obtiene algo que no es un numero de po
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	retract(notif);
 end
+
 
 rule "Regla de obtencion del portal" 
  when
