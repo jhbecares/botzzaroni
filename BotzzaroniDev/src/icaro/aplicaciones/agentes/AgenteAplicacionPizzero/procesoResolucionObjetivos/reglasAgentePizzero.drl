@@ -205,6 +205,7 @@ rule "Regla de obtener numero de pizzas"
    	retract(notif);
 end
 
+
 rule "Regla de obtener numero de pizzas incorrecta"
  when
     notif:Notificacion(group: identNotificador, tipoNotificacion != tipoNotif.numero)
