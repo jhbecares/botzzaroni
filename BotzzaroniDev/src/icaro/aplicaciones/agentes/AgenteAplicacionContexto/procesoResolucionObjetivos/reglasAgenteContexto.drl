@@ -239,11 +239,22 @@ rule "Distribuir mensaje al agente IDENTIFICADOR"
  when
     obj:SaludarConocer(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.numero)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
      tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+     retract(notif);
+     update(f);
+     update(obj);
+ end
+ 
+ rule "Eliminar notificaciones erroneas al distribuir mensaje al agente IDENTIFICADOR"
+ when
+    obj:SaludarConocer(state==Objetivo.SOLVING)
+    f:Focus(foco == obj)
+    notif:Notificacion(tipoNotificacion == tipoNotif.numero)
+  then
      retract(notif);
      update(f);
      update(obj);
@@ -254,7 +265,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
