@@ -21,14 +21,17 @@ public class Pedido {
 	private MetodoPago metodoPago;
 	private int cambioEfectivo;
 	private Date fechaEntrega;
+	public boolean tieneAlergia;
 	private List<Ingrediente> alergias;
 	private int nBebidas;
-
+	public int numeroPizzas;
+	public int numeroTotalPizzas;
+	
 	public Pedido(){
 		nBebidas=0;
 		pizzas = new ArrayList<Pizza>();
 		bebidas = new ArrayList<String>();
-		ArrayList<String> ingredientes  = new ArrayList<String>(Arrays.asList("Quesos ", "Bacon", "Champiñón", "Cebolla"));
+		/*ArrayList<Ingrediente> ingredientes  = new ArrayList<String>(Arrays.asList("Quesos ", "Bacon", "Champiñón", "Cebolla"));
 		Pizza pizza = new Pizza();
 		pizza.setNombrePizza("Carbonara");
 		pizza.setSalsa("Barbacoa");
@@ -46,7 +49,7 @@ public class Pedido {
 		pizza1.setTamanio(TamanioPizza.mediana);
 		pizza1.setPrecio(7.0);
 		pizza1.setIngredientes(ingredientes1);
-		pizzas.add(pizza1);
+		pizzas.add(pizza1);*/
 	}
 	
 	public Usuario getUsuario() {

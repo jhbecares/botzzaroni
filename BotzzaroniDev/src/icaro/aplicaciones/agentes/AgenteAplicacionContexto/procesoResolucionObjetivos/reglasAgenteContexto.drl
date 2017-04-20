@@ -33,7 +33,7 @@ end
 
 rule "Regla de focalizacion en objetivo CrearChatUsuario"
  when
-    f:Focus(foco == null )
+    f:Focus(foco == null)
     obj:CrearChatUsuario()
  then
     f.setFoco(obj);
@@ -84,6 +84,16 @@ rule "Inicio del proceso de consecucion del  objetivo SaludarConocer"
   then
     obj.setSolving();
     update(obj);
+    
+    InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+  	Notificacion notifPide = new Notificacion(agentId);
+  	notifPide.setTipoNotificacion(tipoNotif.saludar);
+  	notifPide.setMensajeNotificacion("Turno del agente identificador ");
+
+   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
+   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+   	iftAgente.aceptaMensaje(mensaje);
 end
 
 
@@ -97,16 +107,16 @@ when
 	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, tipoNotificacion == tipoNotif.pidePizza)
 then 
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
-  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteBebida);
+  		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgentePizzero);
   	Notificacion notifPide = new Notificacion(agentId);
-  	notifPide.setTipoNotificacion(tipoNotif.pideBebida);
-  	notifPide.setMensajeNotificacion("Turno del agente bebida ");
+  	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
+  	notifPide.setMensajeNotificacion("Turno del agente pizzero ");
 
    	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteBebida);
+   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
    	iftAgente.aceptaMensaje(mensaje);
    	
-   	Objetivo ob = new ObtenerBebida();
+   	Objetivo ob = new ObtenerPizza();
  	ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
@@ -229,11 +239,22 @@ rule "Distribuir mensaje al agente IDENTIFICADOR"
  when
     obj:SaludarConocer(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.numero)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
      tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza);
+     retract(notif);
+     update(f);
+     update(obj);
+ end
+ 
+ rule "Eliminar notificaciones erroneas al distribuir mensaje al agente IDENTIFICADOR"
+ when
+    obj:SaludarConocer(state==Objetivo.SOLVING)
+    f:Focus(foco == obj)
+    notif:Notificacion(tipoNotificacion == tipoNotif.numero)
+  then
      retract(notif);
      update(f);
      update(obj);
@@ -244,7 +265,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
@@ -254,12 +275,25 @@ rule "Distribuir mensaje al agente PIZZERO"
      update(obj);
  end
  
- 
- rule "Distribuir mensaje al agente BEBIDA"
+ rule "Eliminar notificaciones erroneas al distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || tipoNotificacion == tipoNotif.puerta)
+  then
+   	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+     retract(notif);
+     update(f);
+     update(obj);
+ end
+ 
+ 
+ 
+ rule "Distribuir mensaje al agente BEBIDA"
+ when
+    obj:ObtenerBebida(state==Objetivo.SOLVING)
+    f:Focus(foco == obj)
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
@@ -269,16 +303,39 @@ rule "Distribuir mensaje al agente PIZZERO"
      update(obj);
  end
  
+  rule "Eliminar notificaciones erroneas al distribuir mensaje al agente BEBIDA"
+ when
+ 	 obj:ObtenerBebida(state == Objetivo.SOLVING)
+     f:Focus(foco == obj)
+     notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || tipoNotificacion == tipoNotif.puerta)
+  then
+   	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+     retract(notif);
+     update(f);
+     update(obj);
+ end
  
  rule "Distribuir mensaje al agente PAGO"
  when
     obj:ObtenerPago(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
      tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgentePago);
+     retract(notif);
+     update(f);
+     update(obj);
+ end
+ 
+   rule "Eliminar notificaciones erroneas al distribuir mensaje al agente PAGO"
+ when
+     obj:ObtenerPago(state==Objetivo.SOLVING)
+     f:Focus(foco == obj)
+     notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || tipoNotificacion == tipoNotif.puerta)
+  then
+   	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);
      update(f);
      update(obj);

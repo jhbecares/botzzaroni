@@ -12,6 +12,7 @@ package icaro.aplicaciones.recursos.interfazChatUsuario.imp;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 import javax.swing.JScrollPane;
 
 import java.awt.Color;
@@ -26,10 +27,12 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	JPanel p=new JPanel();
 	JTextArea dialog=new JTextArea(20,50);
 	JTextArea input=new JTextArea(1,50);
+	DefaultCaret c = (DefaultCaret) dialog.getCaret();
+	
 	JScrollPane scroll=new JScrollPane(
                 dialog,
 		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
 	);
         String nominacionInterlocutor = "usuario";
 	
@@ -60,15 +63,16 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 		setSize(600,500);
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
 		dialog.setEditable(false);
 		input.addKeyListener(this);
+		c.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	
 		p.add(scroll);
 		p.add(input);
 		p.setBackground(new Color(0,127,255));
 		add(p);		
 		setVisible(false);
+   
 	}
         public void setInterpreteTextoUsuario(InterpreteMsgsPanelChat interpreteTexto){
             this.interpreteTextoUsuario = interpreteTexto;
@@ -85,6 +89,15 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 			addText( nominacionInterlocutor + ": "+quote);
 			quote.trim();
             this.interpreteTextoUsuario.interpetarTextoUsuario(quote);
+            
+            this.setVisible(true);
+            this.setAlwaysOnTop(true);
+            this.toFront();
+            /*this.input.requestFocus();
+            this.setFocusable(true);
+            this.requestFocusInWindow();*/
+            
+            
 
 		}
 	}
@@ -93,14 +106,21 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e){
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
 			input.setEditable(true);
+			this.input.setFocusable(true);
+			this.input.requestFocus();
+			this.setFocusable(true);
+            this.requestFocusInWindow();
+			
 		}
 	}
 	
         @Override
 	public void keyTyped(KeyEvent e){}
+        
 	
 	public void addText(String str){
 		dialog.setText(dialog.getText()+str+"\n");
+		
 	}
 	
 	public boolean inArray(String in,String[] str){
