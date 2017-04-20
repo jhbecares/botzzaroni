@@ -68,8 +68,10 @@ public class ConversacionBotzza {
 		noTelefono.add("Lo siento pero para mí eso no es un teléfono, escribidme un teléfono que yo entienda.");
 			
 		List<String> peticionTelefonoImperativo = new ArrayList<String>(); 
-		peticionTelefonoImperativo.add("En serio... necesito tu número de móvil");
-		peticionTelefonoImperativo.add("Si no me das tu número de móvil no puedo seguir :(");
+		peticionTelefonoImperativo.add("Por favor, necesitamos tu número de teléfono");
+		peticionTelefonoImperativo.add("Si no nos das tu número de teléfono no podemos seguir :(");
+		peticionTelefonoImperativo.add("Si no nos das tu número de teléfono no podemos continuar con tu pedido.");
+
 
 		List<String> fechaAnterior = new ArrayList<String>(); 
 		fechaAnterior.add("Disculpa, pero la fecha en la que quieres tu pedido es anterior a la fecha actual. Dime una fecha posterior, por favor :)");
@@ -103,6 +105,79 @@ public class ConversacionBotzza {
 		tengoTuApellido.add("De acuerdo. Apunto también tu apellido.");
 		tengoTuApellido.add("Gracias. Ya he apuntado tu apellido");
 		
+		List<String> solicitaConfirmarDireccion = new ArrayList<String>();
+		solicitaConfirmarDireccion.add("Tenemos una dirección ya almacenada, ¿Quieres usar la misma dirección?");
+		
+		List<String> direccionConfirmada = new ArrayList<String>();
+		direccionConfirmada.add("Genial, usaremos esa dirección :)");
+		direccionConfirmada.add("Ok, usaremos la dirección que tenemos guardada ;)");
+
+		
+		List<String> solicitaCalle = new ArrayList<String>();
+		solicitaCalle.add("Muy bien, dinos el nombre de la calle, por favor.");
+		
+		List<String> solicitarConfirmarDireccionImperativo = new ArrayList<String>();
+		solicitarConfirmarDireccionImperativo.add("Necesitamos si saber si quieres usar esa dirección...");
+		solicitarConfirmarDireccionImperativo.add("Si no nos dices si quieres esa dirección o no sabemos a dónde mandar tus pizzas.");
+
+		List<String> solicitaTelefono = new ArrayList<String>();
+		solicitaTelefono.add("Ahora necesitamos un teléfono para poder ponernos en contacto si es necesario.");
+		solicitaTelefono.add("Muy bien, ahora facilítanos un teléfono de contacto");
+		
+		List<String> tengoTuTelefono = new ArrayList<String>();
+		tengoTuTelefono.add("Apuntamos ese teléfono entonces.");
+		tengoTuTelefono.add("Genial, ya podemos ponernos en contacto contigo.");
+		tengoTuTelefono.add("¡Teléfono listo!");
+		
+		List<String> peticionCalleImperativo = new ArrayList<String>();
+		peticionCalleImperativo.add("Si no nos dices el nombre de la calle no podemos mandarte el pedido :(");
+		peticionCalleImperativo.add("Necesitamos saber el nombre de la calle donde quieres recibir el pedido...");
+
+
+		List<String> tengoTuCalle = new ArrayList<String>();
+		tengoTuCalle.add("Vale, apunto esa calle.");
+		tengoTuCalle.add("Guardo esa calle entonces.");
+
+		List<String> solicitaPortal = new ArrayList<String>();
+		solicitaPortal.add("¿Y cuál es tu portal?");
+		solicitaPortal.add("¿Me dices el portal?");
+		
+		List<String> peticionPortalImperativo = new ArrayList<String>();
+		peticionPortalImperativo.add("Necesito que me digas tu portal :(");
+		peticionPortalImperativo.add("Quizás no me has entendido. Necesito apuntar tu portal...");
+		
+		List<String> tengoTuPortal = new ArrayList<String>();
+		tengoTuPortal.add("¡Portal apuntado!");
+		tengoTuPortal.add("Ya tengo el portal :)");
+		
+		List<String> solicitaPiso = new ArrayList<String>();
+		solicitaPiso.add("¿Y cuál es tu piso?");
+		solicitaPiso.add("¿Y el piso?");
+		
+		List<String> peticionPisoImperativo = new ArrayList<String>();
+		peticionPisoImperativo.add("Necesito saber el piso :(");
+		peticionPisoImperativo.add("Por favor, necesito saber el piso...");
+		
+		List<String> tengoTuPiso = new ArrayList<String>();
+		tengoTuPiso.add("¡Piso apuntado!");
+		tengoTuPiso.add("Vale, ya tengo el piso ;)");
+		
+		List<String> solicitaPuerta = new ArrayList<String>();
+		solicitaPuerta.add("¿Y la puerta?");
+		solicitaPuerta.add("¿Qué puerta?");
+		
+		List<String> peticionPuertaImperativo = new ArrayList<String>();
+		peticionPuertaImperativo.add("Necesito saber la puerta :(");
+		peticionPuertaImperativo.add("Por favor, necesito saber la puerta...");
+		
+		List<String> tengoTuPuerta = new ArrayList<String>();
+		tengoTuPuerta.add("¡Tengo la puerta!");
+		tengoTuPuerta.add("Vale, ya tengo la puerta ;)");
+		
+		List<String> tengoTusDatos = new ArrayList<String>();
+		tengoTusDatos.add("Ya tengo todos tus datos :) Vamos con tu pedido...");
+		tengoTusDatos.add("Ya he guardado tus datos de contacto. Vamos con lo importante ;)");
+		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
 		conversacion.put("saludoInicial", saludoInicialConocido);
@@ -127,8 +202,26 @@ public class ConversacionBotzza {
 		conversacion.put("solicitarApellido", solicitarApellido);
 		conversacion.put("tengoTuApellido", tengoTuApellido);
 		conversacion.put("solicitarApellidoImperativo", solicitarApellidoImperativo);
-
+		conversacion.put("solicitaConfirmarDireccion", solicitaConfirmarDireccion);
+		conversacion.put("solicitaCalle", solicitaCalle);
+		conversacion.put("direccionConfirmada", direccionConfirmada);
+		conversacion.put("solicitarConfirmarDireccionImperativo",solicitarConfirmarDireccionImperativo);
+		conversacion.put("solicitaTelefono", solicitaTelefono);
+		conversacion.put("tengoTuTelefono", tengoTuTelefono);
 		
+		conversacion.put("peticionCalleImperativo", peticionCalleImperativo);
+		conversacion.put("tengoTuCalle", tengoTuCalle);
+		conversacion.put("solicitaPortal",  solicitaPortal);
+		conversacion.put("peticionPortalImperativo", peticionPortalImperativo);
+		conversacion.put("tengoTuPortal", tengoTuPortal);
+		conversacion.put("solicitaPiso", solicitaPiso);
+		conversacion.put("peticionPisoImperativo", peticionPisoImperativo);
+		conversacion.put("tengoTuPiso", tengoTuPiso);
+	
+		conversacion.put("solicitaPuerta", solicitaPuerta);
+		conversacion.put("peticionPuertaImperativo", peticionPuertaImperativo);
+		conversacion.put("tengoTuPuerta", tengoTuPuerta);
+		conversacion.put("tengoTusDatos", tengoTusDatos);
 	}
 	
 	

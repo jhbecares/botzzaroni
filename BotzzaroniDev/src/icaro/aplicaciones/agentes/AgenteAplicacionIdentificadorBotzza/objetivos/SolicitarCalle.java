@@ -16,7 +16,7 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
  */
 public class SolicitarCalle extends Objetivo {
 
-	/** Crea una nueva instancia de ObtenerDireccion */
+	/** Crea una nueva instancia de SolicitarCalle */
 	public SolicitarCalle() {
 		super.setgoalId("SolicitarCalle");
 	}

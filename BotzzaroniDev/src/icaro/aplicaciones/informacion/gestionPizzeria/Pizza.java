@@ -21,7 +21,7 @@ public class Pizza {
 	}
 	
 	private String nombrePizza; // nombre de la pizza
-	private ArrayList<String> ingredientes;
+	private ArrayList<Ingrediente> ingredientes;
 	private TamanioPizza tamanio;
 	private MasaPizza masa;
 	private String salsa;
@@ -29,6 +29,15 @@ public class Pizza {
 	private Usuario usuarioCreador; // será un admin general si no la ha creado un usuario
 	private boolean personalizada; 
 		
+	public static String String_Default="";
+	
+	// FIXME
+	public Pizza(){
+		ingredientes = new ArrayList<Ingrediente>();
+		usuarioCreador = new Usuario();
+		salsa = String_Default;
+	}
+	
 	public double getPrecio() {
 		return precio;
 	}
@@ -61,11 +70,11 @@ public class Pizza {
 		this.salsa = salsa;
 	}
 	
-	public ArrayList<String> getIngredientes() {
+	public ArrayList<Ingrediente> getIngredientes() {
 		return ingredientes;
 	}
 	
-	public void setIngredientes(ArrayList<String> ingredientes) {
+	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 	
@@ -99,6 +108,8 @@ public class Pizza {
 				"Tamaño: " + tamanio + " - Masa: " + masa + " - Salsa: " + salsa + "\n" +
 				"Ingredientes: " + ingredientes.toString().replace("[", "").replace("]", "");
 	}
+	
+
 	
 	
 }

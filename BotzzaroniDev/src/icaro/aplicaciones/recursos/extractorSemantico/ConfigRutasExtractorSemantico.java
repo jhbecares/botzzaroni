@@ -11,7 +11,9 @@ package icaro.aplicaciones.recursos.extractorSemantico;
  * @author SONIAGroup
  */
 public class ConfigRutasExtractorSemantico {
-	public static final String DirectorioGateHome = "C:\\hlocal\\workspace\\BotzzaroniDev\\GATE_Developer_8.4";
-	public static final String DirectorioAppFile = "C:\\hlocal\\workspace\\BotzzaroniDev\\procesador";
+	//public static final String DirectorioGateHome = "C:\\hlocal\\workspace\\BotzzaroniDev\\GATE_Developer_8.4";
+	//public static final String DirectorioAppFile = "C:\\hlocal\\workspace\\BotzzaroniDev\\procesador";
+	public static final String DirectorioGateHome = "C:\\Users\\jenny\\Desktop\\master\\DASI\\botzzaroni\\BotzzaroniDev\\GATE_Developer_8.4";
+	public static final String DirectorioAppFile = "C:\\Users\\jenny\\Desktop\\master\\DASI\\botzzaroni\\BotzzaroniDev\\procesador";
 
 }

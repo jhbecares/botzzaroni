@@ -24,7 +24,7 @@ public class VocabularioGestionPizzeria {
 // 	public static final String IdentAgenteAplicacionDialogoQuedadas = "AgenteAplicacionDialogoQuedadas1";
 //	public static final String IdentAgenteAplicacionGestionQuedadas = "AgenteAplicacionGestionQuedadas1";
 	//public static final String IdentConexionAgte = "SONIA_Bot";
-	public static final String IdentRecursoPersistenciaChat = "PersistenciaChat1";
+//	public static final String IdentRecursoPersistenciaChat = "PersistenciaChat1";
 	public static final String InfoUsuarioYaExiste = "infoUsuarioYaExistente";
 	public static final String InfoUsuarioAltaGuardada = "InfoAltaUsuarioGuardada";
 	public static final String NombreTipoNoticacionSaludo = "Saludo";
