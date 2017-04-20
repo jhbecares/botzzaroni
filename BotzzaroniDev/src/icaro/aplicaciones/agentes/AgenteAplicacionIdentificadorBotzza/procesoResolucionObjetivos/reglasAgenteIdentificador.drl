@@ -562,7 +562,7 @@ rule "Regla de solicitar piso cuando se obtiene algo que no es un piso"
  when
  	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
  	obj:ObtenerPiso(state == Objetivo.PENDING)
-    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, msgg:mensajeNotificacion )
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta, msgg:mensajeNotificacion )
     user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT)
     f:Focus(foco == obj)
  then
@@ -754,7 +754,7 @@ rule "Regla de obtencion de la puerta 2"
  	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
  	obj:ObtenerPuerta(state == Objetivo.PENDING)
     notif:Notificacion(tipoNotificacion == tipoNotif.puerta, msgg:mensajeNotificacion )
-    user:Usuario()
+    user:Usuario(direccion.numero != Direccion.INTEGER_DEFAULT, direccion.piso != Direccion.INTEGER_DEFAULT)
     f:Focus(foco == obj)
  then
  	obj.setSolved();
