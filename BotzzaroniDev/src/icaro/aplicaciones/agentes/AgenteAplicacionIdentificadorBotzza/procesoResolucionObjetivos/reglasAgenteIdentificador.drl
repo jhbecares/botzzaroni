@@ -463,7 +463,7 @@ rule "Regla de solicitar portal cuando se obtiene algo que no es un numero de po
  when
  	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
  	obj:ObtenerPortal(state == Objetivo.PENDING)
-    notif:Notificacion(tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.piso, msgg:mensajeNotificacion )
+    notif:Notificacion(tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.puerta, msgg:mensajeNotificacion )
     user:Usuario()
     f:Focus(foco == obj)
  then
@@ -501,6 +501,38 @@ rule "Regla de obtencion del portal"
    	update(obj);
    	retract(notif);
    	retract(notif2);
+    insert(ob2);
+end
+
+rule "Regla de obtencion del portal 2" 
+ when
+ 	obGeneral:ObtenerInfoUsuario(state == Objetivo.PENDING)
+ 	obj:ObtenerPortal(state == Objetivo.PENDING)
+ 	notif:Notificacion(tipoNotificacion == tipoNotif.portal, msgg:mensajeNotificacion )
+    notif2:Notificacion(tipoNotificacion == tipoNotif.piso, msgg2:mensajeNotificacion )
+    notif3:Notificacion(tipoNotificacion == tipoNotif.puerta, msgg3:mensajeNotificacion )
+    user:Usuario()
+    f:Focus(foco == obj)
+ then
+ 	obj.setSolved();
+ 	
+	Direccion direccion = user.getDireccion();
+ 	direccion.setNumero(Integer.parseInt(msgg));
+ 	user.setDireccion(direccion);
+ 	
+ 	user.actividad();
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuPortal"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	Objetivo ob2 = new ObtenerPiso();
+   	f.setFoco(ob2);
+   	
+   	update(f);
+   	update(obj);
+   	retract(notif);
+   	retract(notif2);
+   	retract(notif3);
     insert(ob2);
 end
 
