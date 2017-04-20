@@ -198,7 +198,7 @@ public class InterpreteMsgsPanelChat {
 		while (annotTypesSal.hasNext()) {
 			Annotation annot = (Annotation) annotTypesSal.next();
 			String anotType = annot.getType();
-			if (anotType.equalsIgnoreCase("saludo")) {
+			if (anotType.equalsIgnoreCase("saludo") && !anotaciones_leidas.contains("saludo")) {
 				anotaciones_leidas.add("saludo");
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
@@ -241,7 +241,7 @@ public class InterpreteMsgsPanelChat {
 								contextoInterpretacion, annot)));
 
 
-			} else if (anotType.equalsIgnoreCase("si")) {
+			} else if (anotType.equalsIgnoreCase("si") && !anotaciones_leidas.contains("si")) {
 				if (!anotaciones_leidas.contains("si"))
 					anotaciones_leidas.add("si");
 				tienePeticion = true;
@@ -249,7 +249,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 				
-			} else if (anotType.equalsIgnoreCase("no")) {
+			} else if (anotType.equalsIgnoreCase("no") && !anotaciones_leidas.contains("no")) {
 				if (!anotaciones_leidas.contains("no"))
 					anotaciones_leidas.add("no");
 				tienePeticion = true;
@@ -257,7 +257,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}			
-			else if (anotType.equalsIgnoreCase("nombres")) {
+			else if (anotType.equalsIgnoreCase("nombres") && !anotaciones_leidas.contains("nombres")) {
 				if (!anotaciones_leidas.contains("nombres"))
 					anotaciones_leidas.add("nombres");
 				tienePeticion = true;
@@ -265,7 +265,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("apellidos")) {
+			else if (anotType.equalsIgnoreCase("apellidos") && !anotaciones_leidas.contains("apellidos")) {
 				if (!anotaciones_leidas.contains("apellidos"))
 					anotaciones_leidas.add("apellidos");
 				tienePeticion = true;
@@ -273,7 +273,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("ingredientes")) {
+			else if (anotType.equalsIgnoreCase("ingredientes") && !anotaciones_leidas.contains("ingredientes")) {
 				if (!anotaciones_leidas.contains("ingredientes"))
 					anotaciones_leidas.add("ingredientes");
 				tienePeticion = true;
@@ -281,7 +281,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("salsas")) {
+			else if (anotType.equalsIgnoreCase("salsas") && !anotaciones_leidas.contains("salsas")) {
 				if (!anotaciones_leidas.contains("salsas"))
 					anotaciones_leidas.add("salsas");
 				tienePeticion = true;
@@ -289,7 +289,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("tamanyopizza")) {
+			else if (anotType.equalsIgnoreCase("tamanyopizza") && !anotaciones_leidas.contains("tamanyopizza")) {
 				if (!anotaciones_leidas.contains("tamanyopizza"))
 					anotaciones_leidas.add("tamanyopizza");
 				tienePeticion = true;
@@ -297,7 +297,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("masapizza")) {
+			else if (anotType.equalsIgnoreCase("masapizza") && !anotaciones_leidas.contains("masapizza")) {
 				if (!anotaciones_leidas.contains("masapizza"))
 					anotaciones_leidas.add("masapizza");
 				tienePeticion = true;
@@ -305,14 +305,14 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("pizzas")) {
+			else if (anotType.equalsIgnoreCase("pizzas") && !anotaciones_leidas.contains("pizzas")) {
 				if (!anotaciones_leidas.contains("pizzas"))
 					anotaciones_leidas.add("pizzas");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
-			}else if (anotType.equalsIgnoreCase("calles")) {
+			}else if (anotType.equalsIgnoreCase("calles") && !anotaciones_leidas.contains("calles")) {
 				if (!anotaciones_leidas.contains("calles"))
 					anotaciones_leidas.add("calles");
 				tienePeticion = true;
