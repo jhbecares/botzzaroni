@@ -34,7 +34,6 @@ public class MensajeGenericoBotzza extends TareaSincrona {
 					.obtenerInterfazUso(VocabularioGestionPizzeria.IdentRecursoComunicacionChat);
 						
 			if (recComunicacionChat != null) {
-                recComunicacionChat.setIdentAgteAreportar(this.identAgente);
 				recComunicacionChat.mostrarVisualizadorChatUsuario(identAgenteOrdenante, NombresPredefinidos.TIPO_COGNITIVO);
                 recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + " " + mensaje);
 

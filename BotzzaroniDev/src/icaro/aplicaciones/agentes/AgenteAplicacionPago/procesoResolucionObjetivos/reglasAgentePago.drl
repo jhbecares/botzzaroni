@@ -34,28 +34,28 @@ end
 
 rule "Mostrar resumen del pedido" 
  when
- 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pidePago)
+ 	// notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pidePago)
+ 	p:Pedido()
+ 	not( exists (FocoUsuario()))
  then
- 	Pedido pedido = new Pedido();
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
- 	tarea.ejecutar(identInterlc, pedido.mostrarResumen());
- 	tarea.ejecutar(identInterlc,ConversacionPago.msg("confirmacionPedido"));
+ 	tarea.ejecutar(p.getUsuario().getUsername(), p.mostrarResumen());
+ 	tarea.ejecutar(p.getUsuario().getUsername(),ConversacionPago.msg("confirmacionPedido"));
  	
     Objetivo obGeneral = new ObtenerPago();
-    obGeneral.setobjectReferenceId(identInterlc);
+    obGeneral.setobjectReferenceId(p.getUsuario().getUsername());
     insert(obGeneral);
     
     Objetivo ob = new AceptarPedido();
-  	ob.setobjectReferenceId(identInterlc);
+  	ob.setobjectReferenceId(p.getUsuario().getUsername());
   	insert(ob); 
   	
-  	FocoUsuario fc = new FocoUsuario(identInterlc);
+  	FocoUsuario fc = new FocoUsuario(p.getUsuario().getUsername());
   	fc.setFoco(ob);	
   	insert(fc);
 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-	insert(pedido);
-   	retract(notif);
+   	// retract(notif);
 end
 
 rule "Acepta el pedido" 

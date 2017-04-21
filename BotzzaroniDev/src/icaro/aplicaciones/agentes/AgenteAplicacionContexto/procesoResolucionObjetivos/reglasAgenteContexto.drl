@@ -104,7 +104,8 @@ salience 100
 when 
 	obj:SaludarConocer(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, tipoNotificacion == tipoNotif.pidePizza)
+	// notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, tipoNotificacion == tipoNotif.pidePizza)
+	user:Usuario()
 then 
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
   		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgentePizzero);
@@ -112,19 +113,19 @@ then
   	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
   	notifPide.setMensajeNotificacion("Turno del agente pizzero ");
 
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
+   	//MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
+   	MensajeSimple mensaje = new MensajeSimple(user, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
    	iftAgente.aceptaMensaje(mensaje);
    	
    	Objetivo ob = new ObtenerPizza();
- 	ob.setobjectReferenceId(identInterlc);
+ 	// ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
 	f.setFoco(ob);
 	obj.setSolved();
 	update(obj);
 	update(f);
-	retract(notif);
+	retract(user);
 end
 
 rule "Recibo mensaje AGENTE PIZZERO objetivo cumplido"
@@ -132,7 +133,8 @@ salience 100
 when 
 	obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgentePizzero, tipoNotificacion == tipoNotif.pideBebida)
+	// notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgentePizzero, tipoNotificacion == tipoNotif.pideBebida)
+	p: Pedido()
 then 			
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
   		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteBebida);
@@ -140,19 +142,20 @@ then
   	notifPide.setTipoNotificacion(tipoNotif.pideBebida);
   	notifPide.setMensajeNotificacion("Turno del agente bebida ");
 
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteBebida);
+   	//MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteBebida);
+   	MensajeSimple mensaje = new MensajeSimple(p, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteBebida);
    	iftAgente.aceptaMensaje(mensaje);
    	
    	Objetivo ob = new ObtenerBebida();
- 	ob.setobjectReferenceId(identInterlc);
+ 	// ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
 	f.setFoco(ob);
 	obj.setSolved();
 	update(obj);
 	update(f);
-	retract(notif);
+	retract(p);
+	// retract(notif);
 end
 
 rule "Recibo mensaje AGENTE BEBIDA objetivo cumplido"
@@ -160,7 +163,8 @@ salience 100
 when 
 	obj:ObtenerBebida(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteBebida, tipoNotificacion == tipoNotif.pidePago)
+	// notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteBebida, tipoNotificacion == tipoNotif.pidePago)
+	p:Pedido()
 then 
 			
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
@@ -169,19 +173,19 @@ then
   	notifPide.setTipoNotificacion(tipoNotif.pidePago);
   	notifPide.setMensajeNotificacion("Turno del agente pago ");
 
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePago);
+   	//MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePago);
+   	MensajeSimple mensaje = new MensajeSimple(p, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePago);
    	iftAgente.aceptaMensaje(mensaje);
    	
    	Objetivo ob = new ObtenerPago();
- 	ob.setobjectReferenceId(identInterlc);
+ 	// ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
 	f.setFoco(ob);
 	obj.setSolved();
 	update(obj);
 	update(f);
-	retract(notif);
+	// retract(notif);
 end
 
 rule "Recibo mensaje AGENTE PAGO objetivo cumplido"
@@ -197,9 +201,8 @@ then
   	notifPide.setTipoNotificacion(tipoNotif.pideCalendario);
   	notifPide.setMensajeNotificacion("Turno del agente calendario ");
 
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, 
-   		VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteCalendario);
-   	iftAgente.aceptaMensaje(mensaje);
+   	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteCalendario);
+   	// iftAgente.aceptaMensaje(mensaje);
    	
    	Objetivo ob = new ObtenerFechaEntrega();
  	ob.setobjectReferenceId(identInterlc);
@@ -288,7 +291,6 @@ rule "Distribuir mensaje al agente PIZZERO"
  end
  
  
- 
  rule "Distribuir mensaje al agente BEBIDA"
  when
     obj:ObtenerBebida(state==Objetivo.SOLVING)
@@ -346,11 +348,11 @@ rule "Distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerFechaEntrega(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion()
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
-     tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteCalendario);
+     //tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteCalendario);
      retract(notif);
      update(f);
      update(obj);
