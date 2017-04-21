@@ -102,13 +102,26 @@ public class Pizza {
 		this.nombrePizza = nombrePizza;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "\n" + "Pizza " + nombrePizza + " ------------------------------------ " + precio + " €" +  "\n" +
+		 /*
+		 return "\n" + "Pizza " + nombrePizza + " ------------------------------------ " + precio + " €" +  "\n" +
 				"Tamaño: " + tamanio + " - Masa: " + masa + " - Salsa: " + salsa + "\n" +
 				"Ingredientes: " + ingredientes.toString().replace("[", "").replace("]", "");
+				*/
+		return "\n" + "Pizza " + nombrePizza + " ------------------------------------ " + precio + " €" +  "\n" +
+		"Tamaño: " + tamanio + " - Masa: " + masa + " - Salsa: " + salsa + "\n";
 	}
 	
+	/*
+	@Override
+	public String toString() {
+		return "Pizza [nombrePizza=" + nombrePizza + ", ingredientes=" + ingredientes + ", tamanio=" + tamanio
+				+ ", masa=" + masa + ", salsa=" + salsa + ", precio=" + precio + ", usuarioCreador=" + usuarioCreador
+				+ ", personalizada=" + personalizada + "]";
+	}
+	*/
 
 	
 	

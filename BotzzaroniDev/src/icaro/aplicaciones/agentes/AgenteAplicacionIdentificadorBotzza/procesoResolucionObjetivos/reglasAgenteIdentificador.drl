@@ -844,7 +844,7 @@ end
 ///////////////////////////////////////////////////////
 
 
-// ÚLTIMA REGLA, devuelve el control al agente contexto para que dirija la conversación
+// ÚLTIMA REGLA, devuelve el control al agente contexto para que dirija la conversación, enviando el usuario completo
 
 rule "Enviar mensaje al agente contexto cuando acaba el agente identificador"
 when
@@ -866,7 +866,8 @@ then
   	Notificacion notifPide = new Notificacion(agentId);
   	notifPide.setTipoNotificacion(tipoNotif.pidePizza);
   	notifPide.setMensajeNotificacion("El agente identificador ha terminado ");
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgenteContexto);
+    // MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgenteContexto);
+    MensajeSimple mensaje = new MensajeSimple(user, VocabularioGestionPizzeria.IdentAgenteIdentificadorBotzza, VocabularioGestionPizzeria.IdentAgenteContexto);
    	iftAgente.aceptaMensaje(mensaje);
    	f.setFoco(null);
    	update(f);

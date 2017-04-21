@@ -51,7 +51,7 @@ public class Pedido {
 		pizza1.setIngredientes(ingredientes1);
 		pizzas.add(pizza1);*/
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -66,6 +66,10 @@ public class Pedido {
 	
 	public void setPizzas(ArrayList<Pizza> pizzas) {
 		this.pizzas = pizzas;
+	}
+	
+	public void addPizza(Pizza p){
+		this.pizzas.add(p);
 	}
 	
 	public List<String> getBebidas() {
@@ -130,6 +134,16 @@ public class Pedido {
 	public void anadirBebida(String bebida) {
 		this.bebidas.add(bebida);
 	}
+
+	@Override
+	public String toString() {
+		return "Pedido [usuario=" + usuario + ", pizzas=" + pizzas + ", bebidas=" + bebidas + ", metodoPago="
+				+ metodoPago + ", cambioEfectivo=" + cambioEfectivo + ", fechaEntrega=" + fechaEntrega
+				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + alergias + ", nBebidas=" + nBebidas
+				+ ", numeroPizzas=" + numeroPizzas + ", numeroTotalPizzas=" + numeroTotalPizzas + "]";
+	}
+	
+	
 	
 	/*
 	 * java.util.Date utilDate = new java.util.Date();
