@@ -20,21 +20,21 @@ public class ConversacionBebida {
 		preguntarBebidas.add("¿Deseas acompañar tu pedido con alguna bebida?");
 
 		List<String> preguntarNumeroBebidas = new ArrayList<String>();
-		preguntarNumeroBebidas.add("Genial. ¿Cuantas bebidas deseas?");
+		preguntarNumeroBebidas.add("Genial. ¿Cuántas bebidas deseas?");
 
 		List<String> noQuiereBebidas = new ArrayList<String>();
-		noQuiereBebidas.add("Bueno no importa otra vez será");
+		noQuiereBebidas.add("Bueno, no importa, otra vez será");
 		
 		List<String> noSabeSiQuiereBebidas = new ArrayList<String>();
 		noSabeSiQuiereBebidas.add("En serio, necesito saber si vas a querer bebidas para poder continuar");
 		noSabeSiQuiereBebidas.add("Perdona, no te he entendido. ¿Quieres bebidas?");
-		noSabeSiQuiereBebidas.add("Quieres bebidas, ¿si o no?");
+		noSabeSiQuiereBebidas.add("Quieres bebidas, ¿sí o no?");
 
 		List<String> quiereBebidas = new ArrayList<String>();
-		quiereBebidas.add("¿Cual deseas?");
+		quiereBebidas.add("¿Cuál deseas?");
 		
 		List<String> bebidaExisteYPreguntaCantidad = new ArrayList<String>();
-		  bebidaExisteYPreguntaCantidad.add("Genial, ¿Y de esta bebida cuantas unidades deseas?");
+		  bebidaExisteYPreguntaCantidad.add("Genial, ¿Y de esta bebida cuántas unidades deseas?");
 		
 		List<String> bebidaExiste = new ArrayList<String>();
 		bebidaExiste.add("Genial, añadida a tu pedido.");
@@ -43,7 +43,7 @@ public class ConversacionBebida {
 		bebidaNoExiste.add("Esa bebida no está disponible.");
 		
 		List<String> cantidadNoValida = new ArrayList<String>();
-		cantidadNoValida.add("Por favor, introduce una cantidad valida");
+		cantidadNoValida.add("Por favor, introduce una cantidad válida");
 		
 		conversacion.put("preguntarBebidas", preguntarBebidas);
 		conversacion.put("preguntarNumeroBebidas", preguntarNumeroBebidas);
