@@ -134,3 +134,28 @@ Finalmente, se decidió entre todos los integrantes implementar lo siguiente par
 * Pedido de una pizza de la carta.
 * Aceptar/Cancelar el pedido, tras mostrar un resumen del mismo.
 * Seleccionar entre pago en efectivo o con tarjeta.
+
+### 5 de Abril: Desarrollo primera versión del sistema
+
+El último día antes de las vacaciones de Semana Santa se hizo un reparto de tareas, en el cual se asignaron los agentes presentes en la aplicación a los miembros del equipo en pares, de manera que cada pareja era responsable de la implementación de un agente o agentes.
+
+Se acordó que el día 17 de Abril, a la vuelta de Semana Santa, debería estar implementado el comportamiento de los agentes asignados, de manera que se dispusiese de tiempo para unificar antes de la entrega prevista para el día 27 de Abril.
+
+Los agentes se repartieron de la siguiente manera:
+
+* Contexto e Identificador: Jenny y Bea.
+* Pizzero: Frank y Alex.
+* Bebida y Pago: Vero y Alfonso.
+
+### 21 de Abril: Reparto de tareas previo a la demo y a la segunda entrega
+
+El día 21 de Abril por la mañana se procedió a realizar el reparto de tareas para la redacción de la memoria pertinente en esta segunda entrega, pospuesta hasta después del puente de Mayo por estar demasiado próxima la demo del lunes 24 y la entrega, de manera que fuera posible realizar los cambios pertinentes.
+
+En concreto, se repartieron las tareas de la siguiente manera:
+* Unificación de los agentes: Jenny y Bea.
+* Comentarios sobre la primera entrega: Jenny y Bea.
+* Diseño de la arquitectura: Vero, Alfonso, Frank y Alex.
+* Modelo de dominio: Vero, Alfonso, Frank y Alex.
+* Descripción de los agentes: Cada pareja responsable de la descripción de los agentes que ha implementado.
+* Instalación y ejecución, limitaciones del prototipo y plan de desarrollo: Jenny y Bea.
+
