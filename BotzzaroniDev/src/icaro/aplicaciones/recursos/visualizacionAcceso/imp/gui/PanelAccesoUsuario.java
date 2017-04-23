@@ -63,6 +63,8 @@ public class PanelAccesoUsuario extends VentanaEstandar {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		setTitle("Acceso");
+		this.setLocationRelativeTo(null);  // *** this will center your app ***            
+
 
 		botonBorrar.setText("Borrar campos");
 		botonBorrar.addActionListener(new java.awt.event.ActionListener() {

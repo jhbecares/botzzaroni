@@ -139,7 +139,8 @@ Logger.getLogger(PanelAccesoAltaUsuario.class.getName()).log(Level.SEVERE, null,
     pack();
 
     this.setTitle("Introducir Informacion de Acceso");
-    this.setPosicionCentrada(400,500);
+    //this.setPosicionCentrada(400,500);
+	this.setLocationRelativeTo(null);  // *** this will center your app ***            
     this.setOpcionMaximizar(false);
 
 }// </editor-fold>
