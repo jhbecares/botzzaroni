@@ -22,7 +22,7 @@ public class ConversacionPago {
 		
 		List<String> solicitarMetodoDePago = new ArrayList<String>();
 		solicitarMetodoDePago.add("Bueno y ahora llega la parte más dolorosa ... ¿Deseas pagar en efectivo o con tarjeta?");
-		solicitarMetodoDePago.add("Vale, ya casi estamos. ¿Cómo quiere realizar el pago: en efectivo o con tarjeta?");
+		solicitarMetodoDePago.add("Vale, ya casi estamos. ¿Cómo quieres realizar el pago: en efectivo o con tarjeta?");
 		solicitarMetodoDePago.add("Disponemos de pago en efectivo o con tarjeta ¿Qué método prefieres?");
 		
 		List<String> metodoDePagoTarjeta = new ArrayList<String>();
@@ -34,13 +34,13 @@ public class ConversacionPago {
 		metodoDePagoEfectivo.add("Ok, el pago se realizará en efectivo. ¿Vas a necesitar cambio?");
 		
 		List<String> solicitarCambio = new ArrayList<String>();
-		solicitarCambio.add("¿Podrías decrime cuál va a ser la cantidad con la que vas a pagar?. Así podré llevar el cambio justo");
-		solicitarCambio.add("¿De cuanto?");
+		solicitarCambio.add("¿Podrías decirme cuál va a ser la cantidad con la que vas a pagar?. Así podré llevar el cambio justo.");
+		solicitarCambio.add("¿De cuánto?");
 		
 		List<String> cambioDesconocido = new ArrayList<String>();
 		cambioDesconocido.add("En serio, necesito saber si necesitas cambio para poder continuar");
 		cambioDesconocido.add("Perdona, no te he entendido. ¿Necesitas cambio?");
-		cambioDesconocido.add("Necesitas cambio, ¿si o no?");
+		cambioDesconocido.add("Necesitas cambio, ¿sí o no?");
 		
 		List<String> cambioInvalido = new ArrayList<String>();
 		cambioInvalido.add("En serio, necesito saber con qué vas a pagar para poder continuar");
