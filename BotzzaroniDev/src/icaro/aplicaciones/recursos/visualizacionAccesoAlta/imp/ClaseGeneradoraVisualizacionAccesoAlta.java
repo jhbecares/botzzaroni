@@ -50,7 +50,9 @@ public class ClaseGeneradoraVisualizacionAccesoAlta extends ImplRecursoSimple im
 	}
   	
   	private void inicializa() throws Exception {
-            ventanaAccesoUsuario.setPosicion(850,100);
+            ventanaAccesoUsuario.setPosicion(500,200);
+    		// ventanaAccesoUsuario.setLocationRelativeTo(null);  // *** this will center your app ***            
+
             trazas.aceptaNuevaTraza(new InfoTraza(nombredeEsteRecurso,
   				"Inicializando recurso",
   				InfoTraza.NivelTraza.debug));

@@ -60,6 +60,8 @@ public class PanelAccesoUsuario extends VentanaEstandar {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Acceso a Botzzaroni");
+		this.setLocationRelativeTo(null);  // *** this will center your app ***            
+
 
         botonAlta.setText("Registrarse");
         botonAlta.addActionListener(new java.awt.event.ActionListener() {

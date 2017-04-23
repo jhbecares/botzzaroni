@@ -16,7 +16,7 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.JScrollPane;
 
 import java.awt.Color;
-
+import java.awt.Font;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
@@ -26,14 +26,10 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 
 	JPanel p=new JPanel();
 	JTextArea dialog=new JTextArea(20,50);
-	JTextArea input=new JTextArea(1,50);
+	JTextArea input=new JTextArea(2,50);
 	DefaultCaret c = (DefaultCaret) dialog.getCaret();
 	
-	JScrollPane scroll=new JScrollPane(
-                dialog,
-		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
-	);
+	JScrollPane scroll;
         String nominacionInterlocutor = "usuario";
 	
 	String[][] chatBot={
@@ -52,21 +48,32 @@ public class VisualizadorChatSimple extends JFrame implements KeyListener{
 	};
 	
 	public static void main(String[] args){
-		new VisualizadorChatSimple();
+		VisualizadorChatSimple v = new VisualizadorChatSimple();
+		v.setVisible(true);
+		v.dialog.setText("Probando Probando  Probando Probando Probando Probando Probando Probando Probando Probando");	
 	}
+	
     private InterpreteMsgsPanelChat interpreteTextoUsuario;
 	
 	public VisualizadorChatSimple(){
 		super("Botzzaroni");
-                 this.setLocation(850,100);
-            
-		setSize(600,500);
+		this.setLocation(400, 50);  // *** this will center your app ***            
+		setSize(800,550);
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		dialog.setEditable(false);
+		dialog.setFont(new Font("Arial Black", Font.BOLD, 14));
+		dialog.setLineWrap(true);
+		dialog.setWrapStyleWord(true);
+		input.setFont(new Font("Arial Black", Font.BOLD, 14));
 		input.addKeyListener(this);
 		c.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	
+		scroll=new JScrollPane(
+	            dialog,
+		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+		);
 		p.add(scroll);
 		p.add(input);
 		p.setBackground(new Color(0,127,255));
