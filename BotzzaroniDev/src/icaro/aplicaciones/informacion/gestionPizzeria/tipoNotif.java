@@ -45,4 +45,7 @@ public class tipoNotif {
 	public static String pideBebida ="pideBebida";
 	public static String pidePago ="pidePago";
 	public static String pideCalendario ="pideCalendario";
+	
+	// Otros
+	public static String insultos = "insultos";
 }
