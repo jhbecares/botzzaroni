@@ -107,6 +107,20 @@ public class ConversacionBotzza {
 		despedida.add("Listo el pedido, intentaremos que esté todo a tu gusto. ¡Hasta pronto!");
 		despedida.add("Eso es todo, pedido listo. Esperamos que vuelvas pronto, estamos encantados de atenderte. ¡Hasta la próxima!");
 
+		List<String> respuestaInsultos = new ArrayList<String>();
+		respuestaInsultos.add("Vaya... No me digas esas cosas :(");
+		respuestaInsultos.add("No me gusta que me insulten, jo :(");
+		respuestaInsultos.add("Soy un bot, pero tengo sentimientos :-(");
+		
+		List<String> respuestaInsultos2 = new ArrayList<String>();
+		respuestaInsultos2.add("En serio, te estás pasando.");
+		respuestaInsultos2.add("No me hagas decírtelo más veces, no me gusta que me insulten.");
+		respuestaInsultos2.add("No te pases... ¿A ti te gusta que te insulten?");
+		
+		List<String> respuestaInsultos3 = new ArrayList<String>();
+		respuestaInsultos3.add("Adiós, tengo que atender a más gente. No ha sido un placer hablar contigo.");
+		respuestaInsultos3.add("Me tengo que ir, me estás haciendo perder el tiempo. Hasta otra.");
+		respuestaInsultos3.add("Me temo que hasta aquí llega nuestra conversación. Te has pasado. Nos vemos.");
 		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
@@ -133,6 +147,9 @@ public class ConversacionBotzza {
 		conversacion.put("tengoTuApellido", tengoTuApellido);
 		conversacion.put("solicitarApellidoImperativo", solicitarApellidoImperativo);
 
+		conversacion.put("respuestaInsultos", respuestaInsultos);
+		conversacion.put("respuestaInsultos2", respuestaInsultos2);
+		conversacion.put("respuestaInsultos3", respuestaInsultos3);
 		
 	}
 	
