@@ -123,6 +123,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("bebidas");
 			anotacionesBusquedaPrueba.add("pagoEfectivo");
 			anotacionesBusquedaPrueba.add("pagoTarjeta");
+			anotacionesBusquedaPrueba.add("insultos");
 
 			
 			if (itfUsoExtractorSem != null) {
@@ -387,6 +388,13 @@ public class InterpreteMsgsPanelChat {
 			} 
 			else if (anotType.equalsIgnoreCase("pagoTarjeta")&& !anotaciones_leidas.contains("pagoTarjeta")) {
 				anotaciones_leidas.add("pagoTarjeta");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("insultos")&& !anotaciones_leidas.contains("insultos")) {
+				anotaciones_leidas.add("insultos");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
