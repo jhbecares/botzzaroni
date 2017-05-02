@@ -152,7 +152,7 @@ rule "Cantidad de bebidas totales incorrecta"
    	retract(notif);
 end
 
-rule "Conocer bebida" 
+rule "Preguntar bebida" 
  when
  	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
  	ob:ObtenerNumeroBebidas(state == Objetivo.SOLVING)
@@ -175,7 +175,7 @@ rule "Conocer bebida"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
 end
 
-rule "Obtener bebida" 
+rule "Obtener nombre bebida" 
  when
   	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.bebidas, msgg:mensajeNotificacion)
  	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
