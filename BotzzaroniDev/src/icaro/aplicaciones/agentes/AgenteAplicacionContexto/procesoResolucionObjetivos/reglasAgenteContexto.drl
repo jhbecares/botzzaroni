@@ -25,10 +25,13 @@ global String agentId;
 rule "Creacion de los objetivos iniciales"
 when 
 then 
-TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarInfoWorkMem.class);
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarInfoWorkMem.class);
     tarea.ejecutar();
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-	 
+	IntWrapper insultos = new IntWrapper();
+	insert(insultos);
+	insultos.setMyInt(0);
+	update(insultos);
 end
 
 rule "Regla de focalizacion en objetivo CrearChatUsuario"
@@ -65,6 +68,37 @@ rule "Crear Chat Usuario y mostrarselo"
     obj.setSolved();
     update(obj);
 end
+
+
+rule "Respuesta ante insulto"
+salience 100
+ when
+ 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.insultos)
+ 	insultos:IntWrapper();
+ then
+ 	 if (insultos != null) {
+	 	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+	 	 System.out.println("INSULTOS: " + insultos);
+	 	 int insultosAux = insultos.getMyInt();
+	 	 if (insultosAux == 0) {
+			insultosAux++;
+	     	tarea.ejecutar(identInterlc,ConversacionBotzza.msg("respuestaInsultos"));
+	     } else if (insultosAux == 1) {
+	     	tarea.ejecutar(identInterlc, ConversacionBotzza.msg("respuestaInsultos2"));
+	     	insultosAux++;
+	     } else if (insultosAux >= 2) {
+	     	tarea.ejecutar(identInterlc, ConversacionBotzza.msg("respuestaInsultos3"));
+	     	insultosAux++;
+	     	// TODO fin aplicacion
+	     } 
+	     insultos.setMyInt(insultosAux);
+	     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+	     // retract(notif);
+     }
+     else {
+     	retract(notif);
+     }
+ end
 
 rule "Regla de focalizacion en objetivo SaludarConocer"
  when
@@ -358,7 +392,6 @@ rule "Distribuir mensaje al agente PIZZERO"
      update(obj);
  end
  
-
 /*
 rule "Respuesta ante resaludo del grupo conocido"
  when
