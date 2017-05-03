@@ -118,9 +118,9 @@ public class ConversacionBotzza {
 		respuestaInsultos2.add("No te pases... ¿A ti te gusta que te insulten?");
 		
 		List<String> respuestaInsultos3 = new ArrayList<String>();
-		respuestaInsultos3.add("Adiós, tengo que atender a más gente. No ha sido un placer hablar contigo.");
-		respuestaInsultos3.add("Me tengo que ir, me estás haciendo perder el tiempo. Hasta otra.");
-		respuestaInsultos3.add("Me temo que hasta aquí llega nuestra conversación. Te has pasado. Nos vemos.");
+		respuestaInsultos3.add("Adiós, tengo que atender a más gente. No ha sido un placer hablar contigo. Se cerrará la aplicación.");
+		respuestaInsultos3.add("Me tengo que ir, me estás haciendo perder el tiempo. Hasta otra. Se cerrará la aplicación.");
+		respuestaInsultos3.add("Me temo que hasta aquí llega nuestra conversación. Te has pasado. Nos vemos. Se cerrará la aplicación.");
 		
 		conversacion.put("saludoInicialDesconocido", saludoInicialDesconocido);
 		conversacion.put("saludoInicialConocido", saludoInicialConocido);
