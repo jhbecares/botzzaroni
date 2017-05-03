@@ -14,6 +14,8 @@ import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 
+import java.util.concurrent.TimeUnit;
+
 global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
@@ -78,7 +80,6 @@ salience 100
  then
  	 if (insultos != null) {
 	 	 TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-	 	 System.out.println("INSULTOS: " + insultos);
 	 	 int insultosAux = insultos.getMyInt();
 	 	 if (insultosAux == 0) {
 			insultosAux++;
@@ -90,6 +91,8 @@ salience 100
 	     	tarea.ejecutar(identInterlc, ConversacionBotzza.msg("respuestaInsultos3"));
 	     	insultosAux++;
 	     	// TODO fin aplicacion
+			TimeUnit.SECONDS.sleep(5);
+	     	System.exit(0);
 	     } 
 	     insultos.setMyInt(insultosAux);
 	     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
