@@ -36,3 +36,8 @@ pagoEfectivo.lst::pagoEfectivo:spanish:pagoEfectivo
 pagoTarjeta.lst::pagoTarjeta:spanish:pagoTarjeta
 bebidas.lst::bebidas:spanish:bebidas
 insultos.lst::insultos:spanish:insultos
+year.lst:year
+time_ampm.lst:time:ampm
+time_modifier.lst:time_modifier
+time_unit.lst:time_unit
+timezone.lst:time:zone
