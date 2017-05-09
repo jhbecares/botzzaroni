@@ -52,3 +52,4 @@ months_spanish::date:spanish:month
 day.lst::date:english:day
 dias.lst::date:spanish:day
 day_cap.lst:date:day
+numero.lst::numero:spanish:number
