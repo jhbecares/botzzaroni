@@ -19,7 +19,7 @@ import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.aplicaciones.informacion.gestionPizzeria.Pizza.TamanioPizza;
 import icaro.aplicaciones.informacion.gestionPizzeria.Pizza.MasaPizza;
 
-
+import java.util.ArrayList;
 
 global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
@@ -111,32 +111,76 @@ rule "Obtiene las alergias"
     update(p);
 end
 
+
 rule "Obtiene las alergias correctamente"
+salience 100
 when
     notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.ingredientes, msgg:mensajeNotificacion)
+    notif2:Notificacion(group2:identNotificador, tipoNotificacion == tipoNotif.ingredientes, msgg2:mensajeNotificacion, msgg!=msgg2)
     obGeneral:ObtenerPedidoPizza(state == SOLVING)
     ob:ObtenerIngredientesAlergias(state == PENDING)
     f: FocoUsuario(foco == ob)
     p: Pedido()
  then
- 	ob.setSolved();
- 	Objetivo ob1 = new ObtenerNumeroPizzas();
- 	ob1.setobjectReferenceId(group);
- 	f.setFoco(ob1);
+ 	
+ 	if(msgg.equalsIgnoreCase("kitkat") || msgg.equalsIgnoreCase("KitKat")){
+    	p.addAlergia("KITKAT");
+    }else if(msgg.equalsIgnoreCase("cebolla")){
+    	p.addAlergia("CEBOLLA");
+    }else if(msgg.equalsIgnoreCase("bacon") || msgg.equalsIgnoreCase("Bacon")){
+    	p.addAlergia("BACON");
+    }	
+    
+    if(msgg2.equalsIgnoreCase("kitkat") || msgg2.equalsIgnoreCase("KitKat")){
+    	p.addAlergia("KITKAT");
+    }else if(msgg2.equalsIgnoreCase("cebolla")){
+    	p.addAlergia("CEBOLLA");
+    }else if(msgg2.equalsIgnoreCase("bacon") || msgg2.equalsIgnoreCase("Bacon")){
+    	p.addAlergia("BACON");
+    }	
  	
  	// TODO: Añadir aquí los ingredientes a los que tenga alergia
- 	//p.setAlergias();
  	update(p);
- 	
- 	
-  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
-    tarea.ejecutar(group, ConversacionPizzero.msg("obtieneIngredientesAlergiasCorrecto"));
+ 
+ 	System.out.println(p);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-    update(ob);
-    update(f);
-    insert(ob1);
+  	
+  	retract(notif);    
+  	retract(notif2);       
+end
+
+rule "Obtiene las alergias correctamente fin"
+when 
+	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.ingredientes, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:ObtenerIngredientesAlergias(state == PENDING)
+    f: FocoUsuario(foco == ob)
+    p: Pedido(alergias.size()!=0)
+ then
+ 
+ 	if(msgg.equalsIgnoreCase("kitkat") || msgg.equalsIgnoreCase("KitKat")){
+    	p.addAlergia("KITKAT");
+    }else if(msgg.equalsIgnoreCase("cebolla")){
+    	p.addAlergia("CEBOLLA");
+    }else if(msgg.equalsIgnoreCase("bacon") || msgg.equalsIgnoreCase("Bacon")){
+    	p.addAlergia("BACON");
+    }
+    
+    ob.setSolved();
+    Objetivo ob1 = new ObtenerNumeroPizzas();
+    f.setFoco(ob1);
+
+    update(p);
+ 	update(f);
+ 	insert(ob1);
+    System.out.println(p);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
+    tarea.ejecutar("patata", ConversacionPizzero.msg("obtieneIngredientesAlergiasCorrecto"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
     retract(notif);
 end
+
+
 
 rule "Obtiene las alergias incorrectamente"
 when

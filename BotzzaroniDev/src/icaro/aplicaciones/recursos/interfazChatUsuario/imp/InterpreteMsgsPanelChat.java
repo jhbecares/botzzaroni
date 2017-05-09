@@ -277,8 +277,7 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("ingredientes") && !anotaciones_leidas.contains("ingredientes")) {
-				if (!anotaciones_leidas.contains("ingredientes"))
+			else if (anotType.equalsIgnoreCase("ingredientes")) {
 					anotaciones_leidas.add("ingredientes");
 				tienePeticion = true;
 				anotacionesInterpretadas
