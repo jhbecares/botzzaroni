@@ -16,11 +16,11 @@
 MultiPhase:	TestTheGrammars
 Phases:
 saludo
+date
 identificacionTelefono
 identificacionPortal
 identificacionPiso
 identificacionPuerta
-identificacionFecha
 identificacionHora
 numberletter 
 url_pre

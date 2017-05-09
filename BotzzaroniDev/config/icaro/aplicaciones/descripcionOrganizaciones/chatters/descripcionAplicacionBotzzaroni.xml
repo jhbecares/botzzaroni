@@ -145,7 +145,7 @@
 		<icaro:RecursosAplicacion>
 			<icaro:Instancia id="Persistencia1" refDescripcion="Persistencia" xsi:type="icaro:Instancia">
 				<icaro:listaPropiedades>
-					<icaro:propiedad atributo="MYSQL_NAME_BD" valor="botzzaroni" />
+					<icaro:propiedad atributo="MYSQL_NAME_BD" valor="botzzaroni2" />
                                         <icaro:propiedad atributo="MYSQL_USER" valor="root" />
 					<icaro:propiedad atributo="MYSQL_PASSWORD" valor="" />
 					<icaro:propiedad atributo="MYSQL_SCRIPT_ITEMS" valor="config/botzzaroni.sql" />
