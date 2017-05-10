@@ -125,11 +125,22 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("pagoTarjeta");
 			anotacionesBusquedaPrueba.add("insultos");
 			
-			// ultima entrega
+			// ultima entrega. Fechas
 			anotacionesBusquedaPrueba.add("fechaNumero");
 			anotacionesBusquedaPrueba.add("TempDate");
 			anotacionesBusquedaPrueba.add("TempTime");
 			anotacionesBusquedaPrueba.add("TempYear");
+			anotacionesBusquedaPrueba.add("year");
+			anotacionesBusquedaPrueba.add("ampm");
+			anotacionesBusquedaPrueba.add("time_modifier");
+			anotacionesBusquedaPrueba.add("time_unit");
+			anotacionesBusquedaPrueba.add("zone");
+			anotacionesBusquedaPrueba.add("ordinal");
+			//anotacionesBusquedaPrueba.add("hour");
+			anotacionesBusquedaPrueba.add("horas");
+			anotacionesBusquedaPrueba.add("month");
+			anotacionesBusquedaPrueba.add("day");
+			anotacionesBusquedaPrueba.add("Mes");
 
 			
 			if (itfUsoExtractorSem != null) {
@@ -446,6 +457,94 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			} 
+			else if (anotType.equalsIgnoreCase("year")&& !anotaciones_leidas.contains("year")) {
+				if (!anotaciones_leidas.contains("year"))
+					anotaciones_leidas.add("year");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("ampm")&& !anotaciones_leidas.contains("ampm")) {
+				if (!anotaciones_leidas.contains("ampm"))
+					anotaciones_leidas.add("ampm");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("time_modifier")&& !anotaciones_leidas.contains("time_modifier")) {
+				if (!anotaciones_leidas.contains("time_modifier"))
+					anotaciones_leidas.add("time_modifier");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("time_unit")&& !anotaciones_leidas.contains("time_unit")) {
+				if (!anotaciones_leidas.contains("time_unit"))
+					anotaciones_leidas.add("time_unit");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("zone")&& !anotaciones_leidas.contains("zone")) {
+				if (!anotaciones_leidas.contains("zone"))
+					anotaciones_leidas.add("zone");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("ordinal")&& !anotaciones_leidas.contains("ordinal")) {
+				if (!anotaciones_leidas.contains("ordinal"))
+					anotaciones_leidas.add("ordinal");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+//			else if (anotType.equalsIgnoreCase("hour")&& !anotaciones_leidas.contains("hour")) {
+//				if (!anotaciones_leidas.contains("hour"))
+//					anotaciones_leidas.add("hour");
+//				tienePeticion = true;
+//				anotacionesInterpretadas
+//						.add(interpretarAnotacionSaludoEInicioPeticion(
+//								contextoInterpretacion, annot));
+//			}
+			else if (anotType.equalsIgnoreCase("horas")&& !anotaciones_leidas.contains("horas")) {
+				if (!anotaciones_leidas.contains("horas"))
+					anotaciones_leidas.add("horas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("month")&& !anotaciones_leidas.contains("month")) {
+				if (!anotaciones_leidas.contains("month"))
+					anotaciones_leidas.add("month");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("day")&& !anotaciones_leidas.contains("day")) {
+				if (!anotaciones_leidas.contains("day"))
+					anotaciones_leidas.add("day");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("Mes")&& !anotaciones_leidas.contains("Mes")) {
+				if (!anotaciones_leidas.contains("Mes"))
+					anotaciones_leidas.add("Mes");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
 	}
 		
 		return anotacionesInterpretadas;
