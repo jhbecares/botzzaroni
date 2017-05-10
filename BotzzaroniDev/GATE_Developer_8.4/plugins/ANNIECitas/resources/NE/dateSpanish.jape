@@ -273,6 +273,30 @@ System.out.println("______________ rule hourSpanish3 ");
 :dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
 
 
+Rule: hourSpanish4
+Priority: 110
+(
+({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+({Token.string == "horas"}|{Token.string == "hora"}|
+{Token.string == "hr"}|{Token.string == "hrs"})?
+(({Token.string == " "})?
+({Token.string == "menos"})
+({Token.string == " "})?
+({Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 29})
+({Token.string == "minutos"}|{Token.string == "minuto"}
+|{Token.string == "min"}|{Token.string == "mins"})?))?
+(({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"}|
+(  ({Token.string == "de"}) ({Token.string == " "})? ({Token.string == "la"}) 
+({Token.string == " "})? ({Token.string == "mañana"}))))?
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule hourSpanish4 ");
+},
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
+
 
 
 Rule: stupidHour
