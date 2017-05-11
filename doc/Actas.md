@@ -175,3 +175,31 @@ Los comentarios recibidos fueron los siguientes:
 - No fue muy bien recibido el modo de autenticación de usuarios con la ventana de login usando el agente Alta-Acceso.
 - Se recordó que para la memoria se deben usar diagramas UML del estándar para representar el sistema.
 
+### 8 de Mayo: Comentarios de la segunda entrega y reparto de tareas para la entrega final
+
+El día 8 de Mayo se recibieron las valoraciones de la segunda entrega de la práctica, con un buen resultado general para el proyecto Botzzaroni.
+
+Se recibió feedback de los profesores, destacando los siguientes puntos a mejorar de cara a la entrega final:
+
+* Se debe explicar mejor la arquitectura de componentes del sistema, realizando un diagrama que deje clara la  presencia de los diferentes recursos y  agentes de la aplicación, así como las relaciones entre los mismos, tanto con diagramas estáticos como dinámicos.
+* Se debe incluir más información sobre el proceso de comunicación entre agentes, dejando claro cómo cooperan para llevar a cabo el pedido del usuario de manera correcta.
+* Se deben documentar los recursos, cosa que no se ha realizado en esta entrega, detallando aspectos sobre sus interfaces de funcionamiento.
+* Se propuso cambiar el modelo de comunicación mediante Notificaciones, cosa que no tuvo mucha aceptación por parte del equipo desarrollador.
+* Se recalcó que en el apartado "when" de las reglas debe existir la menor interacción posible, colocando este código en tareas que puedan ser reutilizadas.
+
+Una vez recibidas las valoraciones, el equipo se reunió para determinar el reparto de tareas para la entrega final.
+En concreto, respecto a la documentación, los papeles son los siguientes:
+
+* Alfonso y Vero: Revisión del agente Bebida, así como integración de la misma en el resumen del pedido que indica el agente Pago.
+
+* Frank y Alex: Completar el funcionamiento del agente Pizzero, comenzando por la realización de pedidos con pizzas personalizadas, para seguir con las recomendaciones de pizzas a los usuarios habituales de la aplicación.
+
+* Jenny: Implementación completa del último agente de la aplicación, el agente Calendario, encargado de determinar la fecha de entrega de los pedidos.
+
+ * Bea: Implementación del recurso de persistencia, integración de agentes y ayuda a los compañeros.
+ 
+ Se indicó además que las presentaciones de la demo final se harán en clase los días 29 y 31 de Mayo, y la siguiente semana se deberá entregar la memoria final del proyecto.
+
+
+
+
