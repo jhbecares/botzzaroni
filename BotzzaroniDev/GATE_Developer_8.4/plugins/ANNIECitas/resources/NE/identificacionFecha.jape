@@ -48,7 +48,7 @@ Priority: 80
 ):identificacionFecha
 -->
 :identificacionFecha{
-System.out.println("______________ rule identificacionFecha ");
+System.out.println("______________ rule identificacionFecha 2");
 System.out.println("The individual tokens : " );
 for (Annotation tok : identificacionFechaAnnots) {
 FeatureMap fm = tok.getFeatures();
@@ -69,7 +69,7 @@ Priority: 70
 ):identificacionFecha
 -->
 :identificacionFecha{
-System.out.println("______________ rule identificacionFecha ");
+System.out.println("______________ rule identificacionFecha 3");
 System.out.println("The individual tokens : " );
 for (Annotation tok : identificacionFechaAnnots) {
 FeatureMap fm = tok.getFeatures();
@@ -91,7 +91,7 @@ Priority: 60
 ):identificacionFecha
 -->
 :identificacionFecha{
-System.out.println("______________ rule identificacionFecha ");
+System.out.println("______________ rule identificacionFecha 4");
 System.out.println("The individual tokens : " );
 for (Annotation tok : identificacionFechaAnnots) {
 FeatureMap fm = tok.getFeatures();
@@ -114,7 +114,7 @@ Priority: 60
 ):identificacionFecha
 -->
 :identificacionFecha{
-System.out.println("______________ rule identificacionFecha ");
+System.out.println("______________ rule identificacionFecha 5");
 System.out.println("The individual tokens : " );
 for (Annotation tok : identificacionFechaAnnots) {
 FeatureMap fm = tok.getFeatures();
@@ -134,7 +134,7 @@ Priority: 60
 ):identificacionFecha
 -->
 :identificacionFecha{
-System.out.println("______________ rule identificacionFecha ");
+System.out.println("______________ rule identificacionFecha 6");
 System.out.println("The individual tokens : " );
 for (Annotation tok : identificacionFechaAnnots) {
 FeatureMap fm = tok.getFeatures();

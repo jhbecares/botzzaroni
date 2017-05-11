@@ -54,6 +54,19 @@ then
 	retract(notif);
 end
 
+rule "Notificacion calendario numero"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.numero)
+then
+
+	System.out.println("reconocido NUMERO");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	System.out.println(notif.getTipoNotificacion());
+	
+	retract(notif);
+end
+
 // "usuario" es el nombre del usuario del chat.
 
 
