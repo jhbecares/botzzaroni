@@ -15,6 +15,9 @@ public class ParseDate {// extends TareaSincrona {
         ParseDate.ejecutar("", "22 horas y 15 minutos");
         ParseDate.ejecutar("", "22 horas y 15 minutos am");
         ParseDate.ejecutar("", "12 horas y 15 minutos am");
+        ParseDate.ejecutar("", "12 y media");
+        ParseDate.ejecutar("", "12 y cuarto");
+        ParseDate.ejecutar("", "12 menos cuarto");
 
     }
 
@@ -61,8 +64,15 @@ public class ParseDate {// extends TareaSincrona {
         // y
         // 14
         // minutos
-        String pattern7 = "";
-        String pattern8 = "";
+        String pattern7 = "(?<hora>[01]?[0-9]|2[0-3])(\\s)*(y)(\\s)*(?<timemod>cuarto|media)"; // 12
+                                                                                               // y
+                                                                                               // cuarto,
+                                                                                               // 22
+                                                                                               // y
+                                                                                               // media
+        String pattern8 = "(?<hora>[01]?[0-9]|2[0-3])(\\s)*(menos)(\\s)*(?<timemod>cuarto)"; // 22
+                                                                                             // menos
+                                                                                             // cuarto
 
         Pattern pat;
         Matcher fechaMatcher;
@@ -135,7 +145,7 @@ public class ParseDate {// extends TareaSincrona {
         if (fechaMatcher.matches()) {
             System.out.println("matches 7");
             System.out.println("hora: " + fechaMatcher.group("hora")
-                    + ", minuto: " + fechaMatcher.group("minuto"));
+                    + ", timemod: " + fechaMatcher.group("timemod"));
 
         }
 
@@ -145,8 +155,7 @@ public class ParseDate {// extends TareaSincrona {
         if (fechaMatcher.matches()) {
             System.out.println("matches 8");
             System.out.println("hora: " + fechaMatcher.group("hora")
-                    + ", minuto: " + fechaMatcher.group("minuto"));
-
+                    + ", timemod: " + fechaMatcher.group("timemod"));
         }
 
     }
