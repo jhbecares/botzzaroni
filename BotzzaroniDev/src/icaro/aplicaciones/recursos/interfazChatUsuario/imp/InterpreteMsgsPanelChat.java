@@ -195,6 +195,8 @@ public class InterpreteMsgsPanelChat {
 		// modelo de informacion
 		ArrayList anotacionesInterpretadas = new ArrayList();
 		ArrayList<String> anotaciones_leidas = new ArrayList<String>();
+		
+		String ingredientes = "";
  
 		Iterator annotTypesSal = anotacionesRelevantes.iterator();
 
@@ -280,9 +282,9 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("ingredientes")) {
 					anotaciones_leidas.add("ingredientes");
 				tienePeticion = true;
-				anotacionesInterpretadas
-						.add(interpretarAnotacionSaludoEInicioPeticion(
-								contextoInterpretacion, annot));
+				// anotacionesInterpretadas .add(interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot));
+				Notificacion n  = interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot);
+				ingredientes += n.getMensajeNotificacion() + " ";
 			}
 			else if (anotType.equalsIgnoreCase("salsas") && !anotaciones_leidas.contains("salsas")) {
 				if (!anotaciones_leidas.contains("salsas"))
@@ -390,8 +392,15 @@ public class InterpreteMsgsPanelChat {
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
-			} 
+			}
 	}
+		if(!ingredientes.equalsIgnoreCase("")){
+			Notificacion listaIngredientes = new Notificacion();
+			listaIngredientes.setMensajeNotificacion(ingredientes);
+			listaIngredientes.setTipoNotificacion("ingredientes");
+			anotacionesInterpretadas.add(listaIngredientes);
+			
+		}
 		
 		return anotacionesInterpretadas;
 	}

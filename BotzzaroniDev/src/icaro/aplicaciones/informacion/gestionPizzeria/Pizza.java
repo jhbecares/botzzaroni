@@ -38,6 +38,10 @@ public class Pizza {
 		salsa = String_Default;
 	}
 	
+	public void addIngrediente(String ingrediente){
+		ingredientes.add(new Ingrediente(ingrediente));
+	}
+	
 	public double getPrecio() {
 		return precio;
 	}
