@@ -4,11 +4,11 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
 import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
 import icaro.infraestructura.entidadesBasicas.comunicacion.*
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.objetivos.*;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.*;
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas.*;
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tools.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tools.*;
 
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -28,15 +28,22 @@ then
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
+
 rule "Peticion fecha calendario"
 when
-	user: Usuario()
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.pideCalendario)
 then
-	System.out.println("inicio calendario");
-
 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionCalendario"));
+    tarea.ejecutar(identInterlc,ConversacionCalendario.msg("peticionCalendario"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+
+	Objetivo obGeneral = new ObtenerEntrega();
+    insert(obGeneral);
+    
+  	FocoUsuario fc = new FocoUsuario(identInterlc);
+  	fc.setFoco(obGeneral);	
+  	insert(fc);
+
 end
 
 // Reglas auxiliares calendario
