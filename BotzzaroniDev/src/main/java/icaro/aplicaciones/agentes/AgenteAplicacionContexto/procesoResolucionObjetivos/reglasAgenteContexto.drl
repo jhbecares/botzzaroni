@@ -20,52 +20,6 @@ global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
 
-// Reglas auxiliares calendario
-rule "Notificacion calendario fecha"
-salience 1000
-when 
-	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempDate)
-then
-	System.out.println("reconocida FECHA");
-	System.out.println("uee: " + notif.getMensajeNotificacion());
-	
-	retract(notif);
-end
-
-rule "Notificacion calendario hora"
-salience 1000
-when 
-	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempTime)
-then
-	System.out.println("reconocida HORA");
-	System.out.println("uee: " + notif.getMensajeNotificacion());
-	
-	retract(notif);
-end
-
-rule "Notificacion calendario año"
-salience 1000
-when 
-	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempYear)
-then
-	System.out.println("reconocido AÑO");
-	System.out.println("uee: " + notif.getMensajeNotificacion());
-	
-	retract(notif);
-end
-
-rule "Notificacion calendario numero"
-salience 1000
-when 
-	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.numero)
-then
-
-	System.out.println("reconocido NUMERO");
-	System.out.println("uee: " + notif.getMensajeNotificacion());
-	System.out.println(notif.getTipoNotificacion());
-	
-	retract(notif);
-end
 
 // "usuario" es el nombre del usuario del chat.
 
@@ -153,6 +107,8 @@ rule "Regla de focalizacion en objetivo SaludarConocer"
  when
  	objA:CrearChatUsuario(state == Objetivo.SOLVED)
     f:Focus(foco == objA)
+    //obj: ObtenerFechaEntrega()
+    // CUIDADO, CAMBIAR ESTO
     obj:SaludarConocer()
  then
     f.setFoco(obj);
@@ -200,7 +156,9 @@ then
    	MensajeSimple mensaje = new MensajeSimple(user, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
    	iftAgente.aceptaMensaje(mensaje);
    	
-   	Objetivo ob = new ObtenerPizza();
+   	// CAMBIAR ESTO TODO TODO TODO FIXME
+	//   	Objetivo ob = new ObtenerPizza();
+ 	Objetivo ob = new ObtenerFechaEntrega();
  	// ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
@@ -435,7 +393,7 @@ rule "Distribuir mensaje al agente PIZZERO"
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
-     //tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteCalendario);
+     tarea.ejecutar(notif, VocabularioGestionPizzeria.IdentAgenteCalendario);
      retract(notif);
      update(f);
      update(obj);

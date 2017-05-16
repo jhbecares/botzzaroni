@@ -4,11 +4,11 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
 import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
 import icaro.infraestructura.entidadesBasicas.comunicacion.*
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.objetivos.*;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.*;
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas.*;
-import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tools.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tools.*;
 
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -35,7 +35,7 @@ then
 	System.out.println("inicio calendario");
 
 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionCalendario"));
+    tarea.ejecutar(user.getNombre(),ConversacionCalendario.msg("peticionCalendario"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
@@ -55,9 +55,16 @@ rule "Notificacion calendario hora"
 salience 1000
 when 
 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempTime)
+	//user:Usuario()
+	// FIXME el nombre del usuario no lo tiene
 then
 	System.out.println("reconocida HORA");
 	System.out.println("uee: " + notif.getMensajeNotificacion());
+	
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionCalendario.msg("reconocidaHora"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+	
 	
 	retract(notif);
 end
