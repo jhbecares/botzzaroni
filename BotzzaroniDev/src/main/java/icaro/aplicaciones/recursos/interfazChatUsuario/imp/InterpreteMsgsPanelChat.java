@@ -49,7 +49,7 @@ public class InterpreteMsgsPanelChat {
     private MensajeSimple mensajeAenviar;
     private InterfazUsoAgente itfAgenteDialogo;
     private ItfUsoExtractorSemantico itfUsoExtractorSem;
-    private HashSet anotacionesRelevantes;
+    private HashSet<?> anotacionesRelevantes;
     private InfoConexionUsuario infoConecxInterlocutor;
     private String identificadordeEsteRecurso;
     private String identificadorAgenteaReportar;
@@ -100,7 +100,7 @@ public class InterpreteMsgsPanelChat {
     
     // Se envia la información al extrator semantico se traducen las anotaciones y se envia el contenido al agente de dialogo
     // de esta forma el agente recibe mensajes con entidades del modelo de información
-			HashSet anotacionesBusquedaPrueba = new HashSet();
+			HashSet<String> anotacionesBusquedaPrueba = new HashSet<String>();
 			anotacionesBusquedaPrueba.add("saludo");
 			anotacionesBusquedaPrueba.add("telefono");
 			anotacionesBusquedaPrueba.add("hora");
@@ -148,7 +148,7 @@ public class InterpreteMsgsPanelChat {
 					anotacionesRelevantes = itfUsoExtractorSem.extraerAnotaciones(anotacionesBusquedaPrueba, textoUsuario);
 					String anot = anotacionesRelevantes.toString();
 					System.out.println(System.currentTimeMillis() + " " + anot);
-					ArrayList infoAenviar = interpretarAnotaciones(sender, textoUsuario, anotacionesRelevantes);
+					ArrayList<Notificacion> infoAenviar = interpretarAnotaciones(sender, textoUsuario, anotacionesRelevantes);
 					enviarInfoExtraida(infoAenviar, sender);
 				} catch (Exception ex) {
 					Logger.getLogger(InterpreteMsgsIRC.class.getName()).log(
@@ -184,7 +184,7 @@ public class InterpreteMsgsPanelChat {
 //        }
     }
    
-    private void enviarInfoExtraida(ArrayList infoExtraida, String sender) {
+    private void enviarInfoExtraida(ArrayList<Notificacion> infoExtraida, String sender) {
 
     	if (itfAgenteDialogo != null) {
 			try {
@@ -207,14 +207,14 @@ public class InterpreteMsgsPanelChat {
 		}
 	}   
    
-	private ArrayList interpretarAnotaciones(String interlocutor,
-			String contextoInterpretacion, HashSet anotacionesRelevantes) {
+	private ArrayList<Notificacion> interpretarAnotaciones(String interlocutor,
+			String contextoInterpretacion, HashSet<?> anotacionesRelevantes) {
 		// recorremos las anotaciones obtenidas y las traducimos a objetos del
 		// modelo de informacion
-		ArrayList anotacionesInterpretadas = new ArrayList();
+		ArrayList<Notificacion> anotacionesInterpretadas = new ArrayList<Notificacion>();
 		ArrayList<String> anotaciones_leidas = new ArrayList<String>();
  
-		Iterator annotTypesSal = anotacionesRelevantes.iterator();
+		Iterator<?> annotTypesSal = anotacionesRelevantes.iterator();
 
 		boolean tienePeticion = false;
 		while (annotTypesSal.hasNext()) {

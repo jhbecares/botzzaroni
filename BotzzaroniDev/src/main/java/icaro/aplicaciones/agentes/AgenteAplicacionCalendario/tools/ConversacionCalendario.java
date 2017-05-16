@@ -14,9 +14,11 @@ public class ConversacionCalendario {
 		List<String> peticionCalendario = new ArrayList<String>();
 		peticionCalendario.add("¿Cuándo querrás recibir tu pedido?");
 		
+		List<String> reconocidaHora = new ArrayList<String>();
+		reconocidaHora.add("Se ha reconocido una hora.");
 
 		conversacion.put("peticionCalendario", peticionCalendario);
-	
+		conversacion.put("reconocidaHora", reconocidaHora);
 		
 	}
 	

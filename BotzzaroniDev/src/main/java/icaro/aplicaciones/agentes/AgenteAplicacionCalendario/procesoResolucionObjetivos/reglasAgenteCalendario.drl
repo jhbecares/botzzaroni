@@ -62,9 +62,16 @@ rule "Notificacion calendario hora"
 salience 1000
 when 
 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempTime)
+	//user:Usuario()
+	// FIXME el nombre del usuario no lo tiene
 then
 	System.out.println("reconocida HORA");
 	System.out.println("uee: " + notif.getMensajeNotificacion());
+	
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(identInterlc,ConversacionCalendario.msg("reconocidaHora"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+	
 	
 	retract(notif);
 end

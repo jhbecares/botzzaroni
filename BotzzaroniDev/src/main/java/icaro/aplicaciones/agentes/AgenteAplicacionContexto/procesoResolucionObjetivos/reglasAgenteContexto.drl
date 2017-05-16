@@ -106,6 +106,8 @@ rule "Regla de focalizacion en objetivo SaludarConocer"
  when
  	objA:CrearChatUsuario(state == Objetivo.SOLVED)
     f:Focus(foco == objA)
+    //obj: ObtenerFechaEntrega()
+    // CUIDADO, CAMBIAR ESTO
     obj:SaludarConocer()
  then
     f.setFoco(obj);
@@ -153,7 +155,9 @@ then
    	MensajeSimple mensaje = new MensajeSimple(user, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgentePizzero);
    	iftAgente.aceptaMensaje(mensaje);
    	
-   	Objetivo ob = new ObtenerPizza();
+   	// CAMBIAR ESTO TODO TODO TODO FIXME
+	//   	Objetivo ob = new ObtenerPizza();
+ 	Objetivo ob = new ObtenerFechaEntrega();
  	// ob.setobjectReferenceId(identInterlc);
  	ob.setSolving();
  	insert(ob); 	
