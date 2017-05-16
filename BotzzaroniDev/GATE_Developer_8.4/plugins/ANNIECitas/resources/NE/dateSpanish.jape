@@ -204,18 +204,6 @@ System.out.println("______________ rule dateSpanish2");
 :dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
 
 
-Rule: dateSpanish3
-Priority: 200
-(
-  {Lookup.minorType == "month"}
-):dateSpanish
--->
-:dateSpanish{
-System.out.println("______________ rule dateSpanish3");
-},
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
-
-
 /////////////////////
 //// HOUR
 /////////////////////
@@ -251,7 +239,8 @@ System.out.println("______________ rule hourSpanish2 ");
 Rule: hourSpanish3
 Priority: 110
 (
-({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+(({Token.kind == "number",Token.string >=0,Token.string < 13})|
+ ({Lookup.majorType == "numero"})) // un numero del 0 al 12
 ({Token.string == "horas"}|{Token.string == "hora"}|
 {Token.string == "hr"}|{Token.string == "hrs"})?
 (({Token.string == " "})?
@@ -298,14 +287,3 @@ System.out.println("______________ rule hourSpanish4 ");
 :dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
 
 
-
-Rule: stupidHour
-Priority: 110
-(
-{Lookup.minorType == time_unit}
-):dateSpanish
--->
-:dateSpanish{
-System.out.println("______________ rule stupidHour ");
-},
-:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"}

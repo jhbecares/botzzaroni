@@ -55,6 +55,11 @@
 					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionPago"
 					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionPago.procesoResolucionObjetivos.reglasAgentePago.drl"
 					tipo="Cognitivo" />
+				<icaro:DescComportamientoAgente
+					nombreComportamiento="AgenteAplicacionCalendario" rol="AgenteAplicacion"
+					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionCalendario"
+					localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionCalendario.procesoResolucionObjetivos.reglasAgenteCalendario.drl"
+					tipo="Cognitivo" />
 			</icaro:DescComportamientoAgentesAplicacion>
 		</icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
@@ -86,6 +91,7 @@
 				 <icaro:componenteGestionado refId="AgenteAplicacionPizzero1" tipoComponente="AgenteAplicacion" />
 				 <icaro:componenteGestionado refId="AgenteAplicacionBebida1" tipoComponente="AgenteAplicacion" />
 				 <icaro:componenteGestionado refId="AgenteAplicacionPago1" tipoComponente="AgenteAplicacion" />
+				 <icaro:componenteGestionado refId="AgenteAplicacionCalendario1" tipoComponente="AgenteAplicacion" />
 				</icaro:componentesGestionados>
 						
 			</icaro:InstanciaGestor>
@@ -133,6 +139,12 @@
 			</icaro:Instancia>
 			
 			<icaro:Instancia id="AgenteAplicacionPago1" refDescripcion="AgenteAplicacionPago">
+				<icaro:listaPropiedades>
+					<icaro:propiedad atributo="" valor="" />
+				</icaro:listaPropiedades>
+			</icaro:Instancia>
+			
+			<icaro:Instancia id="AgenteAplicacionCalendario1" refDescripcion="AgenteAplicacionCalendario">
 				<icaro:listaPropiedades>
 					<icaro:propiedad atributo="" valor="" />
 				</icaro:listaPropiedades>

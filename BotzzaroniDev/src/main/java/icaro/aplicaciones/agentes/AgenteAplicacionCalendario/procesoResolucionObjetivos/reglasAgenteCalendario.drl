@@ -1,0 +1,87 @@
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
+import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
+import icaro.infraestructura.entidadesBasicas.PerformativaUsuario;
+import icaro.infraestructura.entidadesBasicas.comunicacion.*
+import icaro.aplicaciones.agentes.AgenteAplicacionContexto.objetivos.*;
+
+import icaro.aplicaciones.informacion.gestionPizzeria.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tareas.*;
+import icaro.aplicaciones.agentes.AgenteAplicacionContexto.tools.*;
+
+import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
+import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
+import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
+
+import java.util.concurrent.TimeUnit;
+
+global ItfGestorTareas gestorTareas;
+global ItfUsoRecursoTrazas recursoTrazas;
+global String agentId;
+
+rule "Creacion de los objetivos iniciales"
+when 
+then 
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarInfoWorkMem.class);
+    tarea.ejecutar();
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Peticion fecha calendario"
+when
+	user: Usuario()
+then
+	System.out.println("inicio calendario");
+
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("peticionCalendario"));
+   	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+// Reglas auxiliares calendario
+rule "Notificacion calendario fecha"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempDate)
+then
+	System.out.println("reconocida FECHA");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	
+	retract(notif);
+end
+
+rule "Notificacion calendario hora"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempTime)
+then
+	System.out.println("reconocida HORA");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	
+	retract(notif);
+end
+
+rule "Notificacion calendario año"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempYear)
+then
+	System.out.println("reconocido AÑO");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	
+	retract(notif);
+end
+
+rule "Notificacion calendario numero"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.numero)
+then
+
+	System.out.println("reconocido NUMERO");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	System.out.println(notif.getTipoNotificacion());
+	
+	retract(notif);
+end

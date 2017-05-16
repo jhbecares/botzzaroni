@@ -36,7 +36,7 @@ pagoEfectivo.lst::pagoEfectivo:spanish:pagoEfectivo
 pagoTarjeta.lst::pagoTarjeta:spanish:pagoTarjeta
 bebidas.lst::bebidas:spanish:bebidas
 insultos.lst::insultos:spanish:insultos
-year.lst:year:::year
+year.lst:year:year
 time_ampm.lst:ampm:ampm::ampm
 time_modifier.lst::time_modifier:english:time_modifier
 time_modifier_spanish.lst::time_modifier:spanish:time_modifier
@@ -45,11 +45,11 @@ time_unit_spanish.lst::time_unit:spanish:time_unit
 timezone.lst:time:zone
 ordinal.lst:date:ordinal:spanish:ordinal
 ordinal.lst:date:ordinal:english:ordinal
-horas.lst:horas:horas:spanish:horas
-months.lst:month:month:english:month2
-months_lower.lst:month:month:english:month
-months_spanish.lst:month:month:spanish:month
+horas.lst:horas:horas
+months.lst:month:month
+months_lower.lst:month:month
+months_spanish.lst:month:month
 day.lst:date:day:english:day
-dias.lst:date:day:spanish:day
+dias.lst:date:day
 day_cap.lst:date:day:english:day
-numero.lst:numero:numero:spanish:numero
+numero.lst:numero:numero
