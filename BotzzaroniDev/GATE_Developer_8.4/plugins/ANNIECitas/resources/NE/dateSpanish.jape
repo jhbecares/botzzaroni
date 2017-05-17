@@ -268,14 +268,14 @@ System.out.println("______________ rule hourSpanish3 ");
 Rule: hourSpanish4
 Priority: 110
 (
-({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+({Token.kind == "number",Token.string >=0,Token.string < 13}):hora // un numero del 0 al 12
 ({Token.string == "horas"}|{Token.string == "hora"}|
 {Token.string == "hr"}|{Token.string == "hrs"})?
 (({Token.string == " "})?
 ({Token.string == "menos"})
 ({Token.string == " "})?
 ({Token.string == "cuarto"}
-|({Token.kind == "number",Token.string>=0, Token.string <= 29})
+|({Token.kind == "number",Token.string>=0, Token.string <= 29}):minuto
 ({Token.string == "minutos"}|{Token.string == "minuto"}
 |{Token.string == "min"}|{Token.string == "mins"})?))?
 (({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
@@ -287,4 +287,6 @@ Priority: 110
 :dateSpanish{
 System.out.println("______________ rule hourSpanish4 ");
 },
-:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" }

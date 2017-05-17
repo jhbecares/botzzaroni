@@ -141,6 +141,9 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("month");
 			anotacionesBusquedaPrueba.add("day");
 			anotacionesBusquedaPrueba.add("Mes");
+			anotacionesBusquedaPrueba.add("miHora");
+			anotacionesBusquedaPrueba.add("miMinuto");
+
 
 			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
@@ -549,6 +552,22 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
 				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
 					anotaciones_leidas.add("NombrePizzaPersonalizada");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("miHora")&& !anotaciones_leidas.contains("miHora")) {
+				if (!anotaciones_leidas.contains("miHora"))
+					anotaciones_leidas.add("miHora");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("miMinuto")&& !anotaciones_leidas.contains("miMinuto")) {
+				if (!anotaciones_leidas.contains("miMinuto"))
+					anotaciones_leidas.add("miMinuto");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
