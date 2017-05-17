@@ -35,7 +35,13 @@ public class Pizza {
 	public Pizza(){
 		ingredientes = new ArrayList<Ingrediente>();
 		usuarioCreador = new Usuario();
-		salsa = String_Default;
+		precio = 0.0;
+		salsa = "";
+		personalizada = false;
+		nombrePizza = "";
+		tamanio = null;
+		masa = null;
+		// salsa = String_Default;
 	}
 	
 	public void addIngrediente(String ingrediente){
