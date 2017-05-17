@@ -13,9 +13,12 @@
 *  $Id: date.jape 17311 2014-02-14 18:49:50Z dgmaynard $
 */
 
+Imports: {
+import static gate.Utils.*;
+}
 
 Phase:	dateSpanish
-Input: Token Lookup
+Input: Token Lookup Split
 Options: control = appelt
 //Options: control = brill
 
@@ -285,5 +288,3 @@ Priority: 110
 System.out.println("______________ rule hourSpanish4 ");
 },
 :dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
-
-

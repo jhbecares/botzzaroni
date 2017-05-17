@@ -142,6 +142,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("day");
 			anotacionesBusquedaPrueba.add("Mes");
 
+			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -540,6 +541,14 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("Mes")&& !anotaciones_leidas.contains("Mes")) {
 				if (!anotaciones_leidas.contains("Mes"))
 					anotaciones_leidas.add("Mes");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
+				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
+					anotaciones_leidas.add("NombrePizzaPersonalizada");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(

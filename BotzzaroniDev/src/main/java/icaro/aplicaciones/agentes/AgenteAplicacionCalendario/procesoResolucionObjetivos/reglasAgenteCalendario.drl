@@ -99,3 +99,16 @@ then
 	
 	retract(notif);
 end
+
+rule "Notificacion nombre pizza personalizada"
+salience 1000
+when 
+	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.NombrePizzaPersonalizada)
+then
+
+	System.out.println("reconocido nombre pizza personalizada");
+	System.out.println("uee: " + notif.getMensajeNotificacion());
+	System.out.println(notif.getTipoNotificacion());
+	
+	retract(notif);
+end

@@ -1,0 +1,37 @@
+/*
+*  time.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Diana Maynard, 10 Sep 2001
+* 
+*  $Id: date.jape 17311 2014-02-14 18:49:50Z dgmaynard $
+*/
+
+Imports: {
+import static gate.Utils.*;
+}
+
+Phase:	dateSpanish
+Input: Token Lookup Split
+Options: control = appelt
+//Options: control = brill
+
+
+
+Rule: pizza
+Priority: 110
+(
+({Token.string == "@"})
+({Token.string ==~ "(\\w*)"})
+):pizza
+-->
+:pizza{
+System.out.println("______________ rule pizza ");
+},
+:pizza.NombrePizzaPersonalizada = {kind = "pizza", rule = "pizza"}
