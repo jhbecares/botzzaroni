@@ -281,7 +281,7 @@ System.out.println("______________ rule hourSpanish3 ");
 :hora.miHora = { kind = "hora"},
 :minuto.miMinuto = { kind = "minuto" },
 :timeframe.miTimeframe = { kind = "timeframe" },
-:modificador:miModificador = { kind = "modificador" }
+:modificador.miModificador = { kind = "modificador" }
 
 
 Rule: hourSpanish4
@@ -308,5 +308,5 @@ System.out.println("______________ rule hourSpanish4 ");
 :hora.miHora = { kind = "hora"},
 :minuto.miMinuto = { kind = "minuto" },
 :timeframe.miTimeframe = { kind = "timeframe" },
-:modificador:miModificador = { kind = "modificador" }
+:modificador.miModificador = { kind = "modificador" }
 
