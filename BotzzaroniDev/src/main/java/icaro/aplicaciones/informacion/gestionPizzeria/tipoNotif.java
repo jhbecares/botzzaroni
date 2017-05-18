@@ -67,4 +67,7 @@ public class tipoNotif {
 	public static String NombrePizzaPersonalizada = "NombrePizzaPersonalizada";
 	public static String miHora = "miHora";
 	public static String miMinuto = "miMinuto";
+	public static String miDia = "miDia";
+	public static String miMes = "miMes";
+	public static String miTimeframe = "miTimeframe";
 }

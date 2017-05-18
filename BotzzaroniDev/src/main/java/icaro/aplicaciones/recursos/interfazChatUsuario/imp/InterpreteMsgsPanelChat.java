@@ -5,31 +5,28 @@
  */
 package icaro.aplicaciones.recursos.interfazChatUsuario.imp;
 
-import icaro.aplicaciones.recursos.comunicacionChat.imp.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import gate.Annotation;
 import icaro.aplicaciones.informacion.gestionPizzeria.InfoConexionUsuario;
 import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
 import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
+import icaro.aplicaciones.recursos.comunicacionChat.imp.InterpreteMsgsIRC;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc;
-import static icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc.VERSION;
 import icaro.aplicaciones.recursos.extractorSemantico.ItfUsoExtractorSemantico;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ParserFecha;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
-import icaro.infraestructura.entidadesBasicas.excepciones.ExcepcionEnComponente;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -143,7 +140,9 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("Mes");
 			anotacionesBusquedaPrueba.add("miHora");
 			anotacionesBusquedaPrueba.add("miMinuto");
-
+			anotacionesBusquedaPrueba.add("miDia");
+			anotacionesBusquedaPrueba.add("miMes");
+			anotacionesBusquedaPrueba.add("miTimeframe");
 
 			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
@@ -573,6 +572,30 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
+	     else if (anotType.equalsIgnoreCase("miDia")&& !anotaciones_leidas.contains("miDia")) {
+	         if (!anotaciones_leidas.contains("miDia"))
+	           anotaciones_leidas.add("miDia");
+	         tienePeticion = true;
+	         anotacionesInterpretadas
+	             .add(interpretarAnotacionSaludoEInicioPeticion(
+	                 contextoInterpretacion, annot));
+	    }
+	      else if (anotType.equalsIgnoreCase("miMes")&& !anotaciones_leidas.contains("miMes")) {
+	          if (!anotaciones_leidas.contains("miMes"))
+	            anotaciones_leidas.add("miMes");
+	          tienePeticion = true;
+	          anotacionesInterpretadas
+	              .add(interpretarAnotacionSaludoEInicioPeticion(
+	                  contextoInterpretacion, annot));
+	        }
+        else if (anotType.equalsIgnoreCase("miTimeframe")&& !anotaciones_leidas.contains("miTimeframe")) {
+            if (!anotaciones_leidas.contains("miTimeframe"))
+              anotaciones_leidas.add("miTimeframe");
+            tienePeticion = true;
+            anotacionesInterpretadas
+                .add(interpretarAnotacionSaludoEInicioPeticion(
+                    contextoInterpretacion, annot));
+          }
 	}
 		
 		return anotacionesInterpretadas;
