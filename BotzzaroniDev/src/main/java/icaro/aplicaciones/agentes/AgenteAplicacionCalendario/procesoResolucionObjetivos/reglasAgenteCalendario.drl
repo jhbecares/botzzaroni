@@ -68,20 +68,20 @@ then
 end
 
 
-rule "Recibir fecha con dia, mes, año"
+rule "Recibir fecha con dia, mes, anio"
 salience 500
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMes)
-    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miYear)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMes)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion == tipoNotif.miYear)
     sdf:SimpleDateFormat()
 then
-    GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     gc.set(Calendar.YEAR, Integer.parseInt(notif3.getMensajeNotificacion()));
     gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
-    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion()));
     sdf.setCalendar(gc);
     
     update(sdf);
@@ -90,7 +90,7 @@ then
     ob.setSolved();
     update(ob);
     
-    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
     // TODO comprobar si hay que hacer algo mas
     
@@ -105,10 +105,10 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMes)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMes)
     sdf:SimpleDateFormat()
 then
-    GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     // cogemos una instancia del calendario actual para poner el mismo año
     Calendar calendar = Calendar.getInstance();
@@ -116,7 +116,7 @@ then
     
     gc.set(Calendar.YEAR, currentYear);
     gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
-    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion()));
     sdf.setCalendar(gc);
     
     update(sdf);
@@ -140,12 +140,12 @@ rule "Recibir fecha con dia"
 salience 400
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
-    ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
+    ob:ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
     sdf:SimpleDateFormat()
 then
     // cogemos una instancia del calendario actual para poner el mismo año y mes
-    GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     Calendar calendar = Calendar.getInstance();
     int currentYear = calendar.get(Calendar.YEAR); 
@@ -166,11 +166,11 @@ then
     } else {
 	    gc.set(Calendar.YEAR, currentYear);
 	    gc.set(Calendar.MONTH, currentMonth); 
-	    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+	    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion()));
 	    sdf.setCalendar(gc);
     }
     
-    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
     
     update(sdf);
@@ -187,13 +187,13 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
-    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miModificador)
-    notif4:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion == tipoNotif.miModificador)
+    notif4:Notificacion(identInterlc4:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
     sdf:SimpleDateFormat()
 then
     // cogemos una instancia del calendario actual
-    GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
     int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
@@ -236,7 +236,7 @@ then
     ob.setSolved();
     update(ob);
     
-    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
     
     retract(notif);
@@ -251,12 +251,12 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
-    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
     sdf:SimpleDateFormat()
 then
     // cogemos una instancia del calendario actual
-    GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
     int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
@@ -277,7 +277,7 @@ then
     
     sdf.setCalendar(gc);
     
-    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
     ob.setSolved();
     update(ob);
@@ -293,11 +293,13 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
-    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miModificador)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion == tipoNotif.miModificador)
     sdf:SimpleDateFormat()
 then
-    GregorianCalendar gc = sdf.getCalendar();
+    //GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
+    
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
     int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
@@ -329,7 +331,7 @@ then
     
     sdf.setCalendar(gc);
     
-    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
     ob.setSolved();
     update(ob);
@@ -345,10 +347,11 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
-    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
     sdf:SimpleDateFormat()
 then
-    GregorianCalendar gc = sdf.getCalendar();
+    //GregorianCalendar gc = sdf.getCalendar();
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
     int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
@@ -358,7 +361,7 @@ then
       
     sdf.setCalendar(gc);
     
-    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
     ob.setSolved();
     update(ob);

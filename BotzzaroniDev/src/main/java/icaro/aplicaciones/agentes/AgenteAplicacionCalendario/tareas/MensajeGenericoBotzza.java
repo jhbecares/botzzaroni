@@ -5,6 +5,9 @@
 
 package icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tareas;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+
 import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
 import icaro.aplicaciones.recursos.comunicacionChat.ItfUsoComunicacionChat;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ItfUsoInterfazChatUsuario;
@@ -22,7 +25,7 @@ public class MensajeGenericoBotzza extends TareaSincrona {
 
 	@Override
 	public void ejecutar(Object... params) {
-
+		
 		String identDeEstaTarea = this.getIdentTarea();
 		String identAgenteOrdenante = this.getIdentAgente();
 		String identInterlocutor = (String) params[0];

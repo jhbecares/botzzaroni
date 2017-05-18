@@ -69,6 +69,8 @@ public class tipoNotif {
 	public static String miMinuto = "miMinuto";
 	public static String miDia = "miDia";
 	public static String miMes = "miMes";
+	public static String miYear = "miYear";
+
 	public static String miTimeframe = "miTimeframe";
   public static String miModificador = "miModificador";
 
