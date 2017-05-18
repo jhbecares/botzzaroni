@@ -552,7 +552,7 @@ rule "Obtiene salsa de la pizza"
  	ob1.setobjectReferenceId(group);
  	f.setFoco(ob1);
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
-    tarea.ejecutar("", ConversacionPizzero.msg("solicitarTamanioPizza"));
+    tarea.ejecutar("", ConversacionPizzero.msg("tengoTuSalsa"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
     pizza.setSalsa(msgg);
     pizza.setPrecio(6);
