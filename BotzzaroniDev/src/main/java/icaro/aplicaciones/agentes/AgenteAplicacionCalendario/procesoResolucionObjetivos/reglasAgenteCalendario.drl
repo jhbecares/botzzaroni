@@ -15,6 +15,9 @@ import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 
 import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
@@ -46,6 +49,347 @@ then
 
 end
 
+rule "Creacion subobjetivos calendario"
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+then
+    
+    Objetivo obDia = new ObtenerDiaEntrega();
+    insert(obDia);
+    
+    Objetivo obHora = new ObtenerHoraEntrega();
+    insert(obHora);
+    
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss dd/MMM/yyyy");
+
+    // year, month, day of month, hourOfDay, minute
+    java.util.Calendar calendar = new java.util.GregorianCalendar(1970, 1, 1, 0, 0);
+    sdf.setCalendar(calendar);
+end
+
+
+rule "Recibir fecha con dia, mes, año"
+salience 500
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMes)
+    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miYear)
+    sdf:SimpleDateFormat()
+then
+    GregorianCalendar gc = sdf.getCalendar();
+    gc.set(Calendar.YEAR, Integer.parseInt(notif3.getMensajeNotificacion()));
+    gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
+    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+    sdf.setCalendar(gc);
+    
+    update(sdf);
+    
+    
+    ob.setSolved();
+    update(ob);
+    
+    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    
+    // TODO comprobar si hay que hacer algo mas
+    
+    retract(notif);
+    retract(notif2);
+    retract(notif3);
+end
+
+rule "Recibir fecha con dia y mes"
+salience 450
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMes)
+    sdf:SimpleDateFormat()
+then
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    // cogemos una instancia del calendario actual para poner el mismo año
+    Calendar calendar = Calendar.getInstance();
+    int currentYear = calendar.get(Calendar.YEAR); 
+    
+    gc.set(Calendar.YEAR, currentYear);
+    gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
+    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+    sdf.setCalendar(gc);
+    
+    update(sdf);
+    
+    ob.setSolved();
+    update(ob);
+    
+    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    
+    
+    // TODO comprobar si hay que hacer algo mas
+    
+    retract(notif);
+    retract(notif2);
+end
+
+
+// esta regla está pensada para cosas como "mañana", "hoy", "el lunes"
+// es la última que se implementará
+rule "Recibir fecha con dia"
+salience 400
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
+    sdf:SimpleDateFormat()
+then
+    // cogemos una instancia del calendario actual para poner el mismo año y mes
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    Calendar calendar = Calendar.getInstance();
+    int currentYear = calendar.get(Calendar.YEAR); 
+    int currentMonth = calendar.get(Calendar.MONTH);
+    int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+    
+    if (notif.getMensajeNotificacion().equalsIgnoreCase("hoy")) {
+        gc.set(Calendar.YEAR, currentYear);
+        gc.set(Calendar.MONTH, currentMonth); 
+        gc.set(Calendar.DAY_OF_MONTH, currentDay);
+        sdf.setCalendar(gc);
+    } else if (notif.getMensajeNotificacion().equalsIgnoreCase("mañana")) {
+        gc.set(Calendar.YEAR, currentYear);
+        gc.set(Calendar.MONTH, currentMonth); 
+        gc.set(Calendar.DAY_OF_MONTH, currentDay);
+        gc.add(Calendar.DAY_OF_MONTH, 1); // le sumamos uno al dia
+        sdf.setCalendar(gc);
+    } else {
+	    gc.set(Calendar.YEAR, currentYear);
+	    gc.set(Calendar.MONTH, currentMonth); 
+	    gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion());
+	    sdf.setCalendar(gc);
+    }
+    
+    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    
+    
+    update(sdf);
+    
+    ob.setSolved();
+    update(ob);
+    
+    retract(notif);
+end
+
+rule "Recibir hora con hora, minuto, timeframe y modificador"
+salience 500
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miModificador)
+    notif4:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
+    sdf:SimpleDateFormat()
+then
+    // cogemos una instancia del calendario actual
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    int hora = Integer.parseInt(notif.getMensajeNotificacion());
+    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    String modificador = notif3.getMensajeNotificacion();
+    String timeframe = notif4.getMensajeNotificacion();
+    
+    if (hora > 12) {
+        // ignoramos el timeframe, porque es formato 24 horas
+        if (notif3.getMensajeNotificacion().equalsIgnoreCase("menos")) {
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, 0);
+            gc.add(Calendar.MINUTE, -minuto);
+	    } else {
+	        // supongamos que es un "y" normal... no deberíamos llegar aquí
+	        gc.set(Calendar.HOUR_OF_DAY, hora);
+	        gc.set(Calendar.MINUTE, minuto);
+	    }
+	}
+    else {
+        
+        if (notif3.getMensajeNotificacion().equalsIgnoreCase("menos")) {
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, 0);
+            gc.add(Calendar.MINUTE, -minuto);
+        } else {
+            // supongamos que es un "y" normal... no deberíamos llegar aquí
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, minuto);
+        }
+        
+        if (timeframe.equalsIgnoreCase("pm")) {
+            if (hora < 12) {
+                gc.add(Calendar.HOUR_OF_DAY, 12);
+            } 
+        }
+    }
+    
+    sdf.setCalendar(gc);
+    
+    ob.setSolved();
+    update(ob);
+    
+    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    
+    
+    retract(notif);
+    retract(notif2);
+    retract(notif3);
+    retract(notif4);
+end
+
+rule "Recibir hora con hora, minuto y timeframe"
+salience 450
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miTimeframe)
+    sdf:SimpleDateFormat()
+then
+    // cogemos una instancia del calendario actual
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    int hora = Integer.parseInt(notif.getMensajeNotificacion());
+    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    String timeframe = notif3.getMensajeNotificacion();
+    
+    if (hora > 12) {
+        // ignoramos el timeframe, porque es formato 24 horas
+        gc.set(Calendar.HOUR_OF_DAY, hora);
+        gc.set(Calendar.MINUTE, minuto);
+    }
+    else {
+        if (timeframe.equalsIgnoreCase("pm")) {
+            if (hora < 12) {
+                gc.add(Calendar.HOUR_OF_DAY, 12);
+            } 
+        }
+    }
+    
+    sdf.setCalendar(gc);
+    
+    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    
+    ob.setSolved();
+    update(ob);
+    
+    retract(notif);
+    retract(notif2);
+    retract(notif3);
+end
+
+rule "Recibir hora con hora, minuto y modificador"
+salience 450
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    notif3:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miModificador)
+    sdf:SimpleDateFormat()
+then
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    int hora = Integer.parseInt(notif.getMensajeNotificacion());
+    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    String modificador = notif3.getMensajeNotificacion();
+    
+    if (hora > 12) {
+        // ignoramos el timeframe, porque es formato 24 horas
+        if (notif3.getMensajeNotificacion().equalsIgnoreCase("menos")) {
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, 0);
+            gc.add(Calendar.MINUTE, -minuto);
+        } else {
+            // supongamos que es un "y" normal... no deberíamos llegar aquí
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, minuto);
+        }
+    }
+    else {
+        if (notif3.getMensajeNotificacion().equalsIgnoreCase("menos")) {
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, 0);
+            gc.add(Calendar.MINUTE, -minuto);
+        } else {
+            // supongamos que es un "y" normal... no deberíamos llegar aquí
+            gc.set(Calendar.HOUR_OF_DAY, hora);
+            gc.set(Calendar.MINUTE, minuto);
+        }
+    }
+    
+    sdf.setCalendar(gc);
+    
+    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    
+    ob.setSolved();
+    update(ob);
+    
+    retract(notif);
+    retract(notif2);
+    retract(notif3);
+end
+
+rule "Recibir hora con hora y minuto"
+salience 400
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
+    notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miHora)
+    notif2:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
+    sdf:SimpleDateFormat()
+then
+    GregorianCalendar gc = sdf.getCalendar();
+    
+    int hora = Integer.parseInt(notif.getMensajeNotificacion());
+    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    
+    gc.set(Calendar.HOUR_OF_DAY, hora);
+    gc.set(Calendar.MINUTE, minuto);
+      
+    sdf.setCalendar(gc);
+    
+    System.out.println("hora reconocida: " + sdf.format(calendar.getTime()));
+    
+    ob.setSolved();
+    update(ob);
+        
+    retract(notif);
+    retract(notif2);
+end
+
+rule "Cerrar objetivos"
+when
+    obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
+    ob: ObtenerHoraEntrega(state == Objetivo.SOLVED)
+    ob2: ObtenerDiaEntrega(state == Objetivo.SOLVED)
+    f:Focus(foco == obGeneral)
+then
+    obGeneral.setSolved();
+    update(obGeneral);
+
+
+    //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    //tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuEntrega"));
+    //recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    // TODO aquí es donde entra Bea con su magia
+    
+    
+    f.setFoco(null);
+    update(f);
+end
+
+/*
 // Reglas auxiliares calendario
 rule "Notificacion calendario fecha"
 salience 1000
@@ -76,12 +420,12 @@ then
 	retract(notif);
 end
 
-rule "Notificacion calendario a�o"
+rule "Notificacion calendario a�o"
 salience 1000
 when 
 	notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.TempYear)
 then
-	System.out.println("reconocido A�O");
+	System.out.println("reconocido A�O");
 	System.out.println("uee: " + notif.getMensajeNotificacion());
 	
 	retract(notif);
@@ -112,3 +456,4 @@ then
 	
 	retract(notif);
 end
+*/

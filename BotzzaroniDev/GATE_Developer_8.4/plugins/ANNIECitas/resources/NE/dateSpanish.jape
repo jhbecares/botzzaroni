@@ -205,6 +205,20 @@ System.out.println("______________ rule dateSpanish2");
 :mes.miMes = { kind = "mes"}
 
 
+Rule: dateSpanish3
+Priority: 100
+(
+  ({Token.string == "hoy"} | {Token.string == "mañana"} ):dia
+
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish3");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia"}
+
+
 /////////////////////
 //// HOUR
 /////////////////////
