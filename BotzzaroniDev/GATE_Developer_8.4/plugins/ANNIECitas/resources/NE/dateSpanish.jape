@@ -1,0 +1,290 @@
+/*
+*  time.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Diana Maynard, 10 Sep 2001
+* 
+*  $Id: date.jape 17311 2014-02-14 18:49:50Z dgmaynard $
+*/
+
+Imports: {
+import static gate.Utils.*;
+}
+
+Phase:	dateSpanish
+Input: Token Lookup Split
+Options: control = appelt
+//Options: control = brill
+
+/////////////////////////////////////////////////
+
+Macro: DAY_NAME 
+({Lookup.majorType == dias })
+
+Macro: ONE_DIGIT
+({Token.majorType == numero, Token.length == "1"})
+
+Macro: TWO_DIGIT
+({Token.majorType == numero, Token.length == "2"})
+
+Macro: FOUR_DIGIT
+({Token.majorType == numero, Token.length == "4"})
+
+Macro: DAY_MONTH_NUM
+(ONE_DIGIT | TWO_DIGIT)
+
+Macro: DATE_PRE
+// possible modifiers of dates, eg. "early October"
+({Token.string == "principios"}|
+ {Token.string == "comienzos"}|
+ {Token.string == "finales"}|
+ {Token.string == "mediados"}
+)
+
+Macro: DAY 
+(((DATE_PRE)?
+  DAY_NAME) |
+ DAY_MONTH_NUM)
+
+Macro: MONTH_NAME
+( (DATE_PRE)?
+  {Lookup.minorType == month})
+
+Macro: MONTH 
+(MONTH_NAME | DAY_MONTH_NUM)
+
+Macro: SLASH
+  ({Token.string == "/"})
+  
+Macro: DASH
+  {Token.string == "-"}
+
+Macro: DOT
+  {Token.string == "."}
+
+Macro: OF
+  ({Token.string == "de"}|
+   {Token.string == "del"})
+
+
+Macro: YEAR
+(        
+ {Lookup.majorType == year}|
+ TWO_DIGIT | FOUR_DIGIT | 
+ {Token.string == "'"}
+ (TWO_DIGIT)
+)
+
+
+Macro: ORDINAL
+(
+   ({Token.string ==~ "[0-9][0-9]?(o|Âº|a|Âª|er|ero|era)"}
+    |
+   {Lookup.minorType == ordinal})
+   ( ({Token.string == "de"} | 
+      {Token.string == "del"}))?
+)
+
+Macro: NUM_OR_ORDINAL
+  (ORDINAL | DAY_MONTH_NUM)
+
+
+Macro: COMMA
+({Token.string == ","})
+
+Macro: SPACE
+({Token.string == " "})
+
+Macro: TIME_DIFF
+(
+ ({Token.string == "+"}|{Token.string == "-"})
+ (FOUR_DIGIT)
+)
+
+Macro: TIME_AMPM
+(
+ {Lookup.majorType == "ampm"}| {Lookup.minorType == "ampm"}
+)
+
+Macro: MES
+(
+ {Lookup.majorType == month}
+)
+
+
+
+///////////////////////////////////////////////////////////////
+// Time Rules 
+
+Rule: Hora1
+// 8:14 am
+// 4.34 pm
+// 6am
+(
+(ONE_DIGIT|TWO_DIGIT)
+(({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
+  TWO_DIGIT)?
+({Token.string == " "})+
+(TIME_AMPM)
+)
+:dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule Hora1 ");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+
+Rule: Hora2
+// 8:14 am
+// 4.34 pm
+// 6am
+(
+(ONE_DIGIT|TWO_DIGIT)
+(({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
+  TWO_DIGIT)?
+(({Token.string==" "})+ TIME_AMPM)?
+)
+:dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule Hora2 ");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+
+
+Rule: Hora3
+// 8:14 am
+// 4.34 pm
+// 6am
+(
+({Lookup.majorType == "horas"}|{Lookup.majorType == "numero"})
+(({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
+  TWO_DIGIT)?
+(({Token.string == " "})+ TIME_AMPM)?
+)
+:dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule Hora3 ");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+
+
+Rule: dateSpanish
+Priority: 100
+(
+  ({Token.kind == "number",Token.string >0,Token.string <32}) // un numero del 1 al 31
+  ({Token.string == "-"} | {Token.string == "/"} )
+  ({Token.kind == "number",Token.string >0,Token.string <13}) // un numero del 1 al 12
+  ({Token.string == "-"} | {Token.string == "/"} )
+  ({Token.kind == "number",Token.length<5}) // un numero del 1 al 12
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish ");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+
+Rule: dateSpanish2
+Priority: 100
+(
+  ({Token.kind == "number",Token.string >0,Token.string <32}) // un numero del 1 al 31
+  ({Token.string == " "})?
+  ({Token.string == "de"} | {Token.string == "del"} )
+  ({Token.string == " "})?
+  (MES)
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish2");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+
+
+/////////////////////
+//// HOUR
+/////////////////////
+Rule: hourSpanish
+Priority: 100
+(
+({Token.kind == "number",Token.string >=0,Token.string < 24}) // un numero del 0 al 23
+({Token.string == ":"} | {Token.string == "."} )
+({Token.kind == "number",Token.string >=0,Token.string < 60}) // un numero del 0 al 59
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule hourSpanish ");
+},
+:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"}
+
+Rule: hourSpanish2
+Priority: 110
+(
+({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+(({Token.string == ":"} | {Token.string == "."} )
+({Token.kind == "number",Token.string >=0,Token.string < 60}))? // un numero del 0 al 59
+({Token.string == " "})?
+({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"})
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule hourSpanish2 ");
+},
+:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"}
+
+Rule: hourSpanish3
+Priority: 110
+(
+(({Token.kind == "number",Token.string >=0,Token.string < 13})|
+ ({Lookup.majorType == "numero"})) // un numero del 0 al 12
+({Token.string == "horas"}|{Token.string == "hora"}|
+{Token.string == "hr"}|{Token.string == "hrs"})?
+(({Token.string == " "})?
+({Token.string == "y"})
+({Token.string == " "})?
+({Token.string == "media"}|{Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 59})
+({Token.string == "minutos"}|{Token.string == "minuto"}
+|{Token.string == "min"}|{Token.string == "mins"})?))?
+(({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"}|
+(  ({Token.string == "de"}) ({Token.string == " "})? ({Token.string == "la"}) 
+({Token.string == " "})? ({Token.string == "mañana"}))))?
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule hourSpanish3 ");
+},
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
+
+
+Rule: hourSpanish4
+Priority: 110
+(
+({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+({Token.string == "horas"}|{Token.string == "hora"}|
+{Token.string == "hr"}|{Token.string == "hrs"})?
+(({Token.string == " "})?
+({Token.string == "menos"})
+({Token.string == " "})?
+({Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 29})
+({Token.string == "minutos"}|{Token.string == "minuto"}
+|{Token.string == "min"}|{Token.string == "mins"})?))?
+(({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"}|
+(  ({Token.string == "de"}) ({Token.string == " "})? ({Token.string == "la"}) 
+({Token.string == " "})? ({Token.string == "mañana"}))))?
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule hourSpanish4 ");
+},
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}

@@ -27,7 +27,7 @@ public class ConversacionPizzero {
 		
 		String masas =" \n  - Normal\n  - Fina\n  - Bordes rellenos de queso";
 		
-		String salsas =" \n  - Carbonara\n  - Barbacoa\n  - Diabola\n - Tomate\n - Botzzaroni";
+		String salsas =" \n  - Salsa carbonara\n  - Salsa barbacoa\n  - Salsa diabola\n - Salsa de tomate\n - Salsa botzzaroni";
 		
 		List<String> solicitarSalsas = new ArrayList<String>();
 		solicitarSalsas.add("Estas son nuestras salsas: " + salsas + "\n¿Cuál quieres añadir a tu pizza?");
@@ -120,13 +120,19 @@ public class ConversacionPizzero {
 		noGuardarNombrePizza.add("No guardaremos tu pizza entonces");
 		
 		List<String> pedirNombrePizza = new ArrayList<String>();
-		pedirNombrePizza.add("Genial, para que sea más sencillo dinos un nombre con el que quieres que guardemos tu pizza.");
+		pedirNombrePizza.add("Genial, para que sea más sencillo dinos un nombre con el que quieres que guardemos tu pizza. (Tiene que empezar con el caracter '@'. Ej: @PizzaTopeGuay)");
 		
 		List<String> obtenerNombrePizza = new ArrayList<String>();
 		obtenerNombrePizza.add("Guardada tu pizza * para futuras ocasiones");
 		
 		List<String> guardarNombrePizzaIncorrecto = new ArrayList<String>();
 		guardarNombrePizzaIncorrecto.add("No te hemos entendido, ¿Quieres que guardemos tu pizza?");
+		
+		List<String> nombrePizzaPersonalizadaIncorrecto = new ArrayList<String>();
+		nombrePizzaPersonalizadaIncorrecto.add("No te hemos entendido, recuerda poner @ antes del nombre que le quieras dar.");
+		
+		List<String> nombreSalsaIncorrecto = new ArrayList<String>();
+		nombreSalsaIncorrecto.add("Esta salsa no está disponible en Botzzaroni, dinos otra por favor.");
 		
 		conversacion.put("tengoTuPizza", tengoTuPizza);
 		conversacion.put("tengoTuMasa", tengoTuMasa);
@@ -158,6 +164,8 @@ public class ConversacionPizzero {
 		conversacion.put("obtenerNombrePizza", obtenerNombrePizza);
 		conversacion.put("guardarNombrePizzaIncorrecto", guardarNombrePizzaIncorrecto);
 		conversacion.put("solicitarSalsas", solicitarSalsas);
+		conversacion.put("nombrePizzaPersonalizadaIncorrecto", nombrePizzaPersonalizadaIncorrecto);
+		conversacion.put("nombreSalsaIncorrecto", nombreSalsaIncorrecto);
 		
 	}
 	

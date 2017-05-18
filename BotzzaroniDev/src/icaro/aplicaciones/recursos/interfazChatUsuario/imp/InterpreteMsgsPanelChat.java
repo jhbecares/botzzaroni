@@ -123,7 +123,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("bebidas");
 			anotacionesBusquedaPrueba.add("pagoEfectivo");
 			anotacionesBusquedaPrueba.add("pagoTarjeta");
-
+			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -284,7 +284,7 @@ public class InterpreteMsgsPanelChat {
 				tienePeticion = true;
 				// anotacionesInterpretadas .add(interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot));
 				Notificacion n  = interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot);
-				ingredientes += n.getMensajeNotificacion() + " ";
+				ingredientes += n.getMensajeNotificacion() + "-";
 			}
 			else if (anotType.equalsIgnoreCase("salsas") && !anotaciones_leidas.contains("salsas")) {
 				if (!anotaciones_leidas.contains("salsas"))
@@ -372,6 +372,14 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			} 
+			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
+ 				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
+ 					anotaciones_leidas.add("NombrePizzaPersonalizada");
+ 				tienePeticion = true;
+ 				anotacionesInterpretadas
+ 						.add(interpretarAnotacionSaludoEInicioPeticion(
+ 							contextoInterpretacion, annot));
+			}
 			else if (anotType.equalsIgnoreCase("bebidas")&& !anotaciones_leidas.contains("bebidas")) {
 				anotaciones_leidas.add("bebidas");
 				tienePeticion = true;
