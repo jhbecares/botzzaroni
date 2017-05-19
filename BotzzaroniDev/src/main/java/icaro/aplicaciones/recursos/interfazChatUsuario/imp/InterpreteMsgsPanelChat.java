@@ -143,9 +143,10 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("miDia");
 			anotacionesBusquedaPrueba.add("miMes");
 			anotacionesBusquedaPrueba.add("miTimeframe");
-      anotacionesBusquedaPrueba.add("miModificador");
+			anotacionesBusquedaPrueba.add("miModificador");
+			//anotacionesBusquedaPrueba.add("minutoLetra");
 
-      anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
+			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -605,6 +606,14 @@ public class InterpreteMsgsPanelChat {
                 .add(interpretarAnotacionSaludoEInicioPeticion(
                     contextoInterpretacion, annot));
           }
+       /* else if (anotType.equalsIgnoreCase("minutoLetra")&& !anotaciones_leidas.contains("minutoLetra")) {
+            if (!anotaciones_leidas.contains("minutoLetra"))
+              anotaciones_leidas.add("minutoLetra");
+            tienePeticion = true;
+            anotacionesInterpretadas
+                .add(interpretarAnotacionSaludoEInicioPeticion(
+                    contextoInterpretacion, annot));
+          }*/
 	}
 		
 		return anotacionesInterpretadas;

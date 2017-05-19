@@ -63,13 +63,15 @@ then
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss dd/MMM/yyyy");
 
     // year, month, day of month, hourOfDay, minute
-    java.util.Calendar calendar = new java.util.GregorianCalendar(1970, 1, 1, 0, 0);
+    java.util.Calendar calendar = new java.util.GregorianCalendar(1970, 0, 1, 0, 0);
     sdf.setCalendar(calendar);
+    insert(sdf);
+  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
 
 rule "Recibir fecha con dia, mes, anio"
-salience 500
+salience 5
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
@@ -78,21 +80,36 @@ when
     notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion == tipoNotif.miYear)
     sdf:SimpleDateFormat()
 then
+
+	String aux = notif3.getMensajeNotificacion();
+	if (notif3.getMensajeNotificacion().matches("[0-9]{1,2}")) {
+		aux = "20" + aux;
+	}
+	
+	int mes = -1;
+    if (!notif2.getMensajeNotificacion().matches("[0-9]{1,2}")) {
+    	mes = MonthMap.Month.valueOf(notif2.getMensajeNotificacion().toLowerCase()).ordinal();
+    } else {
+    	mes = Integer.parseInt(notif2.getMensajeNotificacion());
+    }
+	
+	
     GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
-    gc.set(Calendar.YEAR, Integer.parseInt(notif3.getMensajeNotificacion()));
-    gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
+    gc.set(Calendar.YEAR, Integer.parseInt(aux));
+    gc.set(Calendar.MONTH, mes);
     gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion()));
     sdf.setCalendar(gc);
     
     update(sdf);
     
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
     // TODO comprobar si hay que hacer algo mas
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
     retract(notif2);
@@ -100,12 +117,13 @@ then
 end
 
 rule "Recibir fecha con dia y mes"
-salience 450
+salience 4
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
     notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMes)
+    //notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion != tipoNotif.miYear)
     sdf:SimpleDateFormat()
 then
     GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
@@ -115,19 +133,28 @@ then
     int currentYear = calendar.get(Calendar.YEAR); 
     
     gc.set(Calendar.YEAR, currentYear);
-    gc.set(Calendar.MONTH, Integer.parseInt(notif2.getMensajeNotificacion())-1); // cuidado, HAY QUE RESTAR UNO, van de 0 a 11
+    
+    int mes = -1;
+    if (!notif2.getMensajeNotificacion().matches("[0-9]{1,2}")) {
+    	mes = MonthMap.Month.valueOf(notif2.getMensajeNotificacion().toLowerCase()).ordinal();
+    } else {
+    	mes = Integer.parseInt(notif2.getMensajeNotificacion());
+    }
+    
+    gc.set(Calendar.MONTH, mes); 
     gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(notif.getMensajeNotificacion()));
     sdf.setCalendar(gc);
     
     update(sdf);
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
-    System.out.println("fecha reconocida: " + sdf.format(calendar.getTime()));
+    System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
     
     // TODO comprobar si hay que hacer algo mas
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
     retract(notif2);
@@ -137,11 +164,16 @@ end
 // esta regla está pensada para cosas como "mañana", "hoy", "el lunes"
 // es la última que se implementará
 rule "Recibir fecha con dia"
-salience 400
+salience 3
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob:ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
+    notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion != tipoNotif.miMes, tipoNotificacion != tipoNotif.miYear)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion != tipoNotif.miYear, tipoNotificacion != tipoNotif.miMes, 
+    	tipoNotificacion != tipoNotif.numero, tipoNotificacion != tipoNotif.TempTime, tipoNotificacion != tipoNotif.calles
+    	, tipoNotificacion != tipoNotif.TempDate,
+    	tipoNotificacion != tipoNotif.miDia)
     sdf:SimpleDateFormat()
 then
     // cogemos una instancia del calendario actual para poner el mismo año y mes
@@ -157,7 +189,7 @@ then
         gc.set(Calendar.MONTH, currentMonth); 
         gc.set(Calendar.DAY_OF_MONTH, currentDay);
         sdf.setCalendar(gc);
-    } else if (notif.getMensajeNotificacion().equalsIgnoreCase("mañana")) {
+    } else if (notif.getMensajeNotificacion().equalsIgnoreCase("ma�ana")) {
         gc.set(Calendar.YEAR, currentYear);
         gc.set(Calendar.MONTH, currentMonth); 
         gc.set(Calendar.DAY_OF_MONTH, currentDay);
@@ -175,14 +207,15 @@ then
     
     update(sdf);
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
+ 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
 end
 
 rule "Recibir hora con hora, minuto, timeframe y modificador"
-salience 500
+salience 5
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
@@ -196,8 +229,17 @@ then
     GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
-    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
-    String modificador = notif3.getMensajeNotificacion();
+ 	int minuto = 0;
+    
+    try {
+    	minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    } catch(Exception e) {
+    	if (notif2.getMensajeNotificacion().equalsIgnoreCase("media")) {
+    		minuto = 30;
+    	} else if (notif2.getMensajeNotificacion().equalsIgnoreCase("cuarto")) {
+    		minuto = 15;
+    	} 
+    }    String modificador = notif3.getMensajeNotificacion();
     String timeframe = notif4.getMensajeNotificacion();
     
     if (hora > 12) {
@@ -233,11 +275,12 @@ then
     
     sdf.setCalendar(gc);
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
     retract(notif2);
@@ -246,7 +289,7 @@ then
 end
 
 rule "Recibir hora con hora, minuto y timeframe"
-salience 450
+salience 4
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
@@ -259,8 +302,17 @@ then
     GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
-    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
-    String timeframe = notif3.getMensajeNotificacion();
+ 	int minuto = 0;
+    
+    try {
+    	minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    } catch(Exception e) {
+    	if (notif2.getMensajeNotificacion().equalsIgnoreCase("media")) {
+    		minuto = 30;
+    	} else if (notif2.getMensajeNotificacion().equalsIgnoreCase("cuarto")) {
+    		minuto = 15;
+    	} 
+    }    String timeframe = notif3.getMensajeNotificacion();
     
     if (hora > 12) {
         // ignoramos el timeframe, porque es formato 24 horas
@@ -279,8 +331,9 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
     retract(notif2);
@@ -288,7 +341,7 @@ then
 end
 
 rule "Recibir hora con hora, minuto y modificador"
-salience 450
+salience 4
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
@@ -302,7 +355,19 @@ then
     
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
-    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    //int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    int minuto = 0;
+    
+    try {
+    	minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    } catch(Exception e) {
+    	if (notif2.getMensajeNotificacion().equalsIgnoreCase("media")) {
+    		minuto = 30;
+    	} else if (notif2.getMensajeNotificacion().equalsIgnoreCase("cuarto")) {
+    		minuto = 15;
+    	} 
+    }
+    
     String modificador = notif3.getMensajeNotificacion();
     
     if (hora > 12) {
@@ -333,8 +398,9 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     retract(notif);
     retract(notif2);
@@ -342,7 +408,7 @@ then
 end
 
 rule "Recibir hora con hora y minuto"
-salience 400
+salience 3
 when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.PENDING)
@@ -350,12 +416,22 @@ when
     notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMinuto)
     sdf:SimpleDateFormat()
 then
-    //GregorianCalendar gc = sdf.getCalendar();
-    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     
     int hora = Integer.parseInt(notif.getMensajeNotificacion());
-    int minuto = Integer.parseInt(notif2.getMensajeNotificacion());
     
+    int minuto = 0;
+    
+    try {
+    	minuto = Integer.parseInt(notif2.getMensajeNotificacion());
+    } catch(Exception e) {
+    	if (notif2.getMensajeNotificacion().equalsIgnoreCase("media")) {
+    		minuto = 30;
+    	} else if (notif2.getMensajeNotificacion().equalsIgnoreCase("cuarto")) {
+    		minuto = 15;
+    	} 
+    }
+    
+    GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
     gc.set(Calendar.HOUR_OF_DAY, hora);
     gc.set(Calendar.MINUTE, minuto);
       
@@ -363,12 +439,15 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
+ 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
         
     retract(notif);
     retract(notif2);
 end
+
+
 
 rule "Cerrar objetivos"
 when
@@ -387,6 +466,7 @@ then
     
     // TODO aquí es donde entra Bea con su magia
     
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     f.setFoco(null);
     update(f);

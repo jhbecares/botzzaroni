@@ -266,8 +266,8 @@ Priority: 110
 (({Token.string == " "})?
 ({Token.string == "y"}):modificador
 ({Token.string == " "})?
-({Token.string == "media"}|{Token.string == "cuarto"}
-|({Token.kind == "number",Token.string>=0, Token.string <= 59}):minuto
+(({Token.string == "media"}|{Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 59})):minuto
 ({Token.string == "minutos"}|{Token.string == "minuto"}
 |{Token.string == "min"}|{Token.string == "mins"})?))?
 ((({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
@@ -283,7 +283,6 @@ System.out.println("______________ rule hourSpanish3 ");
 :timeframe.miTimeframe = { kind = "timeframe" },
 :modificador.miModificador = { kind = "modificador" }
 
-
 Rule: hourSpanish4
 Priority: 110
 (
@@ -293,8 +292,8 @@ Priority: 110
 (({Token.string == " "})?
 ({Token.string == "menos"}):modificador
 ({Token.string == " "})?
-({Token.string == "cuarto"}
-|({Token.kind == "number",Token.string>=0, Token.string <= 29}):minuto
+(({Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 29})):minuto
 ({Token.string == "minutos"}|{Token.string == "minuto"}
 |{Token.string == "min"}|{Token.string == "mins"})?))?
 ((({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
@@ -309,4 +308,3 @@ System.out.println("______________ rule hourSpanish4 ");
 :minuto.miMinuto = { kind = "minuto" },
 :timeframe.miTimeframe = { kind = "timeframe" },
 :modificador.miModificador = { kind = "modificador" }
-
