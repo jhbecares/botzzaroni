@@ -25,6 +25,7 @@ global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
 
+
 rule "Creacion de los objetivos iniciales"
 when 
 then 
