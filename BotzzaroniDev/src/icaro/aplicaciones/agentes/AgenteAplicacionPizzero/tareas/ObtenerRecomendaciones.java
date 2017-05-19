@@ -66,6 +66,11 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 				    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
 				 this.getEnvioHechos().insertarHechoWithoutFireRules(recomendaciones);
 	             this.getEnvioHechos().insertarHecho(recomendaciones);
+	             
+	             for(int i=0; i < recomendaciones.size(); i++){
+	            	 recomendadas  = recomendadas + recomendaciones.get(i).toString() + "\n";
+	             }
+	             
 	             mensaje = "Hemos visto que has creado pizzas anteriormente. Te recordamos que tienes las siguientes pizzas guardadas "
 	            		 + recomendadas 
 	            		 + " ¿Deseas alguna de ellas? Dinos su nombre con un @ delante";
@@ -76,6 +81,9 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 				 if (!recomendaciones.isEmpty()){
 					 String maspedida = null;
 					    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
+					 
+		             maspedida  =  recomendaciones.get(0).toString() + "\n";
+		             
 					 this.getEnvioHechos().insertarHechoWithoutFireRules(recomendaciones.get(0));
 		             this.getEnvioHechos().insertarHecho(recomendaciones);
 		             mensaje = "No tienes pizzas guardadas creadas por ti, pero hemos visto que pides mucho la pizza  " + maspedida + "¿Te gustaría repetirla?";
