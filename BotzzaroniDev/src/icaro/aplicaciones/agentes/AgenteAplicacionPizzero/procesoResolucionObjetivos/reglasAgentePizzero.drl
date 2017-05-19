@@ -514,7 +514,7 @@ rule "Solicitar salsa de la pizza"
 end
 
 
-/*rule "Obtiene salsa de la pizza 2"
+rule "Obtiene salsa de la pizza 2"
 salience 5
  when
     notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.salsas, msgg:mensajeNotificacion)
@@ -537,7 +537,7 @@ salience 5
     insert(ob1);
     retract(notif2);
     retract(notif);
-end*/
+end
 
 rule "Obtiene salsa de la pizza"
  when
@@ -552,7 +552,7 @@ rule "Obtiene salsa de la pizza"
  	ob1.setobjectReferenceId(group);
  	f.setFoco(ob1);
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
-    tarea.ejecutar("", ConversacionPizzero.msg("solicitarTamanioPizza"));
+    tarea.ejecutar("", ConversacionPizzero.msg("tengoTuSalsa"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
     pizza.setSalsa(msgg);
     pizza.setPrecio(6);
