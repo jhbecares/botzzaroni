@@ -3,6 +3,7 @@ package icaro.aplicaciones.recursos.persistenciaAccesoBD;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import icaro.aplicaciones.informacion.gestionPizzeria.Pedido;
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.imp.ErrorEnRecursoException;
 import icaro.infraestructura.patronRecursoSimple.ItfUsoRecursoSimple;
@@ -19,6 +20,8 @@ public interface ItfUsoPersistenciaAccesoBD extends ItfUsoRecursoSimple {
 	public Usuario obtenerUsuario(String usuario) throws Exception;
 
 	public ArrayList<SimpleDateFormat> consultaPedidos(SimpleDateFormat sdf)  throws Exception ;
+
+	public void insertaPedido(Pedido pedido) throws Exception;
 
 	// Método a hacer, añadiendo los datos del usuario ya identificado
 	// public void insertaDatosUsuario(Usuario gr);

@@ -1,6 +1,8 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD.imp;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.Direccion;
+import icaro.aplicaciones.informacion.gestionPizzeria.Pedido;
+import icaro.aplicaciones.informacion.gestionPizzeria.Pizza;
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.imp.util.ScriptRunner;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -19,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 /**
  * Proporciona los servicios de acceso a la bbdd con mysql
@@ -402,7 +405,6 @@ public class PersistenciaAccesoImp {
 			ArrayList<SimpleDateFormat> fechas = new ArrayList<SimpleDateFormat>();
 			
 			conectar();
-			// crearQuery();
 			GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
 			
 			// SELECT fecha FROM `pedido` WHERE `fecha` > '2017-05-21 11:30:00' and `fecha` BETWEEN '2017-05-21 20:30:00' and '2017-05-21 23:59:00' 
@@ -434,5 +436,63 @@ public class PersistenciaAccesoImp {
 		catch (Exception e) {
 			throw new ErrorEnRecursoException(e.getMessage());
 		}
+	}
+
+	public void insertaPedido(Pedido pedido) {
+		// TODO Auto-generated method stub
+		try {
+					
+			conectar();
+	
+			// Primero debemos insertar en la tabla pedido
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MMM/yyyy");
+		    String fecha = sdf.format(pedido.getFechaEntrega());
+			
+			query = conn.createStatement();
+			String consulta = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+					+ ".usuario VALUES ('" + pedido.getUsuario().getUsername() + "','" + pedido.getMetodoPago().toString() +  "'," + pedido.getCambioEfectivo()+", '" + fecha +"')";
+			query.executeUpdate(consulta);
+			
+			// Recuperamos el id del pedido
+			query = conn.createStatement();
+			resultado = query.executeQuery("SELECT id FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".pedido P where P.fecha = '" + fecha +
+					"' and P.aliasUsuario='" + pedido.getUsuario().getUsername() + "'");
+			int idPedido = 0;
+			if(resultado.next()){
+				idPedido = resultado.getInt("id");
+			}
+			
+			// Recuperar ids de las pizzas de la carta
+			HashMap<String, Integer> mapCarta = new HashMap<String, Integer>();
+			query = conn.createStatement();
+			resultado =  query.executeQuery("SELECT id, nombre FROM "
+			+ PersistenciaAccesoImp.nombreBD
+			+ ".pizza P WHERE P.aliasUsuario='botzzaroni'");
+			
+			while(resultado.next()){
+				mapCarta.put(resultado.getString("nombre"), resultado.getInt("id"));
+			}
+			
+			// Para cada ingrediente de la pizza, accedo a su ID y lo añado a la tabla TieneIngrediente con el ID de la pizza
+			for(Pizza p : pedido.getPizzas()){
+				int idPizza = mapCarta.get(p.getNombrePizza());
+				query = conn.createStatement();
+				String insercionIngrediente = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+				+ ".tienePizza VALUES (" + idPedido + "," + idPizza+  ",'" + p.getTamanio().toString()+  "','" + p.getMasa().toString() + "')";
+				query.executeUpdate(insercionIngrediente);
+			}
+			
+			
+			resultado.close();
+			desconectar();
+			return fechas;
+		}
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+		
+		
 	}
 }

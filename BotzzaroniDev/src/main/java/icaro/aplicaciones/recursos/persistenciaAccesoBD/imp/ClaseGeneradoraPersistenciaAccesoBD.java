@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import icaro.aplicaciones.informacion.gestionPizzeria.Pedido;
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.ItfUsoPersistenciaAccesoBD;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
@@ -141,5 +142,15 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 				InfoTraza.NivelTraza.debug));
 		return accesoBD.consultaPedidosFecha(sdf);
 	}
+
+	@Override
+	public void insertaPedido(Pedido pedido) throws Exception {
+		trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Insertando el pedido",
+				InfoTraza.NivelTraza.debug));
+		accesoBD.insertaPedido(pedido);
+	}
+	
+	
 
 }

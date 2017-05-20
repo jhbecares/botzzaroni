@@ -11,7 +11,18 @@ import java.util.Date;
 public class Pedido {
 	
 	public enum MetodoPago{
-		tarjeta, efectivo
+		tarjeta("tarjeta"), efectivo("efectivo");
+		
+		 private final String metodo;       
+
+		    private MetodoPago(String s) {
+		        metodo = s;
+		    }
+
+		    public String toString() {
+		       return this.metodo;
+		    }
+		
 	}
 	
 	
