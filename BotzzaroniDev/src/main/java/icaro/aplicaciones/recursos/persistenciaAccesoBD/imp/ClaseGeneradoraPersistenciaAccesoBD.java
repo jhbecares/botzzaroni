@@ -1,5 +1,9 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD.imp;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.ItfUsoPersistenciaAccesoBD;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
@@ -127,6 +131,15 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 					InfoTraza.NivelTraza.debug));
 			return accesoBD.obtenerDatosUsuario(usuario);
 
+	}
+
+	@Override
+	public ArrayList<SimpleDateFormat> consultaPedidos(SimpleDateFormat sdf) throws Exception {
+		GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
+		trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Obteniendo pedidos de la fecha " + sdf.format(gc.getTime()),
+				InfoTraza.NivelTraza.debug));
+		return accesoBD.consultaPedidosFecha(sdf);
 	}
 
 }

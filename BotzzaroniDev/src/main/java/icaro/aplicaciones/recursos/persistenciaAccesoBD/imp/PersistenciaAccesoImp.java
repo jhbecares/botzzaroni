@@ -15,6 +15,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Proporciona los servicios de acceso a la bbdd con mysql
@@ -387,6 +391,45 @@ public class PersistenciaAccesoImp {
 			resultado.close();
 			desconectar();
 			return user;
+		}
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+
+	public ArrayList<SimpleDateFormat> consultaPedidosFecha(SimpleDateFormat sdf)  throws ErrorEnRecursoException {
+		try {
+			ArrayList<SimpleDateFormat> fechas = new ArrayList<SimpleDateFormat>();
+			
+			conectar();
+			// crearQuery();
+			GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
+			
+			// SELECT fecha FROM `pedido` WHERE `fecha` > '2017-05-21 11:30:00' and `fecha` BETWEEN '2017-05-21 20:30:00' and '2017-05-21 23:59:00' 
+			
+			GregorianCalendar gcIni = (GregorianCalendar) gc.clone();
+			gcIni.set(Calendar.HOUR_OF_DAY, 20);
+		    gcIni.set(Calendar.MINUTE, 30);
+		    
+		    GregorianCalendar gcFin = (GregorianCalendar) gc.clone();
+			gcFin.set(Calendar.HOUR_OF_DAY, 23);
+		    gcFin.set(Calendar.MINUTE, 59);
+			
+			query = conn.createStatement();
+			resultado = query.executeQuery("SELECT fecha FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".pedido P where P.fecha > '" + sdf.format(gc.getTime()) +
+					"' and fecha BETWEEN '" + sdf.format(gcIni.getTime()) + "' and '" + sdf.format(gcFin.getTime()) + "'");
+			while (resultado.next()) {
+				GregorianCalendar cal = null;
+				SimpleDateFormat df = null;
+				resultado.getDate("fecha", cal);
+				df.setCalendar(cal);
+				fechas.add(df);
+			}
+			resultado.close();
+			desconectar();
+			return fechas;
 		}
 		catch (Exception e) {
 			throw new ErrorEnRecursoException(e.getMessage());
