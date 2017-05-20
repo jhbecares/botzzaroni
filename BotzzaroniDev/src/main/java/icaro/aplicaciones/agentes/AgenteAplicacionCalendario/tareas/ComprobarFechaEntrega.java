@@ -81,7 +81,7 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    		ant = cal;
 		    	}
 		    	
-		    	if(continuar){
+		    	if(!continuar){
 		    		   mensaje = "Podemos entregar tu pedido a las: " + sdf.format(ant.getTime());	
 		    		   // Cambiamos el objetivo a lo que toque...
 		    	}
