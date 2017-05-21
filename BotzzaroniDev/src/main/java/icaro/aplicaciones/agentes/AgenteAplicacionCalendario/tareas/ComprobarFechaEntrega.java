@@ -65,30 +65,51 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    	
 		    	GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
 		    	GregorianCalendar ant = null;
-		    	int diferencia = Integer.MAX_VALUE;
+		    	long diferencia = Integer.MAX_VALUE;
 		    	boolean continuar = true;
 		    	int i = 0;
-		    	while(continuar && i < fechasPedidos.size()){
-		    		GregorianCalendar cal = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
-		    		if(ant != null){
-		    			diferencia = cal.get(Calendar.MINUTE) - ant.get(Calendar.MINUTE);
-		    			if(diferencia >= 60 ){
-		    				ant.add(Calendar.MINUTE, 30);
-		    				sdf.setCalendar(ant);
-		    				continuar = false;
-		    			}	
-		    		}
-		    		ant = cal;
+		    	
+		    	if (fechasPedidos.size() == 1){
+		    		ant = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
+		    		System.out.println("Primer pedido " +sdf.format(ant.getTime()));
+		    		ant.add(Calendar.MINUTE, 30);
+		    		System.out.println("Más media hora " +sdf.format(ant.getTime()));
+    				sdf.setCalendar(ant);
+    				continuar = false;
+		    	} else{
+			    	while(continuar && i < fechasPedidos.size()){
+			    		GregorianCalendar cal = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
+			    		if(ant != null){
+			    			long milliSec1 = cal.getTimeInMillis();
+			    	        long milliSec2 = ant.getTimeInMillis();
+			    	        long timeDifInMilliSec;
+			    	        timeDifInMilliSec = milliSec2 - milliSec1;
+			    			diferencia = Math.abs(timeDifInMilliSec / (60 * 1000));
+			    			System.out.println(diferencia);
+			    			if(diferencia >= 60 ){
+			    				ant.add(Calendar.MINUTE, 30);
+			    				sdf.setCalendar(ant);
+			    				continuar = false;
+			    			}else{
+			    				ant = (GregorianCalendar) cal.clone();
+					    		i++;
+			    			}	
+			    		}
+			    		else{
+				    		ant = (GregorianCalendar) cal.clone();
+				    		i++;
+			    		}
+			    	}
 		    	}
 		    	
 		    	if(!continuar){
-		    		   mensaje = "Podemos entregar tu pedido a las: " + sdf.format(ant.getTime());	
+		    		   mensaje = "Esa hora está ocupada, podríamos entregar tu pedido a las: " + sdf.format(ant.getTime()) + " ¿Te parece bien?";
+		    		   System.out.println(sdf.format(ant.getTime()));
+		    		   
 		    		   // Cambiamos el objetivo a lo que toque...
 		    	}
 		    	else{
 		    		   mensaje = "Lo sentimos, no tenemos hueco disponible para tu pedido ese día :(";
-		    		   Calendar calendar = new GregorianCalendar(1970, 0, 1, 0, 0);
-		    		   sdf.setCalendar(calendar);
 		    		   // Cambiamos el objetivo a lo que toque...
 
 		    	}

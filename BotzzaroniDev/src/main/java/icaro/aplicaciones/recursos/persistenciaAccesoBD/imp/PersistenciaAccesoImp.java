@@ -22,8 +22,11 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+
+import com.sun.jmx.snmp.Timestamp;
 
 /**
  * Proporciona los servicios de acceso a la bbdd con mysql
@@ -438,9 +441,11 @@ public class PersistenciaAccesoImp {
 			System.out.println(q);
 			resultado = query.executeQuery(q);
 			while (resultado.next()) {
-				GregorianCalendar cal = null;
+				GregorianCalendar cal = new GregorianCalendar();
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
-				resultado.getDate("fecha", cal);
+				java.sql.Timestamp timestamp = resultado.getTimestamp("fecha");
+				Date d = new Date(timestamp.getTime());
+				cal.setTime(d);
 				df.setCalendar(cal);
 				fechas.add(df);
 			}
