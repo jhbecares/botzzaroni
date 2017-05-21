@@ -103,7 +103,7 @@ then
     update(sdf);
     
     
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -147,7 +147,7 @@ then
     
    	update(sdf);
     
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -204,16 +204,10 @@ then
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
-        
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(ComprobarFechaEntrega.class);
-    tarea.ejecutar(sdf);
-    // No se si el update comentado o no
-    // update(sdf); 
-    
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-    
+    update(sdf);
     retract(notif);
 end
 
@@ -277,8 +271,8 @@ then
     }
     
     sdf.setCalendar(gc);
-    
-    //ob.setSolved();
+    update(sdf);
+    ob.setSolved();
     update(ob);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
@@ -333,8 +327,8 @@ then
     sdf.setCalendar(gc);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
-    
-    //ob.setSolved();
+    update(sdf);
+    ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -400,8 +394,8 @@ then
     sdf.setCalendar(gc);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
-    
-    //ob.setSolved();
+    update(sdf);
+    ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -441,8 +435,8 @@ then
     sdf.setCalendar(gc);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
-    
-    //ob.setSolved();
+    update(sdf);
+    ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
         
@@ -458,6 +452,7 @@ when
     ob: ObtenerHoraEntrega(state == Objetivo.SOLVED)
     ob2: ObtenerDiaEntrega(state == Objetivo.SOLVED)
     f:Focus(foco == obGeneral)
+    sdf:SimpleDateFormat()
 then
     obGeneral.setSolved();
     update(obGeneral);
@@ -468,6 +463,8 @@ then
     //recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
     // TODO aquí es donde entra Bea con su magia
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(ComprobarFechaEntrega.class);
+    tarea.ejecutar(sdf);
     
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
