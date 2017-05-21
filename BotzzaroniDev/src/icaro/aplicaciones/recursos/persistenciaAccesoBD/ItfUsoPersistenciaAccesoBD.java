@@ -23,6 +23,10 @@ public interface ItfUsoPersistenciaAccesoBD extends ItfUsoRecursoSimple {
 	
 	public ArrayList<Pizza> obtenerMasPedidaCarta(String usuario) throws Exception;
 
+	public boolean existePizzaPersonalizadaNombre(String username, String nombrePizza) throws Exception;
+
+	public void insertaPizzaPersonalizada(Pizza pizza) throws Exception;
+
 	
 
 	

@@ -30,13 +30,15 @@ import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.imp.Clas
 
 
 /*
+ * IMPORTANTE!! Rellenar la pizza que se quiere insertar (usuarioCreador, ingredientes y nombre de la pizza), sino MAL
+ * 
  * Llamada a esta tarea: 
  * TareaSincrona tarea = gestorTareas.crearTareaSincrona(ObtenerRecomendaciones.class);  	
- * tarea.ejecutar();
+ * tarea.ejecutar(pizza);
  * 
  */
 
-public class ObtenerRecomendaciones extends TareaSincrona {
+public class InsertaPizzaPersonalizada extends TareaSincrona {
 	// private String identAgenteOrdenante ;
 	private Objetivo contextoEjecucionTarea = null;
 
@@ -44,9 +46,10 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 	public void ejecutar(Object... params) {
 		String identDeEstaTarea = this.getIdentTarea();
 		String identAgenteOrdenante = this.getIdentAgente();
+		Pizza pizza = (Pizza) params[0];
 		try {
 			
-			ArrayList<Pizza> recomendaciones;
+		
 			String mensaje = null;
 			
 			String identRecursoPersistencia = "Persistencia1";
@@ -54,44 +57,19 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 					VocabularioGestionPizzeria.IdentRecursoPersistencia);
 			ItfUsoInterfazChatUsuario recComunicacionChat = (ItfUsoInterfazChatUsuario) NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ.obtenerInterfazUso(
 					VocabularioGestionPizzeria.IdentRecursoComunicacionChat); 
-			String user = recComunicacionChat.getIdentUsuario();
+		
 			
 			
-			// Consulta a la base de datos para recuperar las pizzas personalizadas del usuario
-		    recomendaciones = persistencia.obtenerPersonalizadasUsuario(user);
+			// Dentro de la pizza personalizada está su creador, su nombre y su lista de ingredientes
+			// Comprobamos que no tiene una pizza con ese nombre ese usuario
+		    boolean pizzaExiste = persistencia.existePizzaPersonalizadaNombre(pizza.getUsuarioCreador().getUsername(), pizza.getNombrePizza());
 		    
-			//Focus f = new Focus();
-			if (!recomendaciones.isEmpty()){
-				 String recomendadas = null;
-				    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
-	             this.getEnvioHechos().insertarHecho(recomendaciones);
-	             
-	             for(int i=0; i < recomendaciones.size(); i++){
-	            	 recomendadas  = recomendadas + recomendaciones.get(i).toString() + "\n";
-	             }
-	             
-	             mensaje = "Hemos visto que has creado pizzas anteriormente. Te recordamos que tienes las siguientes pizzas guardadas "
-	            		 + recomendadas 
-	            		 + " ¿Deseas alguna de ellas? Dinos su nombre con un @ delante";
+			if (!pizzaExiste){
+				persistencia.insertaPizzaPersonalizada(pizza);
+				mensaje = "Perfecto! Almacenada tu pizza " + pizza.getNombrePizza() + ". Estará disponible para la próxima vez que vuelvas a estar con nosotros" ; 
 			}
 			else{
-				// Como no tiene personalizadas, consultamos cuál es la pizza de la carta que más ha pedido
-				 recomendaciones = persistencia.obtenerMasPedidaCarta(user);
-				 if (!recomendaciones.isEmpty()){
-					 String maspedida = null;
-					    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
-					 
-		             maspedida  =  recomendaciones.get(0).toString() + "\n";
-		             
-		             this.getEnvioHechos().insertarHecho(recomendaciones.get(0));
-		             mensaje = "No tienes pizzas guardadas creadas por ti, pero hemos visto que pides mucho la pizza  " + maspedida + "¿Te gustaría repetirla?";
-				}
-				else{
-					// Como no tiene personalizadas, consultamos cuál es la pizza de la carta que más ha pedido
-					mensaje = "Lo siento, como todavía no has pedido con nosotros no conocemos tus gustos :( ¡Una vez hayas hecho tu primer pedido te podremos recomendar mejor! ";
-					
-				}
-				
+		         mensaje = "Ya tienes una pizza personalizada con ese nombre, indicanos otro por favor!";
 			}
 
 			if (recComunicacionChat != null) {

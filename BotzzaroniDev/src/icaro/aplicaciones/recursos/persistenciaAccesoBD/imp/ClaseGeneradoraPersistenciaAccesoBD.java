@@ -152,4 +152,22 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 
 	}
 
+	@Override
+	public boolean existePizzaPersonalizadaNombre(String username, String nombrePizza) throws  ErrorEnRecursoException {
+		trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Comprobando si ya estaba ese nombre de pizza personalizada: " + nombrePizza,
+				InfoTraza.NivelTraza.debug));
+		return accesoBD.existePizzaPersonalizada(username, nombrePizza);
+	}
+
+	@Override
+	public void insertaPizzaPersonalizada(Pizza pizza) throws  ErrorEnRecursoException {
+			trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Insertando pizza personalizada " + pizza.toString(), InfoTraza.NivelTraza.debug));
+		// consulta.insertaUsuario(usuario, password);
+		accesoBD.insertaPizzaPersonalizada(pizza);
+	}
+	
+	
+
 }

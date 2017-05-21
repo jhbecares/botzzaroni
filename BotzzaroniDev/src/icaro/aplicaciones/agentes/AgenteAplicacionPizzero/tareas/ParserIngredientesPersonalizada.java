@@ -17,45 +17,45 @@ public void ejecutar(Object... params) {
 	 	for(int i = 0; i < a.length; i++){
 	 		String msgg2 = a[i];
 	 		if(msgg2.equalsIgnoreCase("kitkat") || msgg2.equalsIgnoreCase("Kit Kat")){
-	 			pizza.addIngrediente("Kitkat");
+	 			pizza.addIngrediente("kitkat");
 	    	}else if(msgg2.equalsIgnoreCase("cebolla")){
-	    		pizza.addIngrediente("Cebolla");
+	    		pizza.addIngrediente("cebolla");
 	    	}else if(msgg2.equalsIgnoreCase("bacon") || msgg2.equalsIgnoreCase("Bacón")){
-	    		pizza.addIngrediente("Bacon");
+	    		pizza.addIngrediente("bacon");
 	    	}else if(msgg2.equalsIgnoreCase("pollo")){
-	    		pizza.addIngrediente("Pollo");
+	    		pizza.addIngrediente("pollo");
 	    	}else if(msgg2.equalsIgnoreCase("ternera")){
-	    		pizza.addIngrediente("Ternera");
+	    		pizza.addIngrediente("ternera");
 	    	}else if(msgg2.equalsIgnoreCase("bacon crispy")){
-	    		pizza.addIngrediente("Bacon crispy");
+	    		pizza.addIngrediente("bacon crispy");
 	    	}else if(msgg2.equalsIgnoreCase("jamon serrano")|| msgg2.equalsIgnoreCase("jamón serrano")){
-	    		pizza.addIngrediente("Jamon Serrano");
+	    		pizza.addIngrediente("kamon Serrano");
 	    	}else if(msgg2.equalsIgnoreCase("champiñon")|| msgg2.equalsIgnoreCase("champiñón")||msgg2.equalsIgnoreCase("champiñónes")||msgg2.equalsIgnoreCase("champis")){
-	    		pizza.addIngrediente("Champiñon");
+	    		pizza.addIngrediente("champiñon");
 	    	}else if(msgg2.equalsIgnoreCase("Topping a base de mozzarella")|| msgg2.equalsIgnoreCase("topping de mozzarella")){
-	    		pizza.addIngrediente("Topping a base de mozzarella");
+	    		pizza.addIngrediente("topping a base de mozzarella");
 	    	}else if(msgg2.equalsIgnoreCase("Queso cheddar")|| msgg2.equalsIgnoreCase("queso chedar")){
-	    		pizza.addIngrediente("Queso cheddar");
+	    		pizza.addIngrediente("queso cheddar");
 	    	}else if(msgg2.equalsIgnoreCase("Queso emmental")|| msgg2.equalsIgnoreCase("queso emental")){
-	    		pizza.addIngrediente("Queso emmental");
+	    		pizza.addIngrediente("queso emmental");
 	    	}else if(msgg2.equalsIgnoreCase("queso edam")){
-	    		pizza.addIngrediente("Queso edam");
+	    		pizza.addIngrediente("queso edam");
 	    	}else if(msgg2.equalsIgnoreCase("queso provolone")){
-	    		pizza.addIngrediente("Queso provolone");
+	    		pizza.addIngrediente("queso provolone");
 	    	}else if(msgg2.equalsIgnoreCase("queso azul")){
 	    		pizza.addIngrediente("Queso azul");
 	    	}else if(msgg2.equalsIgnoreCase("york")){
-	    		pizza.addIngrediente("York");
+	    		pizza.addIngrediente("york");
 	    	}else if(msgg2.equalsIgnoreCase("piña")){
-	    		pizza.addIngrediente("Piña");
+	    		pizza.addIngrediente("piña");
 	    	}else if(msgg2.equalsIgnoreCase("tomate natural")|| msgg2.equalsIgnoreCase("tomate")){
-	    		pizza.addIngrediente("Tomate natural");
+	    		pizza.addIngrediente("tomate natural");
 	    	}else if(msgg2.equalsIgnoreCase("tomate confitado")){
-	    		pizza.addIngrediente("Tomate confitado");
+	    		pizza.addIngrediente("tomate confitado");
 	    	}else if(msgg2.equalsIgnoreCase("oregano")|| msgg2.equalsIgnoreCase("orégano")){
-	    		pizza.addIngrediente("Oregano");
+	    		pizza.addIngrediente("oregano");
 	    	}else if(msgg2.equalsIgnoreCase("crema de cacao y avellanas")|| msgg2.equalsIgnoreCase("nocilla")){
-	    		pizza.addIngrediente("Crema de cacao y avellanas");
+	    		pizza.addIngrediente("crema de cacao y avellanas");
 	    	}
 	 	}
 	 	this.getEnvioHechos().actualizarHecho(pizza);
