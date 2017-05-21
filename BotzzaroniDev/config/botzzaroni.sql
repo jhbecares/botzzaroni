@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 -- Base de datos: `Botzzaroni`
 --
 
-CREATE DATABASE IF NOT EXISTS botzzaroni2;
-USE botzzaroni2;
+CREATE DATABASE IF NOT EXISTS botzzaroni;
+USE botzzaroni;
 
 -- --------------------------------------------------------
 

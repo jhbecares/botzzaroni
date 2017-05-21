@@ -73,7 +73,7 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    		if(ant != null){
 		    			diferencia = cal.get(Calendar.MINUTE) - ant.get(Calendar.MINUTE);
 		    			if(diferencia >= 60 ){
-		    				ant.add(Calendar.MINUTE, -30);
+		    				ant.add(Calendar.MINUTE, 30);
 		    				sdf.setCalendar(ant);
 		    				continuar = false;
 		    			}	
