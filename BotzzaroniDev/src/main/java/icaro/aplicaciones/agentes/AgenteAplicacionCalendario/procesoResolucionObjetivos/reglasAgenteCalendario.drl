@@ -451,7 +451,8 @@ when
     obGeneral:ObtenerEntrega(state == Objetivo.PENDING)
     ob: ObtenerHoraEntrega(state == Objetivo.SOLVED)
     ob2: ObtenerDiaEntrega(state == Objetivo.SOLVED)
-    f:Focus(foco == obGeneral)
+    //f:Focus(foco == obGeneral)
+    f:Focus();
     sdf:SimpleDateFormat()
 then
     obGeneral.setSolved();
