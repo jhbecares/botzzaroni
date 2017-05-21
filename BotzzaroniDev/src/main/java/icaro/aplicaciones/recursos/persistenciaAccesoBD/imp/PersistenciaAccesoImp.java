@@ -415,7 +415,7 @@ public class PersistenciaAccesoImp {
 			GregorianCalendar gc = (GregorianCalendar) ss.getCalendar();
 			
 			
-			System.out.println("fecha comprobar: " + ss.format(gc.getTime()));
+			//System.out.println("fecha comprobar: " + ss.format(gc.getTime()));
 			String comprobar = ss.format(gc.getTime());
 			
 			// SELECT fecha FROM `pedido` WHERE `fecha` > '2017-05-21 11:30:00' and `fecha` BETWEEN '2017-05-21 20:30:00' and '2017-05-21 23:59:00' 
@@ -424,13 +424,13 @@ public class PersistenciaAccesoImp {
 			gcIni.set(Calendar.HOUR_OF_DAY, 20);
 		    gcIni.set(Calendar.MINUTE, 30);
 		    
-		    System.out.println("fecha inicio: " + ss.format(gcIni.getTime()));
+		    //System.out.println("fecha inicio: " + ss.format(gcIni.getTime()));
 		    
 		    GregorianCalendar gcFin = (GregorianCalendar) gc.clone();
 			gcFin.set(Calendar.HOUR_OF_DAY, 23);
 		    gcFin.set(Calendar.MINUTE, 59);
 			
-		    System.out.println("fecha fin: " + ss.format(gcFin.getTime()));
+		    //System.out.println("fecha fin: " + ss.format(gcFin.getTime()));
 		    
 			query = conn.createStatement();
 			String q = "SELECT fecha FROM "

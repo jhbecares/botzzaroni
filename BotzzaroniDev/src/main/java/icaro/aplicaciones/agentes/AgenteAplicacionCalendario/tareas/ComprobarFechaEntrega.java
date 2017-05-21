@@ -62,8 +62,9 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 			    // Aquí cambiamos el objetivo para que se ejecute directamente la tarea que inserta el pedido y aú
 		    }
 		    else{ // Hay pedidos, toca comprobar si podemos encajar el nuestro
-		    	
 		    	GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
+	    		System.out.println("fecha recibida" + sdf.format(gc.getTime()));
+
 		    	GregorianCalendar ant = null;
 		    	long diferencia = Integer.MAX_VALUE;
 		    	boolean continuar = true;
@@ -71,12 +72,36 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    	
 		    	if (fechasPedidos.size() == 1){
 		    		ant = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
-		    		System.out.println("Primer pedido " +sdf.format(ant.getTime()));
-		    		ant.add(Calendar.MINUTE, 30);
-		    		System.out.println("Más media hora " +sdf.format(ant.getTime()));
-    				sdf.setCalendar(ant);
-    				continuar = false;
+		    		GregorianCalendar masMedia = (GregorianCalendar) gc.clone();
+		    		masMedia.add(Calendar.MINUTE, 30);
+		    		System.out.println("fecha más media" + sdf.format(masMedia.getTime()));
+		    	    long timeDifInMilliSec  = ant.getTimeInMillis() - masMedia.getTimeInMillis();;
+		    		System.out.println("fecha pedido" + sdf.format(ant.getTime()));
+
+		    	    // Si puede ser antes del pedido
+		    	    if( (timeDifInMilliSec / (60 * 1000)) >= 0){
+	    	        	sdf.setCalendar(gc);
+	    				continuar = false;
+	    				System.out.println("Puede ser antes del pedido" +  sdf.format(gc.getTime()));
+	    	        }else{
+			    		ant.add(Calendar.MINUTE, 30);
+			    		GregorianCalendar gcFin = (GregorianCalendar) gc.clone();
+						gcFin.set(Calendar.HOUR_OF_DAY, 23);
+					    gcFin.set(Calendar.MINUTE, 59);
+			    		System.out.println("fecha fin" + sdf.format(gcFin.getTime()));
+
+	    				ant.add(Calendar.MINUTE, 30);
+	    				timeDifInMilliSec = gcFin.getTimeInMillis() - ant.getTimeInMillis();
+	    				// Si puede ser después del pedido porque está dentro del horario 
+		    	        if( (timeDifInMilliSec / (60 * 1000)) >= 0){
+		    	        	sdf.setCalendar(ant);
+		    				continuar = false;
+		    				System.out.println("Puede ser despues del pedido" + timeDifInMilliSec);
+		    	        }
+	    	        }
+		    		
 		    	} else{
+		    		
 			    	while(continuar && i < fechasPedidos.size()){
 			    		GregorianCalendar cal = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
 			    		if(ant != null){
@@ -85,12 +110,12 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 			    	        long timeDifInMilliSec;
 			    	        timeDifInMilliSec = milliSec2 - milliSec1;
 			    			diferencia = Math.abs(timeDifInMilliSec / (60 * 1000));
-			    			System.out.println(diferencia);
 			    			if(diferencia >= 60 ){
 			    				ant.add(Calendar.MINUTE, 30);
 			    				sdf.setCalendar(ant);
 			    				continuar = false;
-			    			}else{
+			    			}
+			    			else{
 			    				ant = (GregorianCalendar) cal.clone();
 					    		i++;
 			    			}	
@@ -100,12 +125,26 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 				    		i++;
 			    		}
 			    	}
+			    	
+			    	if(continuar){ // Se me acabaron los pedidos, no encontré nada
+			    		// Compruebo si cabe después del último pedido si no se podía en un hueco
+				    	GregorianCalendar gcFin = (GregorianCalendar) gc.clone();
+						gcFin.set(Calendar.HOUR_OF_DAY, 23);
+					    gcFin.set(Calendar.MINUTE, 59);
+	    				ant.add(Calendar.MINUTE, 30);
+					    long milliSec1 = gc.getTimeInMillis();
+		    	        long milliSec2 = ant.getTimeInMillis();
+		    	        long timeDifInMilliSec;
+		    	        timeDifInMilliSec = milliSec1 - milliSec2;
+		    	        if( (timeDifInMilliSec / (60 * 1000)) >= 0){
+		    	        	sdf.setCalendar(ant);
+		    				continuar = false;
+		    	        }   
+			    	}
 		    	}
 		    	
 		    	if(!continuar){
-		    		   mensaje = "Esa hora está ocupada, podríamos entregar tu pedido a las: " + sdf.format(ant.getTime()) + " ¿Te parece bien?";
-		    		   System.out.println(sdf.format(ant.getTime()));
-		    		   
+		    		   mensaje = "Esa hora está ocupada, podríamos entregar tu pedido como pronto a las: " + sdf.format(ant.getTime()) + " ¿Te parece bien?";		    		   
 		    		   // Cambiamos el objetivo a lo que toque...
 		    	}
 		    	else{
@@ -114,6 +153,7 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 
 		    	}
 		    }
+		    
 		    
 		    // Devuelvo la fecha que he obtenido
 		    this.getEnvioHechos().actualizarHecho(sdf);
