@@ -10,17 +10,15 @@ public class ConversacionBebida {
 	
 	static{		
 		conversacion = new HashMap<String, List<String>>();
-		
-		//"Disponemos de las siguientes bebidas: \n - Coca-cola (Light, Zero) \n - Fanta (Naranja y Limon) \n - Cerveza (Con y sin alcohol) \n - Nestea"
-		
+				
 		List<String> cartaBebida = new ArrayList<String>();
-		cartaBebida.add("Disponemos de las siguientes bebidas: \n - Coca-cola (Light, Zero) \n - Fanta (Naranja y Limon) \n - Cerveza (Con y sin alcohol) \n - Nestea");
+		cartaBebida.add("Genial. Disponemos de las siguientes bebidas: \n - Coca-cola (Light, Zero) \n - Fanta (Naranja y Limon) \n - Cerveza (Con y sin alcohol) \n - Nestea");
 		
 		List<String> preguntarBebidas = new ArrayList<String>();
 		preguntarBebidas.add("¿Deseas acompañar tu pedido con alguna bebida?");
 
 		List<String> preguntarNumeroBebidas = new ArrayList<String>();
-		preguntarNumeroBebidas.add("Genial. ¿Cuántas bebidas deseas?");
+		preguntarNumeroBebidas.add("¿Cuántas bebidas deseas?");
 
 		List<String> noQuiereBebidas = new ArrayList<String>();
 		noQuiereBebidas.add("Bueno, no importa, otra vez será");
@@ -34,10 +32,13 @@ public class ConversacionBebida {
 		quiereBebidas.add("¿Cuál deseas?");
 		
 		List<String> bebidaExisteYPreguntaCantidad = new ArrayList<String>();
-		  bebidaExisteYPreguntaCantidad.add("Genial, ¿Y de esta bebida cuántas unidades deseas?");
+		bebidaExisteYPreguntaCantidad.add("Genial, ¿Y de esta bebida cuántas unidades deseas?");
 		
 		List<String> bebidaExiste = new ArrayList<String>();
 		bebidaExiste.add("Genial, añadida a tu pedido.");
+		
+		List<String> muchasBebidas = new ArrayList<String>();
+		muchasBebidas.add("No has pedido tantas bebidas, introduce una cantidad menor");
 		
 		List<String> bebidaNoExiste = new ArrayList<String>();
 		bebidaNoExiste.add("Esa bebida no está disponible.");
@@ -54,6 +55,7 @@ public class ConversacionBebida {
 		conversacion.put("bebidaNoExiste", bebidaNoExiste);	
 		conversacion.put("cartaBebida", cartaBebida);
 		conversacion.put("cantidadNoValida", cantidadNoValida);
+		conversacion.put("muchasBebidas", muchasBebidas);
 		conversacion.put("bebidaExisteYPreguntaCantidad", bebidaExisteYPreguntaCantidad);
 	}
 	
