@@ -195,6 +195,10 @@ Priority: 100
   ({Token.string == "de"} | {Token.string == "del"} )
   ({Token.string == " "})?
   (MES):mes
+  (({Token.string == " "})?
+  ({Token.string == "de"} | {Token.string == "del"} ) 
+  ({Token.string == " "})?
+  ({Token.kind == "number",Token.length<5}):year)
 ):dateSpanish
 -->
 :dateSpanish{
@@ -202,7 +206,8 @@ System.out.println("______________ rule dateSpanish2");
 },
 :dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
 :dia.miDia = { kind = "dia"},
-:mes.miMes = { kind = "mes"}
+:mes.miMes = { kind = "mes"},
+:year.miYear = { kind = "year" }
 
 
 Rule: dateSpanish3
@@ -218,6 +223,23 @@ System.out.println("______________ rule dateSpanish3");
 :dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
 :dia.miDia = { kind = "dia"}
 
+
+Rule: dateSpanish4
+Priority: 99
+(
+  ({Token.kind == "number",Token.string >0,Token.string <32}):dia // un numero del 1 al 31
+  ({Token.string == " "})?
+  ({Token.string == "de"} | {Token.string == "del"} )
+  ({Token.string == " "})?
+  (MES):mes
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish4");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia"},
+:mes.miMes = { kind = "mes"}
 
 /////////////////////
 //// HOUR

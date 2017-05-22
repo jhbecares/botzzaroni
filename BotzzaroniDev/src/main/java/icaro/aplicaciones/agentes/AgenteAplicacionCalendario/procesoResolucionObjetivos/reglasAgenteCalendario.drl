@@ -90,7 +90,7 @@ then
     if (!notif2.getMensajeNotificacion().matches("[0-9]{1,2}")) {
     	mes = MonthMap.Month.valueOf(notif2.getMensajeNotificacion().toLowerCase()).ordinal();
     } else {
-    	mes = Integer.parseInt(notif2.getMensajeNotificacion());
+    	mes = Integer.parseInt(notif2.getMensajeNotificacion())-1;
     }
 	
 	
@@ -103,7 +103,7 @@ then
     update(sdf);
     
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -123,7 +123,11 @@ when
     ob: ObtenerDiaEntrega(state == Objetivo.PENDING)
     notif:Notificacion(identInterlc:identNotificador, tipoNotificacion == tipoNotif.miDia)
     notif2:Notificacion(identInterlc2:identNotificador, tipoNotificacion == tipoNotif.miMes)
-    //notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion != tipoNotif.miYear)
+    notif3:Notificacion(identInterlc3:identNotificador, tipoNotificacion != tipoNotif.miYear, 
+    	tipoNotificacion != tipoNotif.miDia, tipoNotificacion != tipoNotif.miMes,
+    	tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta,
+    	tipoNotificacion != tipoNotif.numero, tipoNotificacion != tipoNotif.TempDate,
+    	tipoNotificacion != tipoNotif.piso)
     sdf:SimpleDateFormat()
 then
     GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
@@ -138,7 +142,7 @@ then
     if (!notif2.getMensajeNotificacion().matches("[0-9]{1,2}")) {
     	mes = MonthMap.Month.valueOf(notif2.getMensajeNotificacion().toLowerCase()).ordinal();
     } else {
-    	mes = Integer.parseInt(notif2.getMensajeNotificacion());
+    	mes = Integer.parseInt(notif2.getMensajeNotificacion())-1;
     }
     
     gc.set(Calendar.MONTH, mes); 
@@ -147,7 +151,7 @@ then
     
    	update(sdf);
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -204,7 +208,7 @@ then
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     update(sdf);
@@ -272,7 +276,7 @@ then
     
     sdf.setCalendar(gc);
     update(sdf);
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
@@ -328,7 +332,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -395,7 +399,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -436,7 +440,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    ob.setSolved();
+    //ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
         

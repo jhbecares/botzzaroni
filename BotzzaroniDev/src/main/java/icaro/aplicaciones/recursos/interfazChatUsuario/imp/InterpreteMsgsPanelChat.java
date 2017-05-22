@@ -142,6 +142,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("miMinuto");
 			anotacionesBusquedaPrueba.add("miDia");
 			anotacionesBusquedaPrueba.add("miMes");
+			anotacionesBusquedaPrueba.add("miYear");
 			anotacionesBusquedaPrueba.add("miTimeframe");
 			anotacionesBusquedaPrueba.add("miModificador");
 			//anotacionesBusquedaPrueba.add("minutoLetra");
@@ -590,6 +591,14 @@ public class InterpreteMsgsPanelChat {
 	              .add(interpretarAnotacionSaludoEInicioPeticion(
 	                  contextoInterpretacion, annot));
 	        }
+	      else if (anotType.equalsIgnoreCase("miYear")&& !anotaciones_leidas.contains("miYear")) {
+	          if (!anotaciones_leidas.contains("miYear"))
+	            anotaciones_leidas.add("miYear");
+	          tienePeticion = true;
+	          anotacionesInterpretadas
+	              .add(interpretarAnotacionSaludoEInicioPeticion(
+	                  contextoInterpretacion, annot));
+	        }			
         else if (anotType.equalsIgnoreCase("miTimeframe")&& !anotaciones_leidas.contains("miTimeframe")) {
             if (!anotaciones_leidas.contains("miTimeframe"))
               anotaciones_leidas.add("miTimeframe");
