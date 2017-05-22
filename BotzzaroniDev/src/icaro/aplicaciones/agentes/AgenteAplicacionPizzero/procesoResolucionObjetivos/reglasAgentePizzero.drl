@@ -224,12 +224,14 @@ rule "Solicitar tipo de pizza"
     ob1:ObtenerTipoPizza(state == PENDING)
     f: FocoUsuario(foco == ob1) 
     p: Pedido()
+    user:Usuario()
  then
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
     tarea.ejecutar(group, ConversacionPizzero.msg("obtenerTipoPizza1") + p.numeroTotalPizzas + ConversacionPizzero.msg("obtenerTipoPizza2"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
     
     Pizza pizza = new Pizza();
+    pizza.setUsuarioCreador(user);
     insert(pizza);
 end
 
@@ -284,6 +286,105 @@ rule "Obtiene el tipo de pizza personalizada"
     System.out.println(pizza);
     update(pizza);
 end
+
+rule "Obtiene el tipo de pizza recomendacion"
+ when
+    notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.tipoPizzaRecomendacion, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:ObtenerTipoPizza(state == PENDING)
+    f: FocoUsuario(foco == ob)
+ then
+ 	ob.setSolved();
+ 	Objetivo ob1 = new GuardarTipoPizzaRecomendacion();
+ 	ob1.setobjectReferenceId(group);
+ 	f.setFoco(ob1);
+ 	TareaSincrona tarea1 = gestorTareas.crearTareaSincrona(ObtenerRecomendaciones.class);
+ 	tarea1.ejecutar();
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    update(ob);
+    update(f);
+    insert(ob1);
+    retract(notif);
+
+end
+
+rule "Obtiene nombre de pizza recomendada incorrecto 2"
+salience 100
+ when
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.NombrePizzaPersonalizada, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:GuardarTipoPizzaRecomendacion(state == PENDING)
+    f: FocoUsuario(foco == ob)
+    pizza:Pizza(tamanio == TamanioPizza.familiar)
+    lista:ArrayList()
+ then
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
+ 	tarea.ejecutar("", ConversacionPizzero.msg("nombrePizzaIncorrecto"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+end
+
+rule "Guarda el tipo de pizza recomendada"
+ when
+    notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.NombrePizzaPersonalizada, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:GuardarTipoPizzaRecomendacion(state == PENDING)
+    f: FocoUsuario(foco == ob)
+    pizza:Pizza(tamanio != TamanioPizza.familiar)
+    lista:ArrayList()
+ then
+ 	ob.setSolved();
+ 	
+ 	Objetivo ob1 = new NombrePersonalizadaCorrecto();
+ 	f.setFoco(ob1);
+ 	System.out.println("**********: " + pizza);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(ExtraerPizzaRecomendada.class);
+ 	tarea.ejecutar(msgg,lista, pizza);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    update(ob);
+    update(f);
+    retract(notif);
+    insert(ob1);
+    System.out.println("**********: " + pizza);
+end
+
+rule "Obtiene nombre de pizza recomendada incorrecto"
+ when
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.NombrePizzaPersonalizada, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:GuardarTipoPizzaRecomendacion(state == PENDING)
+    f: FocoUsuario(foco == ob)
+ then
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
+ 	tarea.ejecutar("", ConversacionPizzero.msg("nombrePizzaIncorrecto"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+end
+
+rule "Obtiene nombre de pizza recomendada correcto"
+ when
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:NombrePersonalizadaCorrecto(state == PENDING)
+    f: FocoUsuario(foco == ob)
+    pizza:Pizza(tamanio != TamanioPizza.familiar)
+    p: Pedido()
+ then
+ 	ob.setSolved();
+ 	Objetivo ob1 = new ObtenerSalsa();
+
+ 	f.setFoco(ob1);
+	p.addPizza(pizza);
+	System.out.println("***************"+ p);
+ 	TareaSincrona tarea1 = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
+ 	tarea1.ejecutar("", ConversacionPizzero.msg("tengoTuPizza"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    update(ob);
+    update(f);
+    insert(ob1);
+	update(p);
+	
+	System.out.println(p);
+end
+
 
 rule "Obtener ingredientes pizza personalizada"
 when 
@@ -397,6 +498,10 @@ rule "Obtener nombre pizza"
     Objetivo ob1 = new ObtenerSalsa();
     f.setFoco(ob1);
     pizza.setNombrePizza(msgg);
+    
+   	TareaSincrona tarea1 = gestorTareas.crearTareaSincrona(InsertaPizzaPersonalizada.class);
+ 	tarea1.ejecutar(pizza);
+    
     String mensaje = ConversacionPizzero.msg("obtenerNombrePizza").replaceAll("\\*", msgg);
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
     tarea.ejecutar(group, mensaje);
@@ -423,7 +528,7 @@ end
 
 rule "Obtiene el tipo de pizza incorrecto"
  when
-    notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.tipoPizzaCasa && tipoNotificacion != tipoNotif.tipoPizzaPersonalizada, msgg:mensajeNotificacion)
+    notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.tipoPizzaCasa && tipoNotificacion != tipoNotif.tipoPizzaPersonalizada && tipoNotificacion != tipoNotif.tipoPizzaRecomendacion, msgg:mensajeNotificacion)
     obGeneral:ObtenerPedidoPizza(state == SOLVING)
     ob:ObtenerTipoPizza(state == PENDING)
     f: FocoUsuario(foco == ob)
@@ -566,7 +671,7 @@ end
 
 rule "Obtiene salsa de la pizza incorrecto"
  when
-    notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.salsas, msgg:mensajeNotificacion)
+    notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.salsas, tipoNotificacion != tipoNotif.ingredientes, msgg:mensajeNotificacion)
     obGeneral:ObtenerPedidoPizza(state == SOLVING)
     ob:ObtenerSalsa(state == PENDING)
     f: FocoUsuario(foco == ob)

@@ -50,7 +50,7 @@ public class InsertaPizzaPersonalizada extends TareaSincrona {
 		try {
 			
 		
-			String mensaje = null;
+			String mensaje = "";
 			
 			String identRecursoPersistencia = "Persistencia1";
 			ItfUsoPersistenciaAccesoBD persistencia = (ItfUsoPersistenciaAccesoBD)  NombresPredefinidos.REPOSITORIO_INTERFACES_OBJ.obtenerInterfazUso(

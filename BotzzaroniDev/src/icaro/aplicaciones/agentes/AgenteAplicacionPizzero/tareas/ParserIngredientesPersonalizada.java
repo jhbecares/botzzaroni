@@ -29,10 +29,10 @@ public void ejecutar(Object... params) {
 	    	}else if(msgg2.equalsIgnoreCase("bacon crispy")){
 	    		pizza.addIngrediente("bacon crispy");
 	    	}else if(msgg2.equalsIgnoreCase("jamon serrano")|| msgg2.equalsIgnoreCase("jamón serrano")){
-	    		pizza.addIngrediente("kamon Serrano");
+	    		pizza.addIngrediente("jamon serrano");
 	    	}else if(msgg2.equalsIgnoreCase("champiñon")|| msgg2.equalsIgnoreCase("champiñón")||msgg2.equalsIgnoreCase("champiñónes")||msgg2.equalsIgnoreCase("champis")){
-	    		pizza.addIngrediente("champiñon");
-	    	}else if(msgg2.equalsIgnoreCase("Topping a base de mozzarella")|| msgg2.equalsIgnoreCase("topping de mozzarella")){
+	    		pizza.addIngrediente("champinion");
+	    	}else if(msgg2.equalsIgnoreCase("topping a base de mozzarella")|| msgg2.equalsIgnoreCase("topping de mozzarella")){
 	    		pizza.addIngrediente("topping a base de mozzarella");
 	    	}else if(msgg2.equalsIgnoreCase("Queso cheddar")|| msgg2.equalsIgnoreCase("queso chedar")){
 	    		pizza.addIngrediente("queso cheddar");
@@ -43,11 +43,11 @@ public void ejecutar(Object... params) {
 	    	}else if(msgg2.equalsIgnoreCase("queso provolone")){
 	    		pizza.addIngrediente("queso provolone");
 	    	}else if(msgg2.equalsIgnoreCase("queso azul")){
-	    		pizza.addIngrediente("Queso azul");
+	    		pizza.addIngrediente("queso azul");
 	    	}else if(msgg2.equalsIgnoreCase("york")){
 	    		pizza.addIngrediente("york");
 	    	}else if(msgg2.equalsIgnoreCase("piña")){
-	    		pizza.addIngrediente("piña");
+	    		pizza.addIngrediente("pinia");
 	    	}else if(msgg2.equalsIgnoreCase("tomate natural")|| msgg2.equalsIgnoreCase("tomate")){
 	    		pizza.addIngrediente("tomate natural");
 	    	}else if(msgg2.equalsIgnoreCase("tomate confitado")){

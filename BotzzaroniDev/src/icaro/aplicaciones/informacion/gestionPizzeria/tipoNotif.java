@@ -29,6 +29,7 @@ public class tipoNotif {
 	public static String numero = "numero";
 	public static String tipoPizzaCasa = "tipoPizzaCasa";
 	public static String tipoPizzaPersonalizada = "tipoPizzaPersonalizada";
+	public static String tipoPizzaRecomendacion = "tipoPizzaRecomendacion";
 	public static String pideAlergia = "pideAlergia";
 
 	

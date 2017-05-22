@@ -80,7 +80,7 @@ public class ConversacionPizzero {
 		obtenerTipoPizza1.add("Vale, para tu pizza número ");
 		
 		List<String> obtenerTipoPizza2 = new ArrayList<String>();
-		obtenerTipoPizza2.add(" ¿Quieres de la carta o una personalizada?");
+		obtenerTipoPizza2.add(" ¿Quieres de la carta, una personalizada o quieres que te recomendemos alguna?");
 		
 		List<String> solicitarTamanioPizza = new ArrayList<String>();
 		solicitarTamanioPizza.add("¿De qué tamaño quieres la pizza? Tenemos: "+ tamanio);

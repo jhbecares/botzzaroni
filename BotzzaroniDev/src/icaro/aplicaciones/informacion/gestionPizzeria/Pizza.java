@@ -38,7 +38,7 @@ public class Pizza {
 		precio = 0.0;
 		salsa = "";
 		personalizada = false;
-		nombrePizza = "";
+		nombrePizza = "pizza";
 		tamanio = null;
 		masa = null;
 		// salsa = String_Default;
@@ -122,6 +122,22 @@ public class Pizza {
 				*/
 		return "\n" + "Pizza " + nombrePizza + " ------------------------------------ " + precio + " €" +  "\n" +
 		"Tamaño: " + tamanio + " - Masa: " + masa + " - Salsa: " + salsa + "\n";
+	}
+	
+	public String getFormatIngredientes() {
+		String mensaje = "";
+		 for (int i = 0; i < ingredientes.size() - 1; i++){
+			 mensaje = mensaje + ingredientes.get(i).toString().toLowerCase();
+			 if((i + 1) != ingredientes.size() - 1)
+				 mensaje = mensaje + ", ";
+		 }
+		 if(ingredientes.size() > 1){
+			 mensaje = mensaje + " y ";
+		 }
+		 if(ingredientes.size() > 0){
+			 mensaje = mensaje + ingredientes.get(ingredientes.size() - 1);
+		 }
+		 return mensaje;
 	}
 	
 	/*

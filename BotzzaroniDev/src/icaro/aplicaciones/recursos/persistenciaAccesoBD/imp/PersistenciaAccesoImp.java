@@ -403,15 +403,15 @@ public class PersistenciaAccesoImp {
 		try {
 			conectar();
 			HashMap<String, ArrayList<Ingrediente>> res = new HashMap<String, ArrayList<Ingrediente>>();
-			String consulta = "SELECT pizza.nombre, ingrediente.nombre FROM "+PersistenciaAccesoImp.nombreBD+".pizza P, "
+			String consulta = "SELECT P.nombre, I.nombre FROM "+PersistenciaAccesoImp.nombreBD+".pizza P, "
 			+PersistenciaAccesoImp.nombreBD+".tieneIngrediente T, "+ PersistenciaAccesoImp.nombreBD +".ingrediente I where P.aliasUsuario='" + usuario 
 					+ "' and P.id = T.idPizza and T.idIngrediente = I.id" ;
 			query = conn.createStatement();
 			resultado = query.executeQuery(consulta);
 			
 			while (resultado.next()) {
-		        String nombrePizza = resultado.getString("pizza.nombre");
-		        String nombreIngrediente = resultado.getString("ingrediente.nombre");
+		        String nombrePizza = resultado.getString("P.nombre");
+		        String nombreIngrediente = resultado.getString("I.nombre");
 		        if (!res.containsKey(nombrePizza)){
 		        	res.put(nombrePizza, new ArrayList<Ingrediente>());
 		        }
@@ -444,11 +444,11 @@ public class PersistenciaAccesoImp {
 		try {
 			conectar();
 			HashMap<String, ArrayList<Ingrediente>> res = new HashMap<String, ArrayList<Ingrediente>>();
-			String consulta = "SELECT pizza.nombre, count(*) contador FROM " +PersistenciaAccesoImp.nombreBD+".pizza P, "
+			String consulta = "SELECT P.nombre, count(*) contador FROM " +PersistenciaAccesoImp.nombreBD+".pizza P, "
 					+PersistenciaAccesoImp.nombreBD+".pedido PE, " +
-					PersistenciaAccesoImp.nombreBD +".tienepizza T,  where PE.aliasUsuario=" +usuario+
-					" and T.idPedido=PE.id and T.idPizza = P.id GROUP by P.nombre order by contador desc"; 
-			
+					PersistenciaAccesoImp.nombreBD +".tienepizza T  where PE.aliasUsuario='" +usuario+
+					"' and T.idPedido=PE.id and T.idPizza = P.id GROUP by P.nombre order by contador desc"; 
+			System.out.println(consulta);
 			query = conn.createStatement();
 			resultado = query.executeQuery(consulta);
 			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
@@ -500,11 +500,18 @@ public class PersistenciaAccesoImp {
 			conectar();
 			
 			// Insertar pizza
+			System.out.println("****************** " + pizza.getUsuarioCreador().getUsername());
+			for(int i = 0; i< pizza.getIngredientes().size(); i++){
+				System.out.println("** - " + pizza.getIngredientes().get(i));
+			}
+			
+			
 			query = conn.createStatement();
 			String insercion = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
-					+ ".pizza VALUES ('" +  pizza.getUsuarioCreador().getUsername() + "','" + pizza.getNombrePizza() +  "', 10)";
+					+ ".pizza VALUES ('','" +  pizza.getUsuarioCreador().getUsername() + "','" + pizza.getNombrePizza() +  "', 10)";
 			query.executeUpdate(insercion);
 			
+			System.out.println("INSERTA DONE");
 			// Recuperar el id con el que se ha insertado
 			query = conn.createStatement();
 			resultado =  query.executeQuery("SELECT id FROM "
@@ -513,6 +520,8 @@ public class PersistenciaAccesoImp {
 			if (resultado.next()) {
 				idPizza = resultado.getInt("id");			
 			}
+			
+			System.out.println("RECUPERA ID PIZZA DONE");
 			
 			// Recuperar ids de los ingredientes
 			HashMap<String, Integer> mapIngr = new HashMap<String, Integer>();
@@ -523,6 +532,8 @@ public class PersistenciaAccesoImp {
 			while(resultado.next()){
 				mapIngr.put(resultado.getString("nombre"), resultado.getInt("id"));
 			}
+			
+			System.out.println("RECUPERA ID INGREDIENTES DONE");
 			
 			// Para cada ingrediente de la pizza, accedo a su ID y lo añado a la tabla TieneIngrediente con el ID de la pizza
 			for(Ingrediente i : pizza.getIngredientes()){

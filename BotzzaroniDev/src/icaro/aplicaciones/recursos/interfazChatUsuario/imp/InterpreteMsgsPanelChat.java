@@ -114,6 +114,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("numero");
 			anotacionesBusquedaPrueba.add("tipoPizzaCasa");
 			anotacionesBusquedaPrueba.add("tipoPizzaPersonalizada");
+			anotacionesBusquedaPrueba.add("tipoPizzaRecomendacion");
 			anotacionesBusquedaPrueba.add("si");
 			anotacionesBusquedaPrueba.add("no");
 			anotacionesBusquedaPrueba.add("calles");
@@ -346,6 +347,14 @@ public class InterpreteMsgsPanelChat {
 			else if (anotType.equalsIgnoreCase("tipoPizzaPersonalizada") && !anotaciones_leidas.contains("tipoPizzaPersonalizada")) {
 				if (!anotaciones_leidas.contains("tipoPizzaPersonalizada"))
 					anotaciones_leidas.add("tipoPizzaPersonalizada");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("tipoPizzaRecomendacion") && !anotaciones_leidas.contains("tipoPizzaRecomendacion")) {
+				if (!anotaciones_leidas.contains("tipoPizzaRecomendacion"))
+					anotaciones_leidas.add("tipoPizzaRecomendacion");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(

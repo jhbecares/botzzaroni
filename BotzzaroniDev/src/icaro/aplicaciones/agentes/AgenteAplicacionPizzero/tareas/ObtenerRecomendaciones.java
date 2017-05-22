@@ -62,12 +62,13 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 		    
 			//Focus f = new Focus();
 			if (!recomendaciones.isEmpty()){
-				 String recomendadas = null;
+				 String recomendadas = "";
 				    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
-	             this.getEnvioHechos().insertarHecho(recomendaciones);
+	             this.getEnvioHechos().insertarHechoWithoutFireRules(recomendaciones);
 	             
 	             for(int i=0; i < recomendaciones.size(); i++){
-	            	 recomendadas  = recomendadas + recomendaciones.get(i).toString() + "\n";
+	            	 String nombre = recomendaciones.get(i).getNombrePizza().substring(0, 1).toUpperCase() + recomendaciones.get(i).getNombrePizza().substring(1);
+	            	 recomendadas  = "\n   - " + recomendadas + nombre + " que lleva " + recomendaciones.get(i).getFormatIngredientes() + "\n";
 	             }
 	             
 	             mensaje = "Hemos visto que has creado pizzas anteriormente. Te recordamos que tienes las siguientes pizzas guardadas "
@@ -78,12 +79,12 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 				// Como no tiene personalizadas, consultamos cuál es la pizza de la carta que más ha pedido
 				 recomendaciones = persistencia.obtenerMasPedidaCarta(user);
 				 if (!recomendaciones.isEmpty()){
-					 String maspedida = null;
+					 String maspedida = "";
 					    // TODO: Leer el array de pizzas que devuelve la consulta y mostrarlas
 					 
 		             maspedida  =  recomendaciones.get(0).toString() + "\n";
 		             
-		             this.getEnvioHechos().insertarHecho(recomendaciones.get(0));
+		             this.getEnvioHechos().insertarHechoWithoutFireRules(recomendaciones.get(0));
 		             mensaje = "No tienes pizzas guardadas creadas por ti, pero hemos visto que pides mucho la pizza  " + maspedida + "¿Te gustaría repetirla?";
 				}
 				else{
@@ -93,7 +94,7 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 				}
 				
 			}
-
+			
 			if (recComunicacionChat != null) {
                 //recComunicacionChat.setIdentAgteAreportar(this.identAgente);
 				recComunicacionChat.mostrarVisualizadorChatUsuario(identAgenteOrdenante, NombresPredefinidos.TIPO_COGNITIVO);
