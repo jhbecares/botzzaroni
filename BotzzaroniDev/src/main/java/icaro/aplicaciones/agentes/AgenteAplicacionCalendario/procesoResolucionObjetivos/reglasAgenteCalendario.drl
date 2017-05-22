@@ -41,10 +41,14 @@ then
     tarea.ejecutar(identInterlc,ConversacionCalendario.msg("peticionCalendario"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
    	
+   	
+   	
+   	/*
    	Pedido p = new Pedido();
    	p = p.pedidoPrueba();
    	TareaSincrona tareaIns = gestorTareas.crearTareaSincrona(InsertarPedido.class);
     tareaIns.ejecutar(p);
+    */
 
 	Objetivo obGeneral = new ObtenerEntrega();
     insert(obGeneral);
