@@ -72,7 +72,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`) VALUES
 (3, 'ternera'),
 (4, 'bacon crispy'),
 (5, 'jamon serrano'),
-(6, 'champiñon'),
+(6, 'champinion'),
 (7, 'topping a base de mozzarella'),
 (8, 'queso cheddar'),
 (9, 'queso emmental'),
@@ -80,7 +80,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`) VALUES
 (11, 'queso provolone'),
 (12, 'queso azul'),
 (13, 'york'),
-(14, 'piña'),
+(14, 'pinia'),
 (15, 'tomate natural'),
 (16, 'tomate confitado'),
 (17, 'oregano'),
@@ -210,7 +210,7 @@ DROP TABLE IF EXISTS `tienePizza`;
 CREATE TABLE IF NOT EXISTS `tienePizza` (
   `idPedido` int(11) NOT NULL,
   `idPizza` int(11) NOT NULL,
-  `tamanyo` enum('familiar','mediana','pequeña','') NOT NULL,
+  `tamanyo` enum('familiar','mediana','pequenia','') NOT NULL,
   `masa` enum('normal','fina','queso','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
