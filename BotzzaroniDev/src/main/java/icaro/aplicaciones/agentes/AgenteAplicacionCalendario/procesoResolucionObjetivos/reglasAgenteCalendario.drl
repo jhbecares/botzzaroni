@@ -103,7 +103,7 @@ then
     update(sdf);
     
     
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -151,7 +151,7 @@ then
     
    	update(sdf);
     
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
@@ -208,7 +208,7 @@ then
     
     System.out.println("fecha reconocida: " + sdf.format(gc.getTime()));
     
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     update(sdf);
@@ -276,7 +276,7 @@ then
     
     sdf.setCalendar(gc);
     update(sdf);
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
@@ -332,7 +332,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -399,7 +399,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
@@ -440,7 +440,7 @@ then
     
     System.out.println("hora reconocida: " + sdf.format(gc.getTime()));
     update(sdf);
-    //ob.setSolved();
+    ob.setSolved();
     update(ob);
  	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
         
