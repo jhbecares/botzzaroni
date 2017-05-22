@@ -9,6 +9,7 @@ import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.objetivos.*;
 import icaro.aplicaciones.informacion.gestionPizzeria.*;
 import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tareas.*;
 import icaro.aplicaciones.agentes.AgenteAplicacionCalendario.tools.*;
+import icaro.aplicaciones.informacion.gestionPizzeria.*;
 
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -39,6 +40,11 @@ then
 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
     tarea.ejecutar(identInterlc,ConversacionCalendario.msg("peticionCalendario"));
    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   	
+   	Pedido p = new Pedido();
+   	p = p.pedidoPrueba();
+   	TareaSincrona tareaIns = gestorTareas.crearTareaSincrona(InsertarPedido.class);
+    tareaIns.ejecutar(p);
 
 	Objetivo obGeneral = new ObtenerEntrega();
     insert(obGeneral);

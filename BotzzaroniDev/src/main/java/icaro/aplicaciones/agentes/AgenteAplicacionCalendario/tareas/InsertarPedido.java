@@ -30,7 +30,7 @@ public class InsertarPedido extends TareaSincrona {
 		String identDeEstaTarea = this.getIdentTarea();
 		String identAgenteOrdenante = this.getIdentAgente();
 		Pedido pedido = (Pedido) params[0];
-		Objetivo obj = (Objetivo) params[1];
+		//Objetivo obj = (Objetivo) params[1];
 		
 		try {
 			
@@ -46,8 +46,8 @@ public class InsertarPedido extends TareaSincrona {
 			persistencia.insertaPedido(pedido);		   
 		    
 		    // Actualizamos objetivo
-			obj.setSolved();
-		    this.getEnvioHechos().actualizarHecho(obj);
+			//obj.setSolved();
+		    //this.getEnvioHechos().actualizarHecho(obj);
 		    
 			if (recComunicacionChat != null) {
                 //recComunicacionChat.setIdentAgteAreportar(this.identAgente);

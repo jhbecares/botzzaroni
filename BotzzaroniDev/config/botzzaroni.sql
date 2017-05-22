@@ -210,7 +210,7 @@ DROP TABLE IF EXISTS `tienePizza`;
 CREATE TABLE IF NOT EXISTS `tienePizza` (
   `idPedido` int(11) NOT NULL,
   `idPizza` int(11) NOT NULL,
-  `tamanyo` enum('familiar','mediana','pequeña','') NOT NULL,
+  `tamanyo` enum('familiar','mediana','pequenia','') NOT NULL,
   `masa` enum('normal','fina','queso','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
