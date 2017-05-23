@@ -31,6 +31,7 @@ pizzas.lst::pizzas:spanish:pizzas
 numero.lst::numero:spanish:numero
 tipoPizzaCasa.lst::tipoPizzaCasa:spanish:tipoPizzaCasa
 tipoPizzaPersonalizada.lst::tipoPizzaPersonalizada:spanish:tipoPizzaPersonalizada
+tipoPizzaRecomendacion.lst::tipoPizzaRecomendacion:spanish:tipoPizzaRecomendacion
 calles.lst::calles:spanish:calles
 pagoEfectivo.lst::pagoEfectivo:spanish:pagoEfectivo
 pagoTarjeta.lst::pagoTarjeta:spanish:pagoTarjeta

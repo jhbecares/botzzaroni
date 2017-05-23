@@ -1,6 +1,8 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD.imp;
 
 import icaro.aplicaciones.informacion.gestionPizzeria.Direccion;
+import icaro.aplicaciones.informacion.gestionPizzeria.Ingrediente;
+import icaro.aplicaciones.informacion.gestionPizzeria.Pizza;
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.imp.util.ScriptRunner;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -15,6 +17,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Proporciona los servicios de acceso a la bbdd con mysql
@@ -392,4 +398,163 @@ public class PersistenciaAccesoImp {
 			throw new ErrorEnRecursoException(e.getMessage());
 		}
 	}
+	
+	public ArrayList<Pizza> obtenerPersonalizadasUsuario(String usuario) throws ErrorEnRecursoException {
+		try {
+			conectar();
+			HashMap<String, ArrayList<Ingrediente>> res = new HashMap<String, ArrayList<Ingrediente>>();
+			String consulta = "SELECT P.nombre, I.nombre FROM "+PersistenciaAccesoImp.nombreBD+".pizza P, "
+			+PersistenciaAccesoImp.nombreBD+".tieneIngrediente T, "+ PersistenciaAccesoImp.nombreBD +".ingrediente I where P.aliasUsuario='" + usuario 
+					+ "' and P.id = T.idPizza and T.idIngrediente = I.id" ;
+			query = conn.createStatement();
+			resultado = query.executeQuery(consulta);
+			
+			while (resultado.next()) {
+		        String nombrePizza = resultado.getString("P.nombre");
+		        String nombreIngrediente = resultado.getString("I.nombre");
+		        if (!res.containsKey(nombrePizza)){
+		        	res.put(nombrePizza, new ArrayList<Ingrediente>());
+		        }
+		        ArrayList<Ingrediente> ingr = res.get(nombrePizza);
+		        ingr.add(new Ingrediente(nombreIngrediente));
+		        res.put(nombrePizza, ingr);
+		       
+			}
+			
+			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+			Iterator it = res.entrySet().iterator();
+			    while (it.hasNext()) {
+			        Map.Entry pair = (Map.Entry)it.next();
+			        Pizza p = new Pizza();
+			        p.setNombrePizza((String) pair.getKey());
+			        p.setIngredientes( (ArrayList<Ingrediente>) pair.getValue());
+			        pizzas.add(p);
+			        it.remove(); // avoids a ConcurrentModificationException
+			    }
+			resultado.close();
+			desconectar();
+			return pizzas;
+		}
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+	
+	public  ArrayList<Pizza> obtenerMasPedidaUsuario(String usuario) throws ErrorEnRecursoException {
+		try {
+			conectar();
+			HashMap<String, ArrayList<Ingrediente>> res = new HashMap<String, ArrayList<Ingrediente>>();
+			String consulta = "SELECT P.nombre, count(*) contador FROM " +PersistenciaAccesoImp.nombreBD+".pizza P, "
+					+PersistenciaAccesoImp.nombreBD+".pedido PE, " +
+					PersistenciaAccesoImp.nombreBD +".tienepizza T  where PE.aliasUsuario='" +usuario+
+					"' and T.idPedido=PE.id and T.idPizza = P.id GROUP by P.nombre order by contador desc"; 
+			System.out.println(consulta);
+			query = conn.createStatement();
+			resultado = query.executeQuery(consulta);
+			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+
+			
+			if (resultado.next()) {
+		        String nombrePizza = resultado.getString("pizza.nombre");
+			    Pizza p = new Pizza();
+			    p.setNombrePizza(nombrePizza);
+		        pizzas.add(p);
+			}
+			resultado.close();
+			desconectar();
+			return pizzas;
+		}
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+
+	public boolean existePizzaPersonalizada(String username, String nombrePizza)  throws ErrorEnRecursoException {
+		boolean estado = false;
+
+		try {
+			conectar();
+			// crearQuery();
+			query = conn.createStatement();
+			resultado = query.executeQuery("SELECT * FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".pizza P where P.aliasUsuario = '" + username + "' and P.nombre = '" + nombrePizza + "'");
+			if (resultado.next()) {
+				estado = true;
+			} else {
+				estado = false;
+			}
+			resultado.close();
+			desconectar();
+			return estado;
+		}
+
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+
+	public void insertaPizzaPersonalizada(Pizza pizza)  throws ErrorEnRecursoException {
+		int idPizza = 0;
+		try {
+			conectar();
+			
+			// Insertar pizza
+			System.out.println("****************** " + pizza.getUsuarioCreador().getUsername());
+			for(int i = 0; i< pizza.getIngredientes().size(); i++){
+				System.out.println("** - " + pizza.getIngredientes().get(i));
+			}
+			
+			
+			query = conn.createStatement();
+			String insercion = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+					+ ".pizza VALUES ('','" +  pizza.getUsuarioCreador().getUsername() + "','" + pizza.getNombrePizza() +  "', 10)";
+			query.executeUpdate(insercion);
+			
+			System.out.println("INSERTA DONE");
+			// Recuperar el id con el que se ha insertado
+			query = conn.createStatement();
+			resultado =  query.executeQuery("SELECT id FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".pizza P where P.aliasUsuario = '" + pizza.getUsuarioCreador().getUsername() + "' and P.nombre = '" + pizza.getNombrePizza() + "'");
+			if (resultado.next()) {
+				idPizza = resultado.getInt("id");			
+			}
+			
+			System.out.println("RECUPERA ID PIZZA DONE");
+			
+			// Recuperar ids de los ingredientes
+			HashMap<String, Integer> mapIngr = new HashMap<String, Integer>();
+			query = conn.createStatement();
+			resultado =  query.executeQuery("SELECT * FROM "
+					+ PersistenciaAccesoImp.nombreBD
+					+ ".ingrediente");
+			while(resultado.next()){
+				mapIngr.put(resultado.getString("nombre"), resultado.getInt("id"));
+			}
+			
+			System.out.println("RECUPERA ID INGREDIENTES DONE");
+			
+			// Para cada ingrediente de la pizza, accedo a su ID y lo añado a la tabla TieneIngrediente con el ID de la pizza
+			for(Ingrediente i : pizza.getIngredientes()){
+				int idIngr = mapIngr.get(i.toString());
+				query = conn.createStatement();
+				String insercionIngrediente = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+						+ ".tieneIngrediente VALUES (" + idPizza + "," + idIngr+  ")";
+				query.executeUpdate(insercionIngrediente);
+			}
+			
+			resultado.close();
+			desconectar();
+		
+		}
+
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+		
+	}
+	
+	
+
 }

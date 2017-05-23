@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-04-2017 a las 19:20:18
--- Versión del servidor: 5.6.21
--- Versión de PHP: 5.6.3
+-- Tiempo de generaciÃ³n: 01-04-2017 a las 19:20:18
+-- VersiÃ³n del servidor: 5.6.21
+-- VersiÃ³n de PHP: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -72,7 +72,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`) VALUES
 (3, 'ternera'),
 (4, 'bacon crispy'),
 (5, 'jamon serrano'),
-(6, 'champiñon'),
+(6, 'champinion'),
 (7, 'topping a base de mozzarella'),
 (8, 'queso cheddar'),
 (9, 'queso emmental'),
@@ -80,7 +80,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`) VALUES
 (11, 'queso provolone'),
 (12, 'queso azul'),
 (13, 'york'),
-(14, 'piña'),
+(14, 'pinia'),
 (15, 'tomate natural'),
 (16, 'tomate confitado'),
 (17, 'oregano'),
@@ -210,7 +210,7 @@ DROP TABLE IF EXISTS `tienePizza`;
 CREATE TABLE IF NOT EXISTS `tienePizza` (
   `idPedido` int(11) NOT NULL,
   `idPizza` int(11) NOT NULL,
-  `tamanyo` enum('familiar','mediana','pequeña','') NOT NULL,
+  `tamanyo` enum('familiar','mediana','pequenia','') NOT NULL,
   `masa` enum('normal','fina','queso','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -251,10 +251,10 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`alias`, `password`, `nombre`, `calle`, `numero`, `piso`, `puerta`, `codPostal`, `movil`) VALUES
-('botzzaroni', 'botzzaroni', 'botzza', 'Prof. José G! Santesmases', 1, 1, 'A', 28040, 666666666);
+('botzzaroni', 'botzzaroni', 'botzza', 'Prof. JosÃ© G! Santesmases', 1, 1, 'A', 28040, 666666666);
 
 --
--- Índices para tablas volcadas
+-- Ãndices para tablas volcadas
 --
 
 --

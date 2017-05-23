@@ -1,5 +1,10 @@
 package icaro.aplicaciones.recursos.persistenciaAccesoBD.imp;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import icaro.aplicaciones.informacion.gestionPizzeria.Ingrediente;
+import icaro.aplicaciones.informacion.gestionPizzeria.Pizza;
 import icaro.aplicaciones.informacion.gestionPizzeria.Usuario;
 import icaro.aplicaciones.recursos.persistenciaAccesoBD.ItfUsoPersistenciaAccesoBD;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
@@ -128,5 +133,41 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 			return accesoBD.obtenerDatosUsuario(usuario);
 
 	}
+	
+	@Override
+	public ArrayList<Pizza> obtenerPersonalizadasUsuario(String usuario) throws ErrorEnRecursoException {
+			trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+					"Obteniendo pizzas personalizadas de usuario " + usuario,
+					InfoTraza.NivelTraza.debug));
+			return accesoBD.obtenerPersonalizadasUsuario(usuario);
+
+	}
+	
+	@Override
+	public  ArrayList<Pizza> obtenerMasPedidaCarta(String usuario) throws ErrorEnRecursoException {
+			trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+					"Obteniendo pizzas más pedidas de usuario " + usuario,
+					InfoTraza.NivelTraza.debug));
+			return accesoBD.obtenerMasPedidaUsuario(usuario);
+
+	}
+
+	@Override
+	public boolean existePizzaPersonalizadaNombre(String username, String nombrePizza) throws  ErrorEnRecursoException {
+		trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Comprobando si ya estaba ese nombre de pizza personalizada: " + nombrePizza,
+				InfoTraza.NivelTraza.debug));
+		return accesoBD.existePizzaPersonalizada(username, nombrePizza);
+	}
+
+	@Override
+	public void insertaPizzaPersonalizada(Pizza pizza) throws  ErrorEnRecursoException {
+			trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Insertando pizza personalizada " + pizza.toString(), InfoTraza.NivelTraza.debug));
+		// consulta.insertaUsuario(usuario, password);
+		accesoBD.insertaPizzaPersonalizada(pizza);
+	}
+	
+	
 
 }

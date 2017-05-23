@@ -114,6 +114,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("numero");
 			anotacionesBusquedaPrueba.add("tipoPizzaCasa");
 			anotacionesBusquedaPrueba.add("tipoPizzaPersonalizada");
+			anotacionesBusquedaPrueba.add("tipoPizzaRecomendacion");
 			anotacionesBusquedaPrueba.add("si");
 			anotacionesBusquedaPrueba.add("no");
 			anotacionesBusquedaPrueba.add("calles");
@@ -123,7 +124,7 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("bebidas");
 			anotacionesBusquedaPrueba.add("pagoEfectivo");
 			anotacionesBusquedaPrueba.add("pagoTarjeta");
-
+			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
 			if (itfUsoExtractorSem != null) {
 				try {
@@ -195,6 +196,8 @@ public class InterpreteMsgsPanelChat {
 		// modelo de informacion
 		ArrayList anotacionesInterpretadas = new ArrayList();
 		ArrayList<String> anotaciones_leidas = new ArrayList<String>();
+		
+		String ingredientes = "";
  
 		Iterator annotTypesSal = anotacionesRelevantes.iterator();
 
@@ -277,13 +280,12 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
-			else if (anotType.equalsIgnoreCase("ingredientes") && !anotaciones_leidas.contains("ingredientes")) {
-				if (!anotaciones_leidas.contains("ingredientes"))
+			else if (anotType.equalsIgnoreCase("ingredientes")) {
 					anotaciones_leidas.add("ingredientes");
 				tienePeticion = true;
-				anotacionesInterpretadas
-						.add(interpretarAnotacionSaludoEInicioPeticion(
-								contextoInterpretacion, annot));
+				// anotacionesInterpretadas .add(interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot));
+				Notificacion n  = interpretarAnotacionSaludoEInicioPeticion(contextoInterpretacion, annot);
+				ingredientes += n.getMensajeNotificacion() + "-";
 			}
 			else if (anotType.equalsIgnoreCase("salsas") && !anotaciones_leidas.contains("salsas")) {
 				if (!anotaciones_leidas.contains("salsas"))
@@ -350,6 +352,14 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
+			else if (anotType.equalsIgnoreCase("tipoPizzaRecomendacion") && !anotaciones_leidas.contains("tipoPizzaRecomendacion")) {
+				if (!anotaciones_leidas.contains("tipoPizzaRecomendacion"))
+					anotaciones_leidas.add("tipoPizzaRecomendacion");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
 			else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
 				anotaciones_leidas.add("portal");
 				tienePeticion = true;
@@ -371,6 +381,14 @@ public class InterpreteMsgsPanelChat {
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			} 
+			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
+ 				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
+ 					anotaciones_leidas.add("NombrePizzaPersonalizada");
+ 				tienePeticion = true;
+ 				anotacionesInterpretadas
+ 						.add(interpretarAnotacionSaludoEInicioPeticion(
+ 							contextoInterpretacion, annot));
+			}
 			else if (anotType.equalsIgnoreCase("bebidas")&& !anotaciones_leidas.contains("bebidas")) {
 				anotaciones_leidas.add("bebidas");
 				tienePeticion = true;
@@ -391,8 +409,15 @@ public class InterpreteMsgsPanelChat {
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
-			} 
+			}
 	}
+		if(!ingredientes.equalsIgnoreCase("")){
+			Notificacion listaIngredientes = new Notificacion();
+			listaIngredientes.setMensajeNotificacion(ingredientes);
+			listaIngredientes.setTipoNotificacion("ingredientes");
+			anotacionesInterpretadas.add(listaIngredientes);
+			
+		}
 		
 		return anotacionesInterpretadas;
 	}

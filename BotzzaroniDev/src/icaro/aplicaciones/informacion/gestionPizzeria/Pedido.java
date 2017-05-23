@@ -31,6 +31,26 @@ public class Pedido {
 		nBebidas=0;
 		pizzas = new ArrayList<Pizza>();
 		bebidas = new ArrayList<String>();
+		alergias = new ArrayList<Ingrediente>();
+		/*ArrayList<Ingrediente> ingredientes  = new ArrayList<String>(Arrays.asList("Quesos ", "Bacon", "Champiñón", "Cebolla"));
+		Pizza pizza = new Pizza();
+		pizza.setNombrePizza("Carbonara");
+		pizza.setSalsa("Barbacoa");
+		pizza.setMasa(MasaPizza.normal);
+		pizza.setTamanio(TamanioPizza.familiar);
+		pizza.setPrecio(10.0);
+		pizza.setIngredientes(ingredientes);
+		pizzas.add(pizza);
+		
+		Pizza pizza1 = new Pizza();
+		ArrayList<String> ingredientes1  = new ArrayList<String>(Arrays.asList("Queso", "Pollo marinado", "Bacon ahumado", "Carne de vacuno"));
+		pizza1.setNombrePizza("Barbacoa");
+		pizza1.setSalsa("Carbonara");
+		pizza1.setMasa(MasaPizza.fina);
+		pizza1.setTamanio(TamanioPizza.mediana);
+		pizza1.setPrecio(7.0);
+		pizza1.setIngredientes(ingredientes1);
+		pizzas.add(pizza1);*/
 	}
 
 	public Usuario getUsuario() {
@@ -126,9 +146,21 @@ public class Pedido {
 
 	@Override
 	public String toString() {
+		String aler = "";
+		for(int i = 0; i < alergias.size(); i++){
+			aler += alergias.get(i) + ", "; 
+		}
 		return "Pedido [usuario=" + usuario + ", pizzas=" + pizzas + ", bebidas=" + bebidas + ", metodoPago="
 				+ metodoPago + ", cambioEfectivo=" + cambioEfectivo + ", fechaEntrega=" + fechaEntrega
-				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + alergias + ", nBebidas=" + nBebidas
+				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + 
+				aler
+				
+				+ ", nBebidas=" + nBebidas
 				+ ", numeroPizzas=" + numeroPizzas + ", numeroTotalPizzas=" + numeroTotalPizzas + "]";
-	}	
+	}
+	
+	public void addAlergia(String a){
+		alergias.add(new Ingrediente(a));
+		
+	}
 }
