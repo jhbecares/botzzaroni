@@ -68,7 +68,7 @@ rule "No obtiene las alergias"
     ob:ObtenerAlergia(state == PENDING)
     f: FocoUsuario(foco == ob)
     p: Pedido()
- then
+ then/*
  	ob.setSolved();
  	Objetivo ob1 = new ObtenerNumeroPizzas();
  	ob1.setobjectReferenceId(group);
@@ -84,7 +84,12 @@ rule "No obtiene las alergias"
     update(ob);
     update(f);
     insert(ob1);
-    retract(notif);
+    retract(notif);*/
+    
+    //Modificado por Vero y Alfonso
+    
+    obGeneral.setSolved();
+    update(obGeneral);
 end
 
 rule "Obtiene las alergias"

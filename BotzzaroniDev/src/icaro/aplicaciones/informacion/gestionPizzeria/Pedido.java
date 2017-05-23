@@ -31,25 +31,6 @@ public class Pedido {
 		nBebidas=0;
 		pizzas = new ArrayList<Pizza>();
 		bebidas = new ArrayList<String>();
-		/*ArrayList<Ingrediente> ingredientes  = new ArrayList<String>(Arrays.asList("Quesos ", "Bacon", "Champiñón", "Cebolla"));
-		Pizza pizza = new Pizza();
-		pizza.setNombrePizza("Carbonara");
-		pizza.setSalsa("Barbacoa");
-		pizza.setMasa(MasaPizza.normal);
-		pizza.setTamanio(TamanioPizza.familiar);
-		pizza.setPrecio(10.0);
-		pizza.setIngredientes(ingredientes);
-		pizzas.add(pizza);
-		
-		Pizza pizza1 = new Pizza();
-		ArrayList<String> ingredientes1  = new ArrayList<String>(Arrays.asList("Queso", "Pollo marinado", "Bacon ahumado", "Carne de vacuno"));
-		pizza1.setNombrePizza("Barbacoa");
-		pizza1.setSalsa("Carbonara");
-		pizza1.setMasa(MasaPizza.fina);
-		pizza1.setTamanio(TamanioPizza.mediana);
-		pizza1.setPrecio(7.0);
-		pizza1.setIngredientes(ingredientes1);
-		pizzas.add(pizza1);*/
 	}
 
 	public Usuario getUsuario() {
@@ -120,12 +101,20 @@ public class Pedido {
 		this.nBebidas = nBebidas;
 	}
 	
+	public void setnBebidas(String nBebidas) {
+		this.nBebidas = Integer.parseInt(nBebidas);
+	}
+	
 	public String mostrarResumen(){
 		String pedido = "Resumiendo, el pedido es el siguiente:";
 		double precioFinal = 0;
 		for(int i = 0; i < pizzas.size(); i++){
 			pedido = pedido + pizzas.get(i).toString();
 			precioFinal += pizzas.get(i).getPrecio();
+		}
+		for(int i = 0; i < bebidas.size(); i++){
+			pedido = pedido + bebidas.get(i).toString() + " ------------------------------------ 1.50 €" +  "\n";
+			precioFinal += 1.50;
 		}
 		pedido += "\n" + "Precio total: ------------------------------------ " + precioFinal + " € ";
 		return pedido;
@@ -141,13 +130,5 @@ public class Pedido {
 				+ metodoPago + ", cambioEfectivo=" + cambioEfectivo + ", fechaEntrega=" + fechaEntrega
 				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + alergias + ", nBebidas=" + nBebidas
 				+ ", numeroPizzas=" + numeroPizzas + ", numeroTotalPizzas=" + numeroTotalPizzas + "]";
-	}
-	
-	
-	
-	/*
-	 * java.util.Date utilDate = new java.util.Date();
-	 * java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-	 */
-	
+	}	
 }
