@@ -69,7 +69,7 @@ rule "Quiere bebida"
  	ob.setSolved();
  	update(ob);
       
-    Objetivo ob1 = new ObtenerNumeroBebidas();
+    Objetivo ob1 = new ObtenerNumeroBebidasTotales();
   	ob1.setobjectReferenceId(group);
   	insert(ob1); 
   	
@@ -77,11 +77,13 @@ rule "Quiere bebida"
   	update(fc);
   	
    	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+   	tarea.ejecutar(group,ConversacionBebida.msg("cartaBebida"));
     tarea.ejecutar(group,ConversacionBebida.msg("preguntarNumeroBebidas"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
 	 
    	retract(notif);
 end
+
 
 rule "No quiere bebida" 
  when
@@ -104,6 +106,7 @@ rule "No quiere bebida"
     retract(notif);
 end
 
+
 rule "No se sabe si quiere bebida" 
  when
   	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.si && tipoNotificacion != tipoNotif.no)
@@ -118,152 +121,187 @@ rule "No se sabe si quiere bebida"
    	retract(notif);
 end
 
-rule "Mostrar menu de las bebidas" 
- when
-  	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.numero, msgg:mensajeNotificacion)
+rule "Introduce numero y bebida juntos en objetivo numero bebidas totales"
+ salience 30 
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.numero, msggNumero:mensajeNotificacion)
+ 	notif1:Notificacion(group1:identNotificador, tipoNotificacion == tipoNotif.bebidas, msggBebida:mensajeNotificacion)
  	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
- 	ob:ObtenerNumeroBebidas(state == Objetivo.PENDING)
+ 	ob:ObtenerNumeroBebidasTotales(state == Objetivo.PENDING)
  	fc:FocoUsuario( foco == ob )
  	pedido1:Pedido()
- then   
- 	pedido1.setnBebidas(Integer.parseInt(msgg));
+ then
+ 	pedido1.setnBebidas(msggNumero);
+ 	for(int i = 0; i < Integer.parseInt(msggNumero); i++){
+ 		pedido1.anadirBebida(msggBebida);
+ 	}
  	
- 	ob.setSolving();
- 	update(ob);
-  	
-   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-   	tarea.ejecutar(group,ConversacionBebida.msg("cartaBebida")); 
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 	
-   	retract(notif);
-   	update(pedido1);
-end
-
-rule "Cantidad de bebidas totales incorrecta" 
- when
-  	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.numero)
- 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
- 	ob:ObtenerNumeroBebidas(state == Objetivo.PENDING)
- 	fc:FocoUsuario( foco == ob )
- then   
-   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-   	tarea.ejecutar(group,ConversacionBebida.msg("cantidadNoValida")); 
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionBebida.msg("bebidaExiste"));
+    tarea.ejecutar(group,ConversacionBebida.msg("masBebidas"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     
-   	retract(notif);
-end
-
-rule "Conocer bebida" 
- when
- 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
- 	ob:ObtenerNumeroBebidas(state == Objetivo.SOLVING)
- 	fc:FocoUsuario( foco == ob)
- 	pedido1:Pedido()
- 	
- then
-	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
- 	
- 	ob.setSolved();
+    Objetivo ob1 = new SaberSiQuiereMasBebidas();
+  	ob1.setobjectReferenceId(group);
+  	insert(ob1); 
+  	
+  	fc.setFoco(ob1);
+  	update(fc);
+    
+    ob.setSolved();
  	update(ob);
-      
-    Objetivo ob1 = new ObtenerNombreBebida();
+ 	
+    retract(notif);
+    retract(notif1);
+end 	
+
+/*
+rule "Introduce numero y no bebida"
+ salience 20 
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.numero, msggNumero:mensajeNotificacion)
+ 	notif1:Notificacion(group1:identNotificador, tipoNotificacion != tipoNotif.bebidas, tipoNotificacion != tipoNotif.numero, msggBebida:mensajeNotificacion)
+ 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
+ 	ob:ObtenerNumeroBebidasTotales(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ 	pedido1:Pedido()
+ then
+ 	
+ 	pedido1.setnBebidas(msggNumero);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,"Por favor introduce una bebida valida");
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+
+	/*Objetivo ob1 = new ObtenerNombreBebida();
+  	ob1.setobjectReferenceId(group);
   	insert(ob1); 
   	
   	fc.setFoco(ob1);
   	update(fc);
 
-   	tarea.ejecutar(pedido1.getUsuario().getUsername(),ConversacionBebida.msg("quiereBebidas"));
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-end
+    retract(notif);
+    
+end 	
 
-rule "Obtener bebida" 
- when
-  	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.bebidas, msgg:mensajeNotificacion)
+
+rule "Introduce bebida y no numero"
+ salience 20 
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.bebidas, msggBebida:mensajeNotificacion)
+ 	notif1:Notificacion(group1:identNotificador, tipoNotificacion != tipoNotif.numero)
  	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
- 	ob:ObtenerNombreBebida(state == Objetivo.PENDING)
- 	fc:FocoUsuario(foco == ob )
-	pedido1:Pedido()
- then   
- 	//pedido1.anadirBebida(msgg);
+ 	ob:ObtenerNumeroBebidasTotales(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ 	pedido1:Pedido()
+ then
+ 	
+ 	pedido1.anadirBebida(msggBebida);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,"Por favor introduce la cantidad de esa bebida");
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+
+	/*Objetivo ob1 = new ObtenerNumeroBebidaEspecifica();
+  	ob1.setobjectReferenceId(group);
+  	insert(ob1); 
+  	
+  	fc.setFoco(ob1);
+  	update(fc);
+
+    retract(notif);
+    
+end */
+
+
+
+/*rule "Si quiere mas bebidas y llega bebidas"
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.numero, msggNumero:mensajeNotificacion)
+ 	notif1:Notificacion(group1:identNotificador, tipoNotificacion == tipoNotif.bebidas, msggBebida:mensajeNotificacion)
+ 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
+ 	ob:SaberSiQuiereMasBebidas(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ 	pedido1:Pedido()
+ then
+ 	
+ 	pedido1.setnBebidas(msggNumero);
+ 	for(int i = 0; i < Integer.parseInt(msggNumero); i++){
+ 		pedido1.anadirBebida(msggBebida);
+ 	}
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionBebida.msg("bebidaExiste"));
+    tarea.ejecutar(group,ConversacionBebida.msg("masBebidas"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+   
+    retract(notif);
+    retract(notif1);
+end 	*/
+
+
+rule "Si quiere mas bebidas"
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.si)
+ 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
+ 	ob:SaberSiQuiereMasBebidas(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ then
+ 	
  	ob.setSolved();
  	update(ob);
+ 
+ 	Objetivo ob1 = new ObtenerNumeroBebidasTotales();
+  	ob1.setobjectReferenceId(group);
+  	insert(ob1); 
+  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,"Que otra bebida deseas?");
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+  	
+  	fc.setFoco(ob1);
+  	update(fc);
+  	retract(notif);
+end 	
+
+
+rule "No quiere mas bebidas"
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.no)
+ 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
+ 	ob:SaberSiQuiereMasBebidas(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ then
  	
- 	Objetivo ob1 = new ObtenerCantidadBebida();
-	insert(ob1); 
-   
-   	fc.setFoco(ob1);
-   	update(fc);
+ 	obGeneral.setSolved();
+ 	update(obGeneral);
+ 	
+ 	ob.setSolved();
+ 	update(ob);
   	
-   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBebida.msg("bebidaExisteYPreguntaCantidad"));
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-	update(pedido1);
-   	retract(notif);
-end
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,"Pues vayamos con el pago :)");
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 
-rule "Bebida incorrecta" 
- when
- 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.bebidas)
-	obGeneral:ObtenerBebidas(state == Objetivo.PENDING)
-	ob:ObtenerNombreBebida(state == Objetivo.PENDING)
-	fc:FocoUsuario(foco == ob )
- then   
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    tarea.ejecutar(group,ConversacionBebida.msg("bebidaNoExiste"));
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-   
-    retract(notif);
-end
+  	retract(notif);
+end 
 
-rule "Obtener cantidad de una bebida especifica" 
- when
- 	notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.numero, msgg:mensajeNotificacion)
-	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
-	ob:ObtenerCantidadBebida(state == Objetivo.PENDING)
-	fc:FocoUsuario(foco == ob )
-	pedido1:Pedido()
- then   
-	ob.setSolved();
-	update(ob);
-	
-	if(pedido1.getnBebidas() == Integer.parseInt(msgg)){
-		obGeneral.setSolved();
- 		update(obGeneral);
-	}
-	else{
-		Objetivo ob1 = new ObtenerNumeroBebidas();
-  		ob1.setobjectReferenceId(group);
-  		insert(ob1); 
-  	
-  		ob1.setSolving();
-  		update(ob1);
-  		
-  		fc.setFoco(ob1);
-  		update(fc);
-  		
-  		pedido1.setnBebidas(pedido1.getnBebidas() - Integer.parseInt(msgg));
-	}
-	update(pedido1);
-	
-	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-	tarea.ejecutar(group,ConversacionBebida.msg("bebidaExiste"));
-	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-   
-    retract(notif);
-end
 
-rule "Cantidad de una bebida especifica no valida" 
- when
- 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.numero)
-	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
-	ob:ObtenerCantidadBebida(state == Objetivo.PENDING)
-	fc:FocoUsuario(foco == ob )
- then   
-	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-	tarea.ejecutar(group,ConversacionBebida.msg("cantidadNoValida"));
-	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-   
-    retract(notif);
-end
+rule "No se sabe si quiere mas bebidas"
+ when 
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.si && tipoNotificacion != tipoNotif.no)
+ 	obGeneral:ObtenerBebidas( state == Objetivo.PENDING)
+ 	ob:SaberSiQuiereMasBebidas(state == Objetivo.PENDING)
+ 	fc:FocoUsuario( foco == ob )
+ then
+ 	  	
+  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+    tarea.ejecutar(group,ConversacionBebida.msg("noSeSabeSiQuiereMas"));
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+
+  	retract(notif);
+end 
+
 
 rule "Enviar mensaje al agente contexto cuando acaba el agente bebida"
 when
@@ -281,3 +319,4 @@ then
    	System.out.println(mensaje);
    	iftAgente.aceptaMensaje(mensaje);
 end
+
