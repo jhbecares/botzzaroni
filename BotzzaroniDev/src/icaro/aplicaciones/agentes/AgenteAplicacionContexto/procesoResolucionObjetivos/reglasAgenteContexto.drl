@@ -296,7 +296,9 @@ rule "Distribuir mensaje al agente IDENTIFICADOR"
  when
     obj:SaludarConocer(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion(tipoNotificacion == tipoNotif.numero)
+    notif:Notificacion(tipoNotificacion == tipoNotif.numero || tipoNotificacion == tipoNotif.TempDate ||
+    	tipoNotificacion == tipoNotif.miMinuto || tipoNotificacion == tipoNotif.miHora || 
+    	tipoNotificacion == tipoNotif.TempTime)
   then
      retract(notif);
      update(f);
@@ -323,7 +325,8 @@ rule "Distribuir mensaje al agente PIZZERO"
     obj:ObtenerPizza(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
     notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || tipoNotificacion == tipoNotif.puerta 
-    	|| tipoNotificacion == tipoNotif.calles || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora)
+    	|| tipoNotificacion == tipoNotif.calles || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora
+    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);
@@ -352,7 +355,8 @@ rule "Distribuir mensaje al agente PIZZERO"
  	 obj:ObtenerBebida(state == Objetivo.SOLVING)
      f:Focus(foco == obj)
      notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || 
-     	tipoNotificacion == tipoNotif.puerta || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora)
+     	tipoNotificacion == tipoNotif.puerta  || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora
+    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);
@@ -379,7 +383,8 @@ rule "Distribuir mensaje al agente PIZZERO"
      obj:ObtenerPago(state==Objetivo.SOLVING)
      f:Focus(foco == obj)
      notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || 
-     	tipoNotificacion == tipoNotif.puerta  || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora)
+     	tipoNotificacion == tipoNotif.puerta  || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora
+    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);

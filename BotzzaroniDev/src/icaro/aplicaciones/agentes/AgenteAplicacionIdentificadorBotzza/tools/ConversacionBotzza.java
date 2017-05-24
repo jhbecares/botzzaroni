@@ -117,7 +117,7 @@ public class ConversacionBotzza {
 		solicitaCalle.add("Muy bien, dinos el nombre de la calle, por favor.");
 		
 		List<String> solicitarConfirmarDireccionImperativo = new ArrayList<String>();
-		solicitarConfirmarDireccionImperativo.add("Necesitamos si saber si quieres usar esa dirección...");
+		solicitarConfirmarDireccionImperativo.add("Necesitamos saber si quieres usar esa dirección...");
 		solicitarConfirmarDireccionImperativo.add("Si no nos dices si quieres esa dirección o no sabemos a dónde mandar tus pizzas.");
 
 		List<String> solicitaTelefono = new ArrayList<String>();
