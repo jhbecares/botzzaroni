@@ -1,12 +1,10 @@
 package icaro.aplicaciones.informacion.gestionPizzeria;
-import java.util.List;
-
-import icaro.aplicaciones.informacion.gestionPizzeria.Pizza.MasaPizza;
-import icaro.aplicaciones.informacion.gestionPizzeria.Pizza.TamanioPizza;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Pedido {
 	
@@ -31,26 +29,6 @@ public class Pedido {
 		nBebidas=0;
 		pizzas = new ArrayList<Pizza>();
 		bebidas = new ArrayList<String>();
-		alergias = new ArrayList<Ingrediente>();
-		/*ArrayList<Ingrediente> ingredientes  = new ArrayList<String>(Arrays.asList("Quesos ", "Bacon", "Champiñón", "Cebolla"));
-		Pizza pizza = new Pizza();
-		pizza.setNombrePizza("Carbonara");
-		pizza.setSalsa("Barbacoa");
-		pizza.setMasa(MasaPizza.normal);
-		pizza.setTamanio(TamanioPizza.familiar);
-		pizza.setPrecio(10.0);
-		pizza.setIngredientes(ingredientes);
-		pizzas.add(pizza);
-		
-		Pizza pizza1 = new Pizza();
-		ArrayList<String> ingredientes1  = new ArrayList<String>(Arrays.asList("Queso", "Pollo marinado", "Bacon ahumado", "Carne de vacuno"));
-		pizza1.setNombrePizza("Barbacoa");
-		pizza1.setSalsa("Carbonara");
-		pizza1.setMasa(MasaPizza.fina);
-		pizza1.setTamanio(TamanioPizza.mediana);
-		pizza1.setPrecio(7.0);
-		pizza1.setIngredientes(ingredientes1);
-		pizzas.add(pizza1);*/
 	}
 
 	public Usuario getUsuario() {
@@ -126,15 +104,28 @@ public class Pedido {
 	}
 	
 	public String mostrarResumen(){
-		String pedido = "Resumiendo, el pedido es el siguiente:";
+		String pedido = "Resumiendo, el pedido es el siguiente: \n";
 		double precioFinal = 0;
 		for(int i = 0; i < pizzas.size(); i++){
 			pedido = pedido + pizzas.get(i).toString();
 			precioFinal += pizzas.get(i).getPrecio();
 		}
+		
+		Map<String,Integer> m = new HashMap<String,Integer>();
 		for(int i = 0; i < bebidas.size(); i++){
-			pedido = pedido + bebidas.get(i).toString() + " ------------------------------------ 1.50 €" +  "\n";
-			precioFinal += 1.50;
+			if(m.containsKey(bebidas.get(i))){
+					m.put(bebidas.get(i), m.get(bebidas.get(i)) + 1);
+			}
+			else{
+				m.put(bebidas.get(i), 1);
+			}
+		}
+		Iterator it = m.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry e = (Map.Entry)it.next();
+			double precioCantidad = 1.50 * (Integer)e.getValue();
+			pedido = pedido + e.getKey() +" ------------------------------------ " + e.getValue() + "*1.50  = " + precioCantidad + "€ \n";
+			precioFinal += precioCantidad;
 		}
 		pedido += "\n" + "Precio total: ------------------------------------ " + precioFinal + " € ";
 		return pedido;
@@ -146,21 +137,9 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		String aler = "";
-		for(int i = 0; i < alergias.size(); i++){
-			aler += alergias.get(i) + ", "; 
-		}
 		return "Pedido [usuario=" + usuario + ", pizzas=" + pizzas + ", bebidas=" + bebidas + ", metodoPago="
 				+ metodoPago + ", cambioEfectivo=" + cambioEfectivo + ", fechaEntrega=" + fechaEntrega
-				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + 
-				aler
-				
-				+ ", nBebidas=" + nBebidas
+				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + alergias + ", nBebidas=" + nBebidas
 				+ ", numeroPizzas=" + numeroPizzas + ", numeroTotalPizzas=" + numeroTotalPizzas + "]";
-	}
-	
-	public void addAlergia(String a){
-		alergias.add(new Ingrediente(a));
-		
-	}
+	}	
 }
