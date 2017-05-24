@@ -58,8 +58,8 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    ArrayList<SimpleDateFormat> fechasPedidos = persistencia.consultaPedidos(sdf);
 		    
 		    if(fechasPedidos.isEmpty()){
-			    mensaje = "Genial, ¡apuntamos tu pedido para ese día a esa hora sin problemas!";
-			    // Aquí cambiamos el objetivo para que se ejecute directamente la tarea que inserta el pedido y aú
+			    mensaje = "Genial, apuntamos tu pedido para ese dÃ­a a esa hora sin problemas!";
+			    // Aquï¿½ cambiamos el objetivo para que se ejecute directamente la tarea que inserta el pedido y aï¿½
 		    }
 		    else{ // Hay pedidos, toca comprobar si podemos encajar el nuestro
 		    	GregorianCalendar gc = (GregorianCalendar) sdf.getCalendar();
@@ -74,7 +74,7 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    		ant = (GregorianCalendar) fechasPedidos.get(i).getCalendar();
 		    		GregorianCalendar masMedia = (GregorianCalendar) gc.clone();
 		    		masMedia.add(Calendar.MINUTE, 30);
-		    		System.out.println("fecha más media" + sdf.format(masMedia.getTime()));
+		    		System.out.println("fecha mÃ¡s media" + sdf.format(masMedia.getTime()));
 		    	    long timeDifInMilliSec  = ant.getTimeInMillis() - masMedia.getTimeInMillis();;
 		    		System.out.println("fecha pedido" + sdf.format(ant.getTime()));
 
@@ -92,11 +92,11 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 
 	    				ant.add(Calendar.MINUTE, 30);
 	    				timeDifInMilliSec = gcFin.getTimeInMillis() - ant.getTimeInMillis();
-	    				// Si puede ser después del pedido porque está dentro del horario 
+	    				// Si puede ser despuï¿½s del pedido porque estï¿½ dentro del horario 
 		    	        if( (timeDifInMilliSec / (60 * 1000)) >= 0){
 		    	        	sdf.setCalendar(ant);
 		    				continuar = false;
-		    				System.out.println("Puede ser despues del pedido" + timeDifInMilliSec);
+		    				System.out.println("Puede ser despuÃ©s del pedido" + timeDifInMilliSec);
 		    	        }
 	    	        }
 		    		
@@ -126,8 +126,8 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 			    		}
 			    	}
 			    	
-			    	if(continuar){ // Se me acabaron los pedidos, no encontré nada
-			    		// Compruebo si cabe después del último pedido si no se podía en un hueco
+			    	if(continuar){ // Se me acabaron los pedidos, no encontrï¿½ nada
+			    		// Compruebo si cabe despuï¿½s del ï¿½ltimo pedido si no se podï¿½a en un hueco
 				    	GregorianCalendar gcFin = (GregorianCalendar) gc.clone();
 						gcFin.set(Calendar.HOUR_OF_DAY, 23);
 					    gcFin.set(Calendar.MINUTE, 59);
@@ -144,11 +144,11 @@ public class ComprobarFechaEntrega extends TareaSincrona {
 		    	}
 		    	
 		    	if(!continuar){
-		    		   mensaje = "Esa hora está ocupada, podríamos entregar tu pedido como pronto a las: " + sdf.format(ant.getTime()) + " ¿Te parece bien?";		    		   
+		    		   mensaje = "Esa hora estÃ¡ ocupada, podrÃ­amos entregar tu pedido como pronto a las: " + sdf.format(ant.getTime()) + " ï¿½Te parece bien?";		    		   
 		    		   // Cambiamos el objetivo a lo que toque...
 		    	}
 		    	else{
-		    		   mensaje = "Lo sentimos, no tenemos hueco disponible para tu pedido ese día :(";
+		    		   mensaje = "Lo sentimos, no tenemos hueco disponible para tu pedido ese dÃ­a :(";
 		    		   // Cambiamos el objetivo a lo que toque...
 
 		    	}

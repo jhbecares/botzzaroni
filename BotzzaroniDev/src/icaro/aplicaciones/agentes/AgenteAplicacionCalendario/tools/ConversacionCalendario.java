@@ -12,14 +12,15 @@ public class ConversacionCalendario {
 		conversacion = new HashMap<String, List<String>>();
 		
 		List<String> peticionCalendario = new ArrayList<String>();
-		peticionCalendario.add("�Cu�ndo querr�s recibir tu pedido?");
+		peticionCalendario.add("¿Cuándo querrás recibir tu pedido?");
+		peticionCalendario.add("¿Cuándo quieres tu pedido?");
+		peticionCalendario.add("¿Para cuándo entregamos tu pedido?");
 		
 		List<String> reconocidaHora = new ArrayList<String>();
 		reconocidaHora.add("Se ha reconocido una hora.");
 
 		conversacion.put("peticionCalendario", peticionCalendario);
 		conversacion.put("reconocidaHora", reconocidaHora);
-		
 	}
 	
 	
