@@ -11,7 +11,18 @@ import java.util.Date;
 public class Pedido {
 	
 	public enum MetodoPago{
-		tarjeta, efectivo
+		tarjeta("tarjeta"), efectivo("efectivo");
+		
+		 private final String metodo;       
+
+		    private MetodoPago(String s) {
+		        metodo = s;
+		    }
+
+		    public String toString() {
+		       return this.metodo;
+		    }
+		
 	}
 	
 	
@@ -51,6 +62,79 @@ public class Pedido {
 		pizza1.setPrecio(7.0);
 		pizza1.setIngredientes(ingredientes1);
 		pizzas.add(pizza1);*/
+	}
+	
+	public Pedido pedidoPrueba(){
+		Pedido p = new Pedido();
+		
+		Usuario u = new Usuario();
+		u.setUsername("bea");
+		p.setUsuario(u);
+		
+		nBebidas=0;
+		pizzas = new ArrayList<Pizza>();
+		bebidas = new ArrayList<String>();
+		ArrayList<Ingrediente> ingredientes  = new ArrayList<Ingrediente>();
+		ingredientes.add(new Ingrediente("pollo"));
+		ingredientes.add(new Ingrediente("ternera"));
+		ingredientes.add(new Ingrediente("bacon"));
+		Pizza pizza = new Pizza();
+		pizza.setNombrePizza("carbonara");
+		pizza.setSalsa("botzzaroni");
+		pizza.setMasa(MasaPizza.normal);
+		pizza.setTamanio(TamanioPizza.familiar);
+		pizza.setPrecio(10.0);
+		pizza.setIngredientes(ingredientes);
+		pizza.setPersonalizada(false);
+		pizzas.add(pizza);
+		
+		Pizza pizza1 = new Pizza();
+		ArrayList<Ingrediente> ingredientes1  = new ArrayList<Ingrediente>();
+		ingredientes.add(new Ingrediente("york"));
+		ingredientes.add(new Ingrediente("ternera"));
+		ingredientes.add(new Ingrediente("pollo"));
+		pizza1.setNombrePizza("barbacoa");
+		pizza1.setSalsa("botzzaroni");
+		pizza1.setMasa(MasaPizza.fina);
+		pizza1.setTamanio(TamanioPizza.mediana);
+		pizza1.setPrecio(7.0);
+		pizza1.setIngredientes(ingredientes1);
+		pizza1.setPersonalizada(false);
+		pizzas.add(pizza1);
+		
+		Pizza pizza2 = new Pizza();
+		ArrayList<Ingrediente> ingredientes2  = new ArrayList<Ingrediente>();
+		ingredientes.add(new Ingrediente("york"));
+		ingredientes.add(new Ingrediente("queso azul"));
+		ingredientes.add(new Ingrediente("queso provolone"));
+		pizza2.setNombrePizza("topeguay");
+		pizza2.setSalsa("diabola");
+		pizza2.setMasa(MasaPizza.normal);
+		pizza2.setTamanio(TamanioPizza.pequenia);
+		pizza2.setPrecio(12.0);
+		pizza2.setIngredientes(ingredientes2);
+		pizza2.setPersonalizada(true);
+		pizza2.setUsuarioCreador(u);
+		pizzas.add(pizza2);
+		
+		
+		Date d = new Date();
+		p.setFechaEntrega(d);
+		p.setMetodoPago(MetodoPago.tarjeta);
+		p.setCambioEfectivo(0);
+		p.tieneAlergia = true;
+		List<Ingrediente> aler = new ArrayList<Ingrediente>();
+		aler.add(new Ingrediente("cebolla"));
+		aler.add(new Ingrediente("oregano"));
+		p.alergias = aler;
+		
+		bebidas.add("cocacola");
+		bebidas.add("nestea");
+		bebidas.add("cerveza");
+		
+		p.setBebidas(bebidas);
+		p.setPizzas(pizzas);
+		return p;
 	}
 
 	public Usuario getUsuario() {

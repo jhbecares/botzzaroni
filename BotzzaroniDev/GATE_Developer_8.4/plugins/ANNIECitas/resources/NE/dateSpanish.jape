@@ -84,7 +84,7 @@ Macro: YEAR
 
 Macro: ORDINAL
 (
-   ({Token.string ==~ "[0-9][0-9]?(o|Âº|a|Âª|er|ero|era)"}
+   ({Token.string ==~ "[0-9][0-9]?(o|�|a|�|er|ero|era)"}
     |
    {Lookup.minorType == ordinal})
    ( ({Token.string == "de"} | 
@@ -121,91 +121,125 @@ Macro: MES
 
 ///////////////////////////////////////////////////////////////
 // Time Rules 
+///////////////////////////////////////////////////////////////
+
+///// HORA /////
 
 Rule: Hora1
 // 8:14 am
 // 4.34 pm
 // 6am
 (
-(ONE_DIGIT|TWO_DIGIT)
+(ONE_DIGIT|TWO_DIGIT):hora
 (({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
-  TWO_DIGIT)?
-({Token.string == " "})+
-(TIME_AMPM)
+  (TWO_DIGIT):minuto)?
+(({Token.string==" "})+ (TIME_AMPM):timeframe)?
 )
 :dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule Hora1 ");
 },
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" },
+:timeframe.miTimeframe = { kind = "timeframe" }
 
 Rule: Hora2
 // 8:14 am
 // 4.34 pm
 // 6am
 (
-(ONE_DIGIT|TWO_DIGIT)
+({Lookup.majorType == "horas"}|{Lookup.majorType == "numero"}):hora
 (({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
-  TWO_DIGIT)?
-(({Token.string==" "})+ TIME_AMPM)?
+  (TWO_DIGIT):minuto)?
+(({Token.string == " "})+ (TIME_AMPM):timeframe)?
 )
 :dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule Hora2 ");
 },
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" },
+:timeframe.miTimeframe = { kind = "timeframe" }
 
 
-Rule: Hora3
-// 8:14 am
-// 4.34 pm
-// 6am
-(
-({Lookup.majorType == "horas"}|{Lookup.majorType == "numero"})
-(({Token.string == ":"}|{Token.string == "."} |{Token.string == "-"} )
-  TWO_DIGIT)?
-(({Token.string == " "})+ TIME_AMPM)?
-)
-:dateSpanish
--->
-:dateSpanish{
-System.out.println("______________ rule Hora3 ");
-},
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
-
+///// FECHA /////
 
 Rule: dateSpanish
 Priority: 100
 (
-  ({Token.kind == "number",Token.string >0,Token.string <32}) // un numero del 1 al 31
+  ({Token.kind == "number",Token.string >0,Token.string <32}):dia // un numero del 1 al 31
   ({Token.string == "-"} | {Token.string == "/"} )
-  ({Token.kind == "number",Token.string >0,Token.string <13}) // un numero del 1 al 12
+  ({Token.kind == "number",Token.string >0,Token.string <13}):mes // un numero del 1 al 12
   ({Token.string == "-"} | {Token.string == "/"} )
-  ({Token.kind == "number",Token.length<5}) // un numero del 1 al 12
+  ({Token.kind == "number",Token.length<5}):year // un numero del 1 al 12
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule dateSpanish ");
 },
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia" },
+:mes.miMes = { kind = "mes" },
+:year.miYear = { kind = "year" }
+
 
 Rule: dateSpanish2
 Priority: 100
 (
-  ({Token.kind == "number",Token.string >0,Token.string <32}) // un numero del 1 al 31
+  ({Token.kind == "number",Token.string >0,Token.string <32}):dia // un numero del 1 al 31
   ({Token.string == " "})?
   ({Token.string == "de"} | {Token.string == "del"} )
   ({Token.string == " "})?
-  (MES)
+  (MES):mes
+  (({Token.string == " "})?
+  ({Token.string == "de"} | {Token.string == "del"} ) 
+  ({Token.string == " "})?
+  ({Token.kind == "number",Token.length<5}):year)
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule dateSpanish2");
 },
-:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia"},
+:mes.miMes = { kind = "mes"},
+:year.miYear = { kind = "year" }
 
+
+Rule: dateSpanish3
+Priority: 100
+(
+  ({Token.string == "hoy"} | {Token.string == "ma�ana"} ):dia
+
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish3");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia"}
+
+
+Rule: dateSpanish4
+Priority: 99
+(
+  ({Token.kind == "number",Token.string >0,Token.string <32}):dia // un numero del 1 al 31
+  ({Token.string == " "})?
+  ({Token.string == "de"} | {Token.string == "del"} )
+  ({Token.string == " "})?
+  (MES):mes
+):dateSpanish
+-->
+:dateSpanish{
+System.out.println("______________ rule dateSpanish4");
+},
+:dateSpanish.TempDate = {kind = "dateSpanish", rule = "dateSpanish"},
+:dia.miDia = { kind = "dia"},
+:mes.miMes = { kind = "mes"}
 
 /////////////////////
 //// HOUR
@@ -213,78 +247,86 @@ System.out.println("______________ rule dateSpanish2");
 Rule: hourSpanish
 Priority: 100
 (
-({Token.kind == "number",Token.string >=0,Token.string < 24}) // un numero del 0 al 23
+({Token.kind == "number",Token.string >=0,Token.string < 24}):hora // un numero del 0 al 23
 ({Token.string == ":"} | {Token.string == "."} )
-({Token.kind == "number",Token.string >=0,Token.string < 60}) // un numero del 0 al 59
+({Token.kind == "number",Token.string >=0,Token.string < 60}):minuto // un numero del 0 al 59
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule hourSpanish ");
 },
-:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" }
 
 Rule: hourSpanish2
 Priority: 110
 (
-({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+({Token.kind == "number",Token.string >=0,Token.string < 13}):hora // un numero del 0 al 12
 (({Token.string == ":"} | {Token.string == "."} )
-({Token.kind == "number",Token.string >=0,Token.string < 60}))? // un numero del 0 al 59
+(({Token.kind == "number",Token.string >=0,Token.string < 60}))?):minuto // un numero del 0 al 59
 ({Token.string == " "})?
 ({Token.string == "am"}|{Token.string == "pm"}
-|{Token.string == "PM"}|{Token.string == "AM"})
+|{Token.string == "PM"}|{Token.string == "AM"}):timeframe
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule hourSpanish2 ");
 },
-:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempTime = {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" },
+:timeframe.miTimeframe = { kind = "timeframe" }
 
 Rule: hourSpanish3
 Priority: 110
 (
 (({Token.kind == "number",Token.string >=0,Token.string < 13})|
- ({Lookup.majorType == "numero"})) // un numero del 0 al 12
+ ({Lookup.majorType == "numero"})):hora // un numero del 0 al 12
 ({Token.string == "horas"}|{Token.string == "hora"}|
 {Token.string == "hr"}|{Token.string == "hrs"})?
 (({Token.string == " "})?
-({Token.string == "y"})
+({Token.string == "y"}):modificador
 ({Token.string == " "})?
-({Token.string == "media"}|{Token.string == "cuarto"}
-|({Token.kind == "number",Token.string>=0, Token.string <= 59})
+(({Token.string == "media"}|{Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 59})):minuto
 ({Token.string == "minutos"}|{Token.string == "minuto"}
 |{Token.string == "min"}|{Token.string == "mins"})?))?
-(({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
-|{Token.string == "PM"}|{Token.string == "AM"}|
-(  ({Token.string == "de"}) ({Token.string == " "})? ({Token.string == "la"}) 
-({Token.string == " "})? ({Token.string == "mañana"}))))?
+((({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"}))?):timeframe
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule hourSpanish3 ");
 },
-:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
-
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" },
+:timeframe.miTimeframe = { kind = "timeframe" },
+:modificador.miModificador = { kind = "modificador" }
 
 Rule: hourSpanish4
 Priority: 110
 (
-({Token.kind == "number",Token.string >=0,Token.string < 13}) // un numero del 0 al 12
+({Token.kind == "number",Token.string >=0,Token.string < 13}):hora // un numero del 0 al 12
 ({Token.string == "horas"}|{Token.string == "hora"}|
 {Token.string == "hr"}|{Token.string == "hrs"})?
 (({Token.string == " "})?
-({Token.string == "menos"})
+({Token.string == "menos"}):modificador
 ({Token.string == " "})?
-({Token.string == "cuarto"}
-|({Token.kind == "number",Token.string>=0, Token.string <= 29})
+(({Token.string == "cuarto"}
+|({Token.kind == "number",Token.string>=0, Token.string <= 29})):minuto
 ({Token.string == "minutos"}|{Token.string == "minuto"}
 |{Token.string == "min"}|{Token.string == "mins"})?))?
-(({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
-|{Token.string == "PM"}|{Token.string == "AM"}|
-(  ({Token.string == "de"}) ({Token.string == " "})? ({Token.string == "la"}) 
-({Token.string == " "})? ({Token.string == "mañana"}))))?
+((({Token.string == " "})? ({Token.string == "am"}|{Token.string == "pm"}
+|{Token.string == "PM"}|{Token.string == "AM"}))?):timeframe
 ):dateSpanish
 -->
 :dateSpanish{
 System.out.println("______________ rule hourSpanish4 ");
 },
-:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"}
+:dateSpanish.TempTime =  {kind = "dateSpanish", rule = "dateSpanish"},
+:hora.miHora = { kind = "hora"},
+:minuto.miMinuto = { kind = "minuto" },
+:timeframe.miTimeframe = { kind = "timeframe" },
+:modificador.miModificador = { kind = "modificador" }

@@ -5,31 +5,28 @@
  */
 package icaro.aplicaciones.recursos.interfazChatUsuario.imp;
 
-import icaro.aplicaciones.recursos.comunicacionChat.imp.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import gate.Annotation;
 import icaro.aplicaciones.informacion.gestionPizzeria.InfoConexionUsuario;
 import icaro.aplicaciones.informacion.gestionPizzeria.Notificacion;
 import icaro.aplicaciones.informacion.gestionPizzeria.VocabularioGestionPizzeria;
+import icaro.aplicaciones.recursos.comunicacionChat.imp.InterpreteMsgsIRC;
 import icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc;
-import static icaro.aplicaciones.recursos.comunicacionChat.imp.util.ConexionIrc.VERSION;
 import icaro.aplicaciones.recursos.extractorSemantico.ItfUsoExtractorSemantico;
 import icaro.aplicaciones.recursos.interfazChatUsuario.ParserFecha;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
-import icaro.infraestructura.entidadesBasicas.excepciones.ExcepcionEnComponente;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.recursosOrganizacion.repositorioInterfaces.ItfUsoRepositorioInterfaces;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -49,7 +46,7 @@ public class InterpreteMsgsPanelChat {
     private MensajeSimple mensajeAenviar;
     private InterfazUsoAgente itfAgenteDialogo;
     private ItfUsoExtractorSemantico itfUsoExtractorSem;
-    private HashSet anotacionesRelevantes;
+    private HashSet<?> anotacionesRelevantes;
     private InfoConexionUsuario infoConecxInterlocutor;
     private String identificadordeEsteRecurso;
     private String identificadorAgenteaReportar;
@@ -100,7 +97,7 @@ public class InterpreteMsgsPanelChat {
     
     // Se envia la información al extrator semantico se traducen las anotaciones y se envia el contenido al agente de dialogo
     // de esta forma el agente recibe mensajes con entidades del modelo de información
-			HashSet anotacionesBusquedaPrueba = new HashSet();
+			HashSet<String> anotacionesBusquedaPrueba = new HashSet<String>();
 			anotacionesBusquedaPrueba.add("saludo");
 			anotacionesBusquedaPrueba.add("telefono");
 			anotacionesBusquedaPrueba.add("hora");
@@ -124,6 +121,33 @@ public class InterpreteMsgsPanelChat {
 			anotacionesBusquedaPrueba.add("bebidas");
 			anotacionesBusquedaPrueba.add("pagoEfectivo");
 			anotacionesBusquedaPrueba.add("pagoTarjeta");
+			anotacionesBusquedaPrueba.add("insultos");
+			
+			// ultima entrega. Fechas
+			anotacionesBusquedaPrueba.add("fechaNumero");
+			anotacionesBusquedaPrueba.add("TempDate");
+			anotacionesBusquedaPrueba.add("TempTime");
+			anotacionesBusquedaPrueba.add("TempYear");
+			anotacionesBusquedaPrueba.add("year");
+			anotacionesBusquedaPrueba.add("ampm");
+			anotacionesBusquedaPrueba.add("time_modifier");
+			anotacionesBusquedaPrueba.add("time_unit");
+			anotacionesBusquedaPrueba.add("zone");
+			anotacionesBusquedaPrueba.add("ordinal");
+			//anotacionesBusquedaPrueba.add("hour");
+			anotacionesBusquedaPrueba.add("horas");
+			anotacionesBusquedaPrueba.add("month");
+			anotacionesBusquedaPrueba.add("day");
+			anotacionesBusquedaPrueba.add("Mes");
+			anotacionesBusquedaPrueba.add("miHora");
+			anotacionesBusquedaPrueba.add("miMinuto");
+			anotacionesBusquedaPrueba.add("miDia");
+			anotacionesBusquedaPrueba.add("miMes");
+			anotacionesBusquedaPrueba.add("miYear");
+			anotacionesBusquedaPrueba.add("miTimeframe");
+			anotacionesBusquedaPrueba.add("miModificador");
+			//anotacionesBusquedaPrueba.add("minutoLetra");
+
 			anotacionesBusquedaPrueba.add("NombrePizzaPersonalizada");
 			
 			if (itfUsoExtractorSem != null) {
@@ -131,7 +155,7 @@ public class InterpreteMsgsPanelChat {
 					anotacionesRelevantes = itfUsoExtractorSem.extraerAnotaciones(anotacionesBusquedaPrueba, textoUsuario);
 					String anot = anotacionesRelevantes.toString();
 					System.out.println(System.currentTimeMillis() + " " + anot);
-					ArrayList infoAenviar = interpretarAnotaciones(sender, textoUsuario, anotacionesRelevantes);
+					ArrayList<Notificacion> infoAenviar = interpretarAnotaciones(sender, textoUsuario, anotacionesRelevantes);
 					enviarInfoExtraida(infoAenviar, sender);
 				} catch (Exception ex) {
 					Logger.getLogger(InterpreteMsgsIRC.class.getName()).log(
@@ -167,7 +191,7 @@ public class InterpreteMsgsPanelChat {
 //        }
     }
    
-    private void enviarInfoExtraida(ArrayList infoExtraida, String sender) {
+    private void enviarInfoExtraida(ArrayList<Notificacion> infoExtraida, String sender) {
 
     	if (itfAgenteDialogo != null) {
 			try {
@@ -190,16 +214,16 @@ public class InterpreteMsgsPanelChat {
 		}
 	}   
    
-	private ArrayList interpretarAnotaciones(String interlocutor,
-			String contextoInterpretacion, HashSet anotacionesRelevantes) {
+	private ArrayList<Notificacion> interpretarAnotaciones(String interlocutor,
+			String contextoInterpretacion, HashSet<?> anotacionesRelevantes) {
 		// recorremos las anotaciones obtenidas y las traducimos a objetos del
 		// modelo de informacion
-		ArrayList anotacionesInterpretadas = new ArrayList();
+		ArrayList<Notificacion> anotacionesInterpretadas = new ArrayList<Notificacion>();
 		ArrayList<String> anotaciones_leidas = new ArrayList<String>();
 		
 		String ingredientes = "";
  
-		Iterator annotTypesSal = anotacionesRelevantes.iterator();
+		Iterator<?> annotTypesSal = anotacionesRelevantes.iterator();
 
 		boolean tienePeticion = false;
 		while (annotTypesSal.hasNext()) {
@@ -361,55 +385,238 @@ public class InterpreteMsgsPanelChat {
 								contextoInterpretacion, annot));
 			}
 			else if (anotType.equalsIgnoreCase("portal")&& !anotaciones_leidas.contains("portal")) {
-				anotaciones_leidas.add("portal");
+				if (!anotaciones_leidas.contains("portal"))
+					anotaciones_leidas.add("portal");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
 			else if (anotType.equalsIgnoreCase("piso")&& !anotaciones_leidas.contains("piso")) {
-				anotaciones_leidas.add("piso");
+				if (!anotaciones_leidas.contains("piso"))
+					anotaciones_leidas.add("piso");
+				
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 	
 			} else if (anotType.equalsIgnoreCase("puerta")&& !anotaciones_leidas.contains("puerta")) {
-				anotaciones_leidas.add("puerta");
+				if (!anotaciones_leidas.contains("puerta"))
+					anotaciones_leidas.add("puerta");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
-			} 
-			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
- 				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
- 					anotaciones_leidas.add("NombrePizzaPersonalizada");
- 				tienePeticion = true;
- 				anotacionesInterpretadas
- 						.add(interpretarAnotacionSaludoEInicioPeticion(
- 							contextoInterpretacion, annot));
 			}
 			else if (anotType.equalsIgnoreCase("bebidas")&& !anotaciones_leidas.contains("bebidas")) {
-				anotaciones_leidas.add("bebidas");
+				if (!anotaciones_leidas.contains("bebidas"))
+					anotaciones_leidas.add("bebidas");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			} 
 			else if (anotType.equalsIgnoreCase("pagoEfectivo")&& !anotaciones_leidas.contains("pagoEfectivo")) {
-				anotaciones_leidas.add("pagoEfectivo");
+				if (!anotaciones_leidas.contains("pagoEfectivo"))
+					anotaciones_leidas.add("pagoEfectivo");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			} 
 			else if (anotType.equalsIgnoreCase("pagoTarjeta")&& !anotaciones_leidas.contains("pagoTarjeta")) {
-				anotaciones_leidas.add("pagoTarjeta");
+				if (!anotaciones_leidas.contains("pagoTarjeta"))
+					anotaciones_leidas.add("pagoTarjeta");
 				tienePeticion = true;
 				anotacionesInterpretadas
 						.add(interpretarAnotacionSaludoEInicioPeticion(
 								contextoInterpretacion, annot));
 			}
+			else if (anotType.equalsIgnoreCase("insultos")&& !anotaciones_leidas.contains("insultos")) {
+				if (!anotaciones_leidas.contains("insultos"))
+					anotaciones_leidas.add("insultos");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("fechaNumero")&& !anotaciones_leidas.contains("fechaNumero")) {
+				if (!anotaciones_leidas.contains("fechaNumero"))
+					anotaciones_leidas.add("fechaNumero");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("TempDate")&& !anotaciones_leidas.contains("TempDate")) {
+				if (!anotaciones_leidas.contains("TempDate"))
+					anotaciones_leidas.add("TempDate");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("TempTime")&& !anotaciones_leidas.contains("TempTime")) {
+				if (!anotaciones_leidas.contains("TempTime"))
+					anotaciones_leidas.add("TempTime");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("TempYear")&& !anotaciones_leidas.contains("TempYear")) {
+				if (!anotaciones_leidas.contains("TempYear"))
+					anotaciones_leidas.add("TempYear");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("year")&& !anotaciones_leidas.contains("year")) {
+				if (!anotaciones_leidas.contains("year"))
+					anotaciones_leidas.add("year");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			} 
+			else if (anotType.equalsIgnoreCase("ampm")&& !anotaciones_leidas.contains("ampm")) {
+				if (!anotaciones_leidas.contains("ampm"))
+					anotaciones_leidas.add("ampm");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("time_modifier")&& !anotaciones_leidas.contains("time_modifier")) {
+				if (!anotaciones_leidas.contains("time_modifier"))
+					anotaciones_leidas.add("time_modifier");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("time_unit")&& !anotaciones_leidas.contains("time_unit")) {
+				if (!anotaciones_leidas.contains("time_unit"))
+					anotaciones_leidas.add("time_unit");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("zone")&& !anotaciones_leidas.contains("zone")) {
+				if (!anotaciones_leidas.contains("zone"))
+					anotaciones_leidas.add("zone");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("ordinal")&& !anotaciones_leidas.contains("ordinal")) {
+				if (!anotaciones_leidas.contains("ordinal"))
+					anotaciones_leidas.add("ordinal");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("horas")&& !anotaciones_leidas.contains("horas")) {
+				if (!anotaciones_leidas.contains("horas"))
+					anotaciones_leidas.add("horas");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("month")&& !anotaciones_leidas.contains("month")) {
+				if (!anotaciones_leidas.contains("month"))
+					anotaciones_leidas.add("month");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("day")&& !anotaciones_leidas.contains("day")) {
+				if (!anotaciones_leidas.contains("day"))
+					anotaciones_leidas.add("day");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("Mes")&& !anotaciones_leidas.contains("Mes")) {
+				if (!anotaciones_leidas.contains("Mes"))
+					anotaciones_leidas.add("Mes");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("NombrePizzaPersonalizada")&& !anotaciones_leidas.contains("NombrePizzaPersonalizada")) {
+				if (!anotaciones_leidas.contains("NombrePizzaPersonalizada"))
+					anotaciones_leidas.add("NombrePizzaPersonalizada");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("miHora")&& !anotaciones_leidas.contains("miHora")) {
+				if (!anotaciones_leidas.contains("miHora"))
+					anotaciones_leidas.add("miHora");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+			else if (anotType.equalsIgnoreCase("miMinuto")&& !anotaciones_leidas.contains("miMinuto")) {
+				if (!anotaciones_leidas.contains("miMinuto"))
+					anotaciones_leidas.add("miMinuto");
+				tienePeticion = true;
+				anotacionesInterpretadas
+						.add(interpretarAnotacionSaludoEInicioPeticion(
+								contextoInterpretacion, annot));
+			}
+	     else if (anotType.equalsIgnoreCase("miDia")&& !anotaciones_leidas.contains("miDia")) {
+	         if (!anotaciones_leidas.contains("miDia"))
+	           anotaciones_leidas.add("miDia");
+	         tienePeticion = true;
+	         anotacionesInterpretadas
+	             .add(interpretarAnotacionSaludoEInicioPeticion(
+	                 contextoInterpretacion, annot));
+	    }
+	      else if (anotType.equalsIgnoreCase("miMes")&& !anotaciones_leidas.contains("miMes")) {
+	          if (!anotaciones_leidas.contains("miMes"))
+	            anotaciones_leidas.add("miMes");
+	          tienePeticion = true;
+	          anotacionesInterpretadas
+	              .add(interpretarAnotacionSaludoEInicioPeticion(
+	                  contextoInterpretacion, annot));
+	        }
+	      else if (anotType.equalsIgnoreCase("miYear")&& !anotaciones_leidas.contains("miYear")) {
+	          if (!anotaciones_leidas.contains("miYear"))
+	            anotaciones_leidas.add("miYear");
+	          tienePeticion = true;
+	          anotacionesInterpretadas
+	              .add(interpretarAnotacionSaludoEInicioPeticion(
+	                  contextoInterpretacion, annot));
+	        }			
+        else if (anotType.equalsIgnoreCase("miTimeframe")&& !anotaciones_leidas.contains("miTimeframe")) {
+            if (!anotaciones_leidas.contains("miTimeframe"))
+              anotaciones_leidas.add("miTimeframe");
+            tienePeticion = true;
+            anotacionesInterpretadas
+                .add(interpretarAnotacionSaludoEInicioPeticion(
+                    contextoInterpretacion, annot));
+          }
+        else if (anotType.equalsIgnoreCase("miModificador")&& !anotaciones_leidas.contains("miModificador")) {
+            if (!anotaciones_leidas.contains("miModificador"))
+              anotaciones_leidas.add("miModificador");
+            tienePeticion = true;
+            anotacionesInterpretadas
+                .add(interpretarAnotacionSaludoEInicioPeticion(
+                    contextoInterpretacion, annot));
+          }
 	}
 		if(!ingredientes.equalsIgnoreCase("")){
 			Notificacion listaIngredientes = new Notificacion();

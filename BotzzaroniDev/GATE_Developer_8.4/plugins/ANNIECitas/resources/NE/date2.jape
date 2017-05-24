@@ -1,0 +1,56 @@
+/*
+*  time.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Diana Maynard, 10 Sep 2001
+* 
+*  $Id: date.jape 17311 2014-02-14 18:49:50Z dgmaynard $
+*/
+
+
+Phase: date2
+Input: Token Lookup
+Options: control = appelt
+
+
+
+
+///////////////////////////////////////////////////////////////
+// Time Rules 
+/*
+
+ 
+ 
+ Rule: date2rule1
+
+(
+ ({Token.kind == "number",Token.string >=1,Token.string <= 31})
+ ({Token.string == " "})?
+ ({Token.string == "de"})
+ ({Token.string == " "})?
+ ({Lookup.majorType == "month"}):mes
+ ({Token.string == " "})?
+ ({Token.string == "del"})
+ ({Token.string == " "})?
+ ({Lookup.majorType == "year"}):year
+)
+:date2rule1
+-->
+:date2rule1{
+System.out.println("______________ rule date2rule1 ");
+System.out.println("The individual tokens : " );
+for (Annotation tok : date2rule3Annots) {
+FeatureMap fm = tok.getFeatures();
+String str = (String)fm.get("string");
+System.out.println(str);
+}
+},
+ :date2rule1.TempDate = {kind = "positive", rule = "date2rule1"},
+ :year.TempDate = {kind = "positive", rule = "date2rule1"}
+ 

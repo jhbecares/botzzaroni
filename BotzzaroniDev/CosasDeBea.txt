@@ -1,6 +1,6 @@
 Cómo hacer que funcione:
 
-- Modificar si hace falta en este .xml la contraseña de root, que yo tengo puesta vacío
+- Modificar si hace falta en este .xml la contrase�a de root, que yo tengo puesta vacío
 - Arrancar mysql
 - El script de nuestra base de datos está en config/botzzaroni.sql
 - Run con chatters/descripcionAplicacionBotzzaroni

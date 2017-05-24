@@ -152,12 +152,28 @@ Los agentes se repartieron de la siguiente manera:
 El día 21 de Abril por la mañana se procedió a realizar el reparto de tareas para la redacción de la memoria pertinente en esta segunda entrega, pospuesta hasta después del puente de Mayo por estar demasiado próxima la demo del lunes 24 y la entrega, de manera que fuera posible realizar los cambios pertinentes.
 
 En concreto, se repartieron las tareas de la siguiente manera:
-* Unificación de los agentes: Jenny y Bea.
-* Comentarios sobre la primera entrega: Jenny y Bea.
-* Diseño de la arquitectura: Vero, Alfonso, Frank y Alex.
-* Modelo de dominio: Vero, Alfonso, Frank y Alex.
-* Descripción de los agentes: Cada pareja responsable de la descripción de los agentes que ha implementado.
-* Instalación y ejecución, limitaciones del prototipo y plan de desarrollo: Jenny y Bea.
+* Unificación de los agentes: *Jenny y Bea.
+* Comentarios sobre la primera entrega:*  Jenny y Bea.
+* Diseño de la arquitectura:* Vero, Alfonso, Frank y Alex.
+* Modelo de dominio:* Vero, Alfonso, Frank y Alex.
+* Descripción de los agentes:* Cada pareja responsable de la descripción de los agentes que ha implementado.
+* Instalación y ejecución, limitaciones del prototipo y plan de desarrollo:* Jenny y Bea.
+
+
+### 24 de Abril: Presentación del estado del proyecto con demo
+
+El lunes 24 de Abril, Alfonso y Vero realizaron una presentación en la que se mostraba el estado del proyecto, así como la organización en agentes y recursos del proyecto.
+
+La demo mostraba la realización de un pedido creando un usuario nuevo, con dos pizzas y tres bebidas.
+
+Los comentarios recibidos fueron los siguientes:
+
+
+- Para la demo final emplear frases completas, de manera que se pueda observar con claridad que el sistema reconoce los datos que el agente tiene por objetivo conseguir.
+- De igual manera, Francisco recomendó que para la demo final mostremos tanto usuarios conocidos como desconocidos, de manera que se pueda observar el flujo de trabajo completo.
+- Se indicó que está bien guiar al usuario pero se debe de igual manera demostrar que el usuario puede decidir otras cosas y el sistema reacciona a ellas.
+- No fue muy bien recibido el modo de autenticación de usuarios con la ventana de login usando el agente Alta-Acceso.
+- Se recordó que para la memoria se deben usar diagramas UML del estándar para representar el sistema.
 
 ### 8 de Mayo: Comentarios de la segunda entrega y reparto de tareas para la entrega final
 

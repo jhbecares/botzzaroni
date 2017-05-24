@@ -47,5 +47,33 @@ public class tipoNotif {
 	public static String pidePago ="pidePago";
 	public static String pideCalendario ="pideCalendario";
 	
+	// Otros
+	public static String insultos = "insultos";
+	public static String TempDate = "TempDate";
+	public static String TempYear = "TempYear";
+	public static String TempTime = "TempTime";
+	public static String fechaNumero = "fechaNumero";
+	public static String year = "year";
+	public static String ampm = "ampm";
+	public static String time_modifier = "time_modifier";
+	public static String time_unit = "time_unit";
+	public static String zone = "zone";
+	public static String ordinal = "ordinal";
+	//public static String hour = "hour";
+	public static String horas = "horas";
+	public static String month = "month";
+	public static String day = "day";
+
+	public static String mes = "Mes";
 	public static String NombrePizzaPersonalizada = "NombrePizzaPersonalizada";
+	public static String miHora = "miHora";
+	public static String miMinuto = "miMinuto";
+	public static String miDia = "miDia";
+	public static String miMes = "miMes";
+	public static String miYear = "miYear";
+	//public static String minutoLetra = "minutoLetra";
+
+	public static String miTimeframe = "miTimeframe";
+	public static String miModificador = "miModificador";
+
 }
