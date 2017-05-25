@@ -134,12 +134,17 @@ public class Pedido {
 	public void anadirBebida(String bebida) {
 		this.bebidas.add(bebida);
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Pedido [usuario=" + usuario + ", pizzas=" + pizzas + ", bebidas=" + bebidas + ", metodoPago="
 				+ metodoPago + ", cambioEfectivo=" + cambioEfectivo + ", fechaEntrega=" + fechaEntrega
 				+ ", tieneAlergia=" + tieneAlergia + ", alergias=" + alergias + ", nBebidas=" + nBebidas
 				+ ", numeroPizzas=" + numeroPizzas + ", numeroTotalPizzas=" + numeroTotalPizzas + "]";
-	}	
+	}
+	
+	public void addAlergia(String a){
+		alergias.add(new Ingrediente(a));
+		
+	}
 }
