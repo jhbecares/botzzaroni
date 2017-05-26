@@ -22,27 +22,27 @@ public class ParserIngredientesAlergia extends TareaSincrona{
 	 		System.out.println("-------------------------------" + a[i]);
 	 		String msgg2 = a[i];
 	 		if(msgg2.equalsIgnoreCase("kitkat") || msgg2.equalsIgnoreCase("Kit Kat")){
-	    		p.addAlergia("Kitkat");
+	    		p.addAlergia("kitkat");
 	    	}else if(msgg2.equalsIgnoreCase("cebolla")){
-	    		p.addAlergia("Cebolla");
+	    		p.addAlergia("cebolla");
 	    	}else if(msgg2.equalsIgnoreCase("bacon") || msgg2.equalsIgnoreCase("Bacón")){
-	    		p.addAlergia("Bacon");
+	    		p.addAlergia("bacon");
 	    	}else if(msgg2.equalsIgnoreCase("pollo")){
-	    		p.addAlergia("Pollo");
+	    		p.addAlergia("pollo");
 	    	}else if(msgg2.equalsIgnoreCase("ternera")){
-	    		p.addAlergia("Ternera");
+	    		p.addAlergia("ternera");
 	    	}else if(msgg2.equalsIgnoreCase("bacon crispy")){
-	    		p.addAlergia("Bacon crispy");
+	    		p.addAlergia("bacon crispy");
 	    	}else if(msgg2.equalsIgnoreCase("jamon serrano")|| msgg2.equalsIgnoreCase("jamón serrano")){
-	    		p.addAlergia("Jamon serrano");
+	    		p.addAlergia("jamon serrano");
 	    	}else if(msgg2.equalsIgnoreCase("champiñon")|| msgg2.equalsIgnoreCase("champiñón")||msgg2.equalsIgnoreCase("champiñónes")||msgg2.equalsIgnoreCase("champis")){
-	    		p.addAlergia("Champiñon");
+	    		p.addAlergia("champinion");
 	    	}else if(msgg2.equalsIgnoreCase("Topping a base de mozzarella")|| msgg2.equalsIgnoreCase("topping de mozzarella")){
-	    		p.addAlergia("Topping a base de mozzarella");
+	    		p.addAlergia("topping a base de mozzarella");
 	    	}else if(msgg2.equalsIgnoreCase("Queso cheddar")|| msgg2.equalsIgnoreCase("queso chedar")){
-	    		p.addAlergia("Queso cheddar");
+	    		p.addAlergia("queso cheddar");
 	    	}else if(msgg2.equalsIgnoreCase("Queso emmental")|| msgg2.equalsIgnoreCase("queso emental")){
-	    		p.addAlergia("Queso emmental");
+	    		p.addAlergia("queso emmental");
 	    	}else if(msgg2.equalsIgnoreCase("queso edam")){
 	    		p.addAlergia("queso edam");
 	    	}else if(msgg2.equalsIgnoreCase("queso provolone")){
@@ -52,7 +52,7 @@ public class ParserIngredientesAlergia extends TareaSincrona{
 	    	}else if(msgg2.equalsIgnoreCase("york")){
 	    		p.addAlergia("york");
 	    	}else if(msgg2.equalsIgnoreCase("piña")){
-	    		p.addAlergia("piña");
+	    		p.addAlergia("pinia");
 	    	}else if(msgg2.equalsIgnoreCase("tomate natural")|| msgg2.equalsIgnoreCase("tomate")){
 	    		p.addAlergia("tomate natural");
 	    	}else if(msgg2.equalsIgnoreCase("tomate confitado")){
