@@ -859,6 +859,9 @@ then
    	
 
 	// TODO: Actualizar los datos del usuario
+	TareaSincrona tareaUpdate = gestorTareas.crearTareaSincrona(ActualizaDatosUsuario.class);
+    tareaUpdate.ejecutar(user);
+	
 
 	// Enviar mensaje de finalizado
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.

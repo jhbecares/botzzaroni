@@ -187,6 +187,14 @@ public class ClaseGeneradoraPersistenciaAccesoBD extends ImplRecursoSimple
 				InfoTraza.NivelTraza.debug));
 		accesoBD.insertaPedido(pedido);
 }
+
+	@Override
+	public void insertaDatosUsuario(Usuario gr) throws Exception {
+		trazas.aceptaNuevaTraza(new InfoTraza(this.getId(),
+				"Actualizando datos usuario",
+				InfoTraza.NivelTraza.debug));
+		accesoBD.insertaDatosUsuario(gr);
+	}
 	
 	
 
