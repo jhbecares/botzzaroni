@@ -29,7 +29,7 @@ USE botzzaroni;
 -- Estructura de tabla para la tabla `bebida`
 --
 
-DROP TABLE IF EXISTS `bebida`;
+-- DROP TABLE IF EXISTS `bebida`;
 
 CREATE TABLE IF NOT EXISTS `bebida` (
 `id` int(11) NOT NULL,
@@ -47,7 +47,7 @@ INSERT INTO `bebida` (`id`, `nombre`, `precio`) VALUES
 (3, 'nestea', 3),
 (4, 'fanta de limon', 3),
 (5, 'cerveza', 3.5),
-(8, 'aquarius', 3);
+(6, 'aquarius', 3);
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ INSERT INTO `bebida` (`id`, `nombre`, `precio`) VALUES
 -- Estructura de tabla para la tabla `ingrediente`
 --
 
-DROP TABLE IF EXISTS `ingrediente`;
+-- DROP TABLE IF EXISTS `ingrediente`;
 
 CREATE TABLE IF NOT EXISTS `ingrediente` (
 `id` int(11) NOT NULL,
@@ -94,7 +94,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `pedido`
 --
 
-DROP TABLE IF EXISTS `pedido`;
+-- DROP TABLE IF EXISTS `pedido`;
 
 CREATE TABLE IF NOT EXISTS `pedido` (
 `id` int(11) NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
 -- Estructura de tabla para la tabla `pizza`
 --
 
-DROP TABLE IF EXISTS `pizza`;
+-- DROP TABLE IF EXISTS `pizza`;
 
 CREATE TABLE IF NOT EXISTS `pizza` (
 `id` int(11) NOT NULL,
@@ -145,7 +145,7 @@ INSERT INTO `pizza` (`id`, `aliasUsuario`, `nombre`, `precio`) VALUES
 -- Estructura de tabla para la tabla `salsa`
 --
 
-DROP TABLE IF EXISTS `salsa`;
+-- DROP TABLE IF EXISTS `salsa`;
 
 CREATE TABLE IF NOT EXISTS `salsa` (
 `id` int(11) NOT NULL,
@@ -168,7 +168,7 @@ INSERT INTO `salsa` (`id`, `nombre`) VALUES
 --
 -- Estructura de tabla para la tabla `tieneAlergia`
 --
-DROP TABLE IF EXISTS `tieneAlergia`;
+-- DROP TABLE IF EXISTS `tieneAlergia`;
 
 CREATE TABLE IF NOT EXISTS `tieneAlergia` (
   `idPedido` int(11) NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `tieneAlergia` (
 --
 -- Estructura de tabla para la tabla `tieneBebida`
 --
-DROP TABLE IF EXISTS `tieneBebida`;
+-- DROP TABLE IF EXISTS `tieneBebida`;
 
 CREATE TABLE IF NOT EXISTS `tieneBebida` (
   `idPedido` int(11) NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `tieneBebida` (
 --
 -- Estructura de tabla para la tabla `tieneIngrediente`
 --
-DROP TABLE IF EXISTS `tieneIngrediente`;
+-- DROP TABLE IF EXISTS `tieneIngrediente`;
 
 CREATE TABLE IF NOT EXISTS `tieneIngrediente` (
   `idPizza` int(11) NOT NULL,
@@ -222,7 +222,7 @@ INSERT INTO `tieneingrediente` (`idPizza`, `idIngrediente`) VALUES
 --
 -- Estructura de tabla para la tabla `tienePizza`
 --
-DROP TABLE IF EXISTS `tienePizza`;
+-- DROP TABLE IF EXISTS `tienePizza`;
 
 CREATE TABLE IF NOT EXISTS `tienePizza` (
   `idPedido` int(11) NOT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `tienePizza` (
 --
 -- Estructura de tabla para la tabla `tieneSalsa`
 --
-DROP TABLE IF EXISTS `tieneSalsa`;
+-- DROP TABLE IF EXISTS `tieneSalsa`;
 
 CREATE TABLE IF NOT EXISTS `tieneSalsa` (
   `idPizza` int(11) NOT NULL,
@@ -251,7 +251,7 @@ INSERT INTO `tienesalsa` (`idPizza`, `idSalsa`) VALUES ('1', '5'), ('2', '5'), (
 -- Estructura de tabla para la tabla `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+-- DROP TABLE IF EXISTS `usuario`;
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `alias` varchar(30) NOT NULL,
