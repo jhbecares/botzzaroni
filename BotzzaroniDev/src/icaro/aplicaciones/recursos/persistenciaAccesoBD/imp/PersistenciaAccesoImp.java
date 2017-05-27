@@ -466,7 +466,7 @@ public class PersistenciaAccesoImp {
 
 			
 			if (resultado.next()) {
-		        String nombrePizza = resultado.getString("pizza.nombre");
+		        String nombrePizza = resultado.getString("P.nombre");
 			    Pizza p = new Pizza();
 			    p.setNombrePizza(nombrePizza);
 		        pizzas.add(p);
