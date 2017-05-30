@@ -368,7 +368,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerPago(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta, tipoNotificacion != tipoNotif.insultos)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
@@ -384,7 +384,7 @@ rule "Distribuir mensaje al agente PIZZERO"
      f:Focus(foco == obj)
      notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || 
      	tipoNotificacion == tipoNotif.puerta  || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora
-    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto)
+    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto || tipoNotificacion == tipoNotif.insultos)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);

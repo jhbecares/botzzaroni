@@ -67,8 +67,7 @@ public class Direccion {
 //	}
 	@Override
 	public String toString() {
-		return " calle " + nombreCalle + " número " + numero + ", " + piso + " " + puerta
-				+ ", " + codigoPostal;
+		return " calle " + nombreCalle + " número " + numero + ", " + piso + ", " + puerta;
 	}	
 	
 	
