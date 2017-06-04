@@ -797,4 +797,27 @@ public class PersistenciaAccesoImp {
 		
 	}
 
+	public void insertaDatosUsuario(Usuario gr)
+			throws ErrorEnRecursoException {
+
+		// .usuario VALUES ('" + usuario + "','" + password +  "', 'nombre', 'calle', 0, 0, 'puerta', 00000, 000000000)
+		try {
+			conectar();
+			// crearQuery();
+			query = conn.createStatement();
+			String consulta = "UPDATE " + PersistenciaAccesoImp.nombreBD
+					+ ".usuario set nombre='" + gr.getNombre() + "', calle='" + gr.getDireccion().getNombreCalle()+"', numero=" + gr.getDireccion().getNumero() +
+					", piso=" + gr.getDireccion().getPiso() + ", puerta='" + gr.getDireccion().getPuerta() + "', codPostal=" + gr.getDireccion().getCodigoPostal()
+					+ ", movil="+ gr.getMovil().toString()+" WHERE alias='" +gr.getUsername() + "'" ;
+			System.out.println(consulta);
+
+			query.executeUpdate(consulta);
+			desconectar();
+		}
+
+		catch (Exception e) {
+			throw new ErrorEnRecursoException(e.getMessage());
+		}
+	}
+
 }

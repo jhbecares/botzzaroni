@@ -68,7 +68,7 @@ public class ObtenerRecomendaciones extends TareaSincrona {
 	             
 	             for(int i=0; i < recomendaciones.size(); i++){
 	            	 String nombre = recomendaciones.get(i).getNombrePizza().substring(0, 1).toUpperCase() + recomendaciones.get(i).getNombrePizza().substring(1);
-	            	 recomendadas  = "\n   - " + recomendadas + nombre + " que lleva " + recomendaciones.get(i).getFormatIngredientes() + "\n";
+	            	 recomendadas  =  recomendadas + " \n - " + nombre + " que lleva " + recomendaciones.get(i).getFormatIngredientes() + "\n";
 	             }
 	             
 	             mensaje = "Hemos visto que has creado pizzas anteriormente. Te recordamos que tienes las siguientes pizzas guardadas "

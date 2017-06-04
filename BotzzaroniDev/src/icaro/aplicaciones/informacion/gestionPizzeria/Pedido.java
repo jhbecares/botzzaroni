@@ -1,4 +1,5 @@
 package icaro.aplicaciones.informacion.gestionPizzeria;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class Pedido {
 		pizzas = new ArrayList<Pizza>();
 		bebidas = new ArrayList<String>();
 		alergias = new ArrayList<Ingrediente> (); 
+		metodoPago = null;
 	}
 	
 	public Pedido pedidoPrueba(){
@@ -99,9 +101,11 @@ public class Pedido {
 		pizza2.setUsuarioCreador(u);
 		pizzas.add(pizza2);
 		
-		
+		SimpleDateFormat sdf = new SimpleDateFormat();
+
 		Date d = new Date();
 		p.setFechaEntrega(d);
+		
 		p.setMetodoPago(MetodoPago.tarjeta);
 		p.setCambioEfectivo(0);
 		p.tieneAlergia = true;

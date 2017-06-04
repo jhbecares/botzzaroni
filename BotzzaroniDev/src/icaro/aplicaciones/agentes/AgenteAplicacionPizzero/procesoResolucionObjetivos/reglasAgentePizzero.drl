@@ -346,9 +346,32 @@ rule "Guarda el tipo de pizza recomendada"
     insert(ob1);
 end
 
+rule "Guarda el tipo de pizza recomendada sin arroba"
+ when
+    notif:Notificacion(group:identNotificador, tipoNotificacion == tipoNotif.pizzas, msgg:mensajeNotificacion)
+    obGeneral:ObtenerPedidoPizza(state == SOLVING)
+    ob:GuardarTipoPizzaRecomendacion(state == PENDING)
+    f: FocoUsuario(foco == ob)
+    pizza:Pizza(tamanio != TamanioPizza.familiar)
+    lista:ArrayList()
+ then
+ 	ob.setSolved();
+ 	
+ 	Objetivo ob1 = new NombrePersonalizadaCorrecto();
+ 	f.setFoco(ob1);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(ExtraerPizzaRecomendada.class);
+ 	tarea.ejecutar(msgg,lista, pizza);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
+    update(ob);
+    update(f);
+    retract(notif);
+    insert(ob1);
+end
+
 rule "Obtiene nombre de pizza recomendada incorrecto"
  when
- 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.NombrePizzaPersonalizada, msgg:mensajeNotificacion)
+ 	notif:Notificacion(group:identNotificador, tipoNotificacion != tipoNotif.NombrePizzaPersonalizada && tipoNotificacion != tipoNotif.pizzas, msgg:mensajeNotificacion)
     obGeneral:ObtenerPedidoPizza(state == SOLVING)
     ob:GuardarTipoPizzaRecomendacion(state == PENDING)
     f: FocoUsuario(foco == ob)

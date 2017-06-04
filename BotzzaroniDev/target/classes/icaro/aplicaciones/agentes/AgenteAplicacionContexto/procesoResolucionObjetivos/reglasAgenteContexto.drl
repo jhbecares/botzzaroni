@@ -225,6 +225,7 @@ then
 	obj.setSolved();
 	update(obj);
 	update(f);
+	retract(p);
 	// retract(notif);
 end
 
@@ -233,26 +234,25 @@ salience 100
 when 
 	obj:ObtenerPago(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-	notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteBebida, tipoNotificacion == tipoNotif.pideCalendario)
+	//notif:Notificacion(identInterlc:VocabularioGestionPizzeria.IdentAgenteBebida, tipoNotificacion == tipoNotif.pideCalendario)
+	p:Pedido(metodoPago==MetodoPago.tarjeta || metodoPago==MetodoPago.efectivo)
 then 			
 	InterfazUsoAgente iftAgente = (InterfazUsoAgente)NombresPredefinidos.
   		REPOSITORIO_INTERFACES_OBJ.obtenerInterfaz(NombresPredefinidos.ITF_USO + VocabularioGestionPizzeria.IdentAgenteCalendario);
-  	Notificacion notifPide = new Notificacion(agentId);
-  	notifPide.setTipoNotificacion(tipoNotif.pideCalendario);
-  	notifPide.setMensajeNotificacion("Turno del agente calendario ");
 
-   	MensajeSimple mensaje = new MensajeSimple(notifPide, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteCalendario);
+   	MensajeSimple mensaje = new MensajeSimple(p, VocabularioGestionPizzeria.IdentAgenteContexto, VocabularioGestionPizzeria.IdentAgenteCalendario);
    	iftAgente.aceptaMensaje(mensaje);
    	
    	Objetivo ob = new ObtenerFechaEntrega();
- 	ob.setobjectReferenceId(identInterlc);
+ 	ob.setobjectReferenceId("");
  	ob.setSolving();
  	insert(ob); 	
 	f.setFoco(ob);
 	obj.setSolved();
 	update(obj);
 	update(f);
-	retract(notif);
+	retract(p);
+	//retract(notif);
 end
 
 
@@ -368,7 +368,7 @@ rule "Distribuir mensaje al agente PIZZERO"
  when
     obj:ObtenerPago(state==Objetivo.SOLVING)
     f:Focus(foco == obj)
-    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta)
+    notif:Notificacion(tipoNotificacion != tipoNotif.piso, tipoNotificacion != tipoNotif.portal, tipoNotificacion != tipoNotif.puerta, tipoNotificacion != tipoNotif.insultos)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      Tarea tarea = gestorTareas.crearTarea(Distribuir.class);
@@ -384,7 +384,7 @@ rule "Distribuir mensaje al agente PIZZERO"
      f:Focus(foco == obj)
      notif:Notificacion(tipoNotificacion == tipoNotif.piso || tipoNotificacion == tipoNotif.portal || 
      	tipoNotificacion == tipoNotif.puerta  || tipoNotificacion == tipoNotif.TempTime || tipoNotificacion == tipoNotif.miHora
-    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto)
+    	|| tipoNotificacion == tipoNotif.TempDate || tipoNotificacion == tipoNotif.miMinuto || tipoNotificacion == tipoNotif.insultos)
   then
    	 recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
      retract(notif);
