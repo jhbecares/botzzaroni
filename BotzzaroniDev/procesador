@@ -8,7 +8,7 @@
         <urlString>$gatehome$plugins/Learning/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$gatehome$plugins/ANNIECitas/</urlString>
+        <urlString>$gatehome$plugins/Botzzaroni/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$gatehome$plugins/ANNIE/</urlString>
@@ -116,13 +116,13 @@
                 <entry>
                   <string>tokeniserRulesURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/tokeniser/DefaultTokeniser.rules</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/tokeniser/DefaultTokeniser.rules</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>transducerGrammarURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/tokeniser/postprocess.jape</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/tokeniser/postprocess.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -171,13 +171,13 @@
                 <entry>
                   <string>gazetteerListsURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/sentenceSplitter/gazetteer/lists.def</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/sentenceSplitter/gazetteer/lists.def</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>transducerURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/sentenceSplitter/grammar/main-single-nl.jape</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/sentenceSplitter/grammar/main-single-nl.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -230,7 +230,7 @@
                 <entry>
                   <string>listsURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/gazetteer/lists.def</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/gazetteer/lists.def</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -291,7 +291,7 @@
                 <entry>
                   <string>grammarURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$gatehome$plugins/ANNIECitas/resources/NE/main.jape</urlString>
+                    <urlString>$gatehome$plugins/Botzzaroni/resources/NE/main.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
