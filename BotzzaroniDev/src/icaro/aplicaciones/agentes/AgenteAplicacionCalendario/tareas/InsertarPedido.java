@@ -16,9 +16,9 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
 
 /*
- *  Parámetros de la tarea
+ *  Parï¿½metros de la tarea
  *  - Pedido a insertar
- *  - Objetivo a cumplir para finalizar el flujo de la aplicación del todo
+ *  - Objetivo a cumplir para finalizar el flujo de la aplicaciï¿½n del todo
  */
 
 public class InsertarPedido extends TareaSincrona {
@@ -52,7 +52,7 @@ public class InsertarPedido extends TareaSincrona {
 			if (recComunicacionChat != null) {
                 //recComunicacionChat.setIdentAgteAreportar(this.identAgente);
 				recComunicacionChat.mostrarVisualizadorChatUsuario(identAgenteOrdenante, NombresPredefinidos.TIPO_COGNITIVO);
-                recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + ": " +mensaje);
+                //recComunicacionChat.mostrarTexto(VocabularioGestionPizzeria.IdentConexionAgte + ": " +mensaje);
 			} 
 			else {
 				identAgenteOrdenante = this.getAgente().getIdentAgente();

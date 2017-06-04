@@ -631,14 +631,7 @@ public class PersistenciaAccesoImp {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		    String fecha = sdf.format(pedido.getFechaEntrega());
 			    
-			query = conn.createStatement();
-			String consulta = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
-					+ ".pedido VALUES ( NULL, '" + pedido.getUsuario().getUsername() + "','" + pedido.getMetodoPago().toString() +  "'," + pedido.getCambioEfectivo()+", '" + fecha +"')";
-			 System.out.println(consulta);
-			query.executeUpdate(consulta);
-			
-		   
- 
+
 			// Recuperamos el id del pedido
 			query = conn.createStatement();
 			String q2 = "SELECT id FROM "
@@ -648,12 +641,17 @@ public class PersistenciaAccesoImp {
 			System.out.println(q2);
 			resultado = query.executeQuery(q2);
 			int idPedido = 0;
-			if(resultado.next()){
-				idPedido = resultado.getInt("id");
+			while(resultado.next()){
+				if (resultado.getInt("id") > idPedido) 
+					idPedido = resultado.getInt("id");
 			}
 			System.out.println(idPedido);
 			
-			
+			query = conn.createStatement();
+			String consulta = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+					+ ".pedido VALUES ( " + idPedido + ", '" + pedido.getUsuario().getUsername() + "','" + pedido.getMetodoPago().toString() +  "'," + pedido.getCambioEfectivo()+", '" + fecha +"')";
+			 System.out.println(consulta);
+			query.executeUpdate(consulta);
 			
 			// Recuperar ids de las pizzas de la carta
 			HashMap<String, Integer> mapCarta = new HashMap<String, Integer>();

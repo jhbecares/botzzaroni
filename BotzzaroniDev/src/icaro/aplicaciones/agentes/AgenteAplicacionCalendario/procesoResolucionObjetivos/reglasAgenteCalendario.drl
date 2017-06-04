@@ -206,7 +206,7 @@ then
         gc.set(Calendar.MONTH, currentMonth); 
         gc.set(Calendar.DAY_OF_MONTH, currentDay);
         sdf.setCalendar(gc);
-    } else if (notif.getMensajeNotificacion().equalsIgnoreCase("ma�ana")) {
+    } else if (notif.getMensajeNotificacion().equalsIgnoreCase("mañana")) {
         gc.set(Calendar.YEAR, currentYear);
         gc.set(Calendar.MONTH, currentMonth); 
         gc.set(Calendar.DAY_OF_MONTH, currentDay);
@@ -479,10 +479,7 @@ then
 	GregorianCalendar gc = (GregorianCalendar)sdf.getCalendar();
 	Date date = sdf.parse(sdf.format(gc.getTime()));
 	p.setFechaEntrega(date);
-    //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
-    //tarea.ejecutar(user.getNombre(),ConversacionBotzza.msg("tengoTuEntrega"));
-    //recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-    
+   
     // TODO aquí es donde entra Bea con su magia
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(ComprobarFechaEntrega.class);
     tarea.ejecutar(sdf);
@@ -491,6 +488,9 @@ then
     tareaIns.ejecutar(p);
     
 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    
+    TareaSincrona tareaprint = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
+	tareaprint.ejecutar(agentId, "Ya hemos apuntado tu pedido. Gracias por usar Botzzaroni!");
     
     f.setFoco(null);
     update(f);

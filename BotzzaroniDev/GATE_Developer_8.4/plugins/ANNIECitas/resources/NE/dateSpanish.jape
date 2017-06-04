@@ -84,7 +84,7 @@ Macro: YEAR
 
 Macro: ORDINAL
 (
-   ({Token.string ==~ "[0-9][0-9]?(o|º|a|ª|er|ero|era)"}
+   ({Token.string ==~ "[0-9][0-9]?(o|ï¿½|a|ï¿½|er|ero|era)"}
     |
    {Lookup.minorType == ordinal})
    ( ({Token.string == "de"} | 
@@ -213,7 +213,7 @@ System.out.println("______________ rule dateSpanish2");
 Rule: dateSpanish3
 Priority: 100
 (
-  ({Token.string == "hoy"} | {Token.string == "mañana"} ):dia
+  ({Token.string == "hoy"} | {Token.string == "maÃ±ana"} ):dia
 
 ):dateSpanish
 -->
