@@ -133,7 +133,29 @@ rule "Introduce numero y bebida juntos en objetivo numero bebidas totales"
  then
  	pedido1.setnBebidas(msggNumero);
  	for(int i = 0; i < Integer.parseInt(msggNumero); i++){
- 		pedido1.anadirBebida(msggBebida);
+ 		
+ 		if(msggBebida.equalsIgnoreCase("cocacola") || msggBebida.equalsIgnoreCase("coca-cola") || msggBebida.equalsIgnoreCase("coca cola")
+	 		|| msggBebida.equalsIgnoreCase("cocacolas") || msggBebida.equalsIgnoreCase("coca-colas") || msggBebida.equalsIgnoreCase("coca colas")
+	 		|| msggBebida.equalsIgnoreCase("cocacola light") || msggBebida.equalsIgnoreCase("coca-cola light") || msggBebida.equalsIgnoreCase("coca cola light")
+	 		|| msggBebida.equalsIgnoreCase("cocacola zero") || msggBebida.equalsIgnoreCase("coca-cola zero") || msggBebida.equalsIgnoreCase("coca cola zero") ){
+ 				pedido1.anadirBebida("cocacola");
+ 		}
+ 		else if(msggBebida.equalsIgnoreCase("fanta de naranja") || msggBebida.equalsIgnoreCase("fanta naranja") || msggBebida.equalsIgnoreCase("fanta") || msggBebida.equalsIgnoreCase("fantas")){
+ 		 	pedido1.anadirBebida("fanta de naranja");
+ 		}
+ 		else if(msggBebida.equalsIgnoreCase("fanta de limon") || msggBebida.equalsIgnoreCase("fanta limon") || msggBebida.equalsIgnoreCase("fanta de limón") || msggBebida.equalsIgnoreCase("fanta limón")){
+ 		 	pedido1.anadirBebida("fanta de limon");
+ 		}
+ 		else if(msggBebida.equalsIgnoreCase("nestea") || msggBebida.equalsIgnoreCase("nesti") || msggBebida.equalsIgnoreCase("nesty")){
+ 		 	pedido1.anadirBebida("nestea");
+ 		}
+ 		else if(msggBebida.equalsIgnoreCase("cerveza") || msggBebida.equalsIgnoreCase("cerveza sin alcohol") || msggBebida.equalsIgnoreCase("cerveza con limon")
+ 		 || msggBebida.equalsIgnoreCase("cerveza limon") || msggBebida.equalsIgnoreCase("cerveza con limón") || msggBebida.equalsIgnoreCase("cerveza limón")){
+ 		 	pedido1.anadirBebida("cerveza");
+ 		}
+ 		
+ 		
+ 		 		
  	}
  	
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoBotzza.class);
@@ -147,6 +169,8 @@ rule "Introduce numero y bebida juntos en objetivo numero bebidas totales"
   	
   	fc.setFoco(ob1);
   	update(fc);
+  	
+  	update(pedido1);
     
     ob.setSolved();
  	update(ob);

@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -631,7 +634,14 @@ public class PersistenciaAccesoImp {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		    String fecha = sdf.format(pedido.getFechaEntrega());
 			    
-
+			query = conn.createStatement();
+			String consulta = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
+					+ ".pedido VALUES ( NULL, '" + pedido.getUsuario().getUsername() + "','" + pedido.getMetodoPago().toString() +  "'," + pedido.getCambioEfectivo()+", '" + fecha +"')";
+			 System.out.println(consulta);
+			query.executeUpdate(consulta);
+			
+		   
+ 
 			// Recuperamos el id del pedido
 			query = conn.createStatement();
 			String q2 = "SELECT id FROM "
@@ -641,17 +651,12 @@ public class PersistenciaAccesoImp {
 			System.out.println(q2);
 			resultado = query.executeQuery(q2);
 			int idPedido = 0;
-			while(resultado.next()){
-				if (resultado.getInt("id") > idPedido) 
-					idPedido = resultado.getInt("id");
+			if(resultado.next()){
+				idPedido = resultado.getInt("id");
 			}
 			System.out.println(idPedido);
 			
-			query = conn.createStatement();
-			String consulta = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
-					+ ".pedido VALUES ( " + idPedido + ", '" + pedido.getUsuario().getUsername() + "','" + pedido.getMetodoPago().toString() +  "'," + pedido.getCambioEfectivo()+", '" + fecha +"')";
-			 System.out.println(consulta);
-			query.executeUpdate(consulta);
+			
 			
 			// Recuperar ids de las pizzas de la carta
 			HashMap<String, Integer> mapCarta = new HashMap<String, Integer>();
@@ -707,7 +712,7 @@ public class PersistenciaAccesoImp {
 					if (resultado.next()) {
 						idPizzaPersonalizada = resultado.getInt("id");			
 					}
-					
+					System.out.println("Id personalizada " + idPizzaPersonalizada);					
 					query = conn.createStatement();
 					String insercionPizza = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
 					+ ".tienepizza VALUES (" + idPedido + "," + idPizzaPersonalizada+  ",'" + p.getTamanio().toString()+  "','" + p.getMasa().toString() + "')";
@@ -716,6 +721,7 @@ public class PersistenciaAccesoImp {
 					query.executeUpdate(insercionPizza);
 					
 					int idSalsa = mapSalsa.get(p.getSalsa());
+					System.out.println("ID salsa " + idSalsa);
 					
 					// Insertar la salsa					
 					query = conn.createStatement();
@@ -731,7 +737,7 @@ public class PersistenciaAccesoImp {
 			
 			// Insertar las alergias del pedido si tiene
 			if(pedido.tieneAlergia){
-				
+				System.out.println("Tiene alergia");
 				// Recuperar ids de los ingredientes
 				HashMap<String, Integer> mapIngr = new HashMap<String, Integer>();
 				query = conn.createStatement();
@@ -747,6 +753,7 @@ public class PersistenciaAccesoImp {
 				
 				for(Ingrediente i: pedido.getAlergias()){
 					int idIngr = mapIngr.get(i.toString());
+					System.out.println("Id ingr alergia: " + idIngr);
 					query = conn.createStatement();
 					String insercionAlergia = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
 							+ ".tieneAlergia VALUES (" + idPedido + "," + idIngr+  ")";
@@ -774,10 +781,11 @@ public class PersistenciaAccesoImp {
 				}
 				
 				for(String i: pedido.getBebidas()){
-					int idIngr = mapBebidas.get(i);
+					int idBebida = mapBebidas.get(i);
+					System.out.println("Id bebida: " + idBebida);
 					query = conn.createStatement();
 					String insercionBebida = "INSERT INTO " + PersistenciaAccesoImp.nombreBD
-							+ ".tienebebida VALUES (" + idPedido + "," + idIngr+ ", 'mediano')";
+							+ ".tienebebida VALUES (" + idPedido + "," + idBebida+ ", 'mediano')";
 					System.out.println(insercionBebida);
 
 					query.executeUpdate(insercionBebida);
@@ -793,7 +801,7 @@ public class PersistenciaAccesoImp {
 		}
 		
 		
-	}
+}
 
 	public void insertaDatosUsuario(Usuario gr)
 			throws ErrorEnRecursoException {

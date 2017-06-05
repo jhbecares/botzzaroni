@@ -678,7 +678,23 @@ salience 12
   	TareaSincrona tarea = gestorTareas.crearTareaSincrona(MensajeGenericoPizzero.class);
     tarea.ejecutar("", ConversacionPizzero.msg("tengoTuSalsa"));
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName()); 
-    pizza.setSalsa(msgg);
+    
+    if(msgg.equalsIgnoreCase("salsa carbonara")){
+    	pizza.setSalsa("carbonara");    
+    
+    }else if(msgg.equalsIgnoreCase("salsa barbacoa")){
+		pizza.setSalsa("barbacoa");    
+    }
+    else if(msgg.equalsIgnoreCase("salsa diabola") || msgg.equalsIgnoreCase("salsa diábola") ){
+        pizza.setSalsa("diabola");
+    }
+    else if(msgg.equalsIgnoreCase("salsa tomate") || msgg.equalsIgnoreCase("salsa de tomate") ){
+        pizza.setSalsa("tomate");
+    }
+    else if(msgg.equalsIgnoreCase("salsa botzzaroni") || msgg.equalsIgnoreCase("salsa botzza") ){    
+    	pizza.setSalsa("botzzaroni");
+    }
+    
     pizza.setPrecio(6);
    	update(ob);
     update(f);
